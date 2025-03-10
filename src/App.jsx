@@ -40,8 +40,8 @@ function App() {
                   <h3 className="text-base font-medium text-left">
                     Parla con <img src={logo_negro_eugenio} alt="Logo Eugenio" className="inline w-24 align-middle" />
                   </h3>
-                  <div className="bg-gray-200 p-1 rounded-full">
-                    <FaArrowRight className="text-gray-600" />
+                  <div className="bg-gray-100 p-1 rounded-full">
+                    <FaArrowRight className="text-xs text-gray-600" />
                   </div>
                 </div>
                 <p className="text-xs text-gray-500 text-left">
@@ -54,8 +54,8 @@ function App() {
                   <h3 className="text-base font-medium text-left">
                     Parla con un agente
                   </h3>
-                  <div className="bg-gray-200 p-1 rounded-full">
-                    <FaArrowRight className="text-gray-600" />
+                  <div className="bg-gray-100 p-1 rounded-full">
+                    <FaArrowRight className="text-xs text-gray-600" />
                   </div>
                 </div>
                 <p className="text-xs text-gray-500 text-left">
@@ -71,8 +71,8 @@ function App() {
               <p className="text-xs text-gray-500 text-left">
                 Scopri il processo e i benefici in pochi semplici passaggi.
               </p>
-              <div className="absolute right-4 bottom-4 bg-gray-200 p-1 rounded-full">
-                <FaArrowRight className="text-gray-600" />
+              <div className="absolute right-4 bottom-4 bg-gray-100 p-1 rounded-full">
+                <FaArrowRight className="text-xs text-gray-600" />
               </div>
             </div>
           </div>
