@@ -1,5 +1,8 @@
 import React from 'react'
+import { FaArrowRight } from 'react-icons/fa6'
 import logo_creditplan from './assets/LOGO-CREDITPLAN.png'
+import logo_eugenio from './assets/logo_eugenio.png'
+import logo_negro_eugenio from './assets/logo_negro_eugenio.png'
 import family_w_dog from './assets/family_with_dog.jpg'
 import './App.css'
 
@@ -32,10 +35,47 @@ function App() {
           </p>
           <div className="mt-6 flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
             <div className="flex flex-col space-y-4">
-              <div className="bg-white w-full md:w-48 h-20 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl transition-colors duration-200"></div>
-              <div className="bg-white w-full md:w-48 h-20 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl transition-colors duration-200"></div>
+              {/* Box per Eugenio */}
+              <div className="relative bg-white w-full md:w-64 h-20 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl transition-colors duration-200 flex flex-col items-start justify-center px-4">
+                <div className="w-full flex justify-between items-center">
+                  <h3 className="text-base font-medium text-left">
+                    Parla con <img src={logo_negro_eugenio} alt="Logo Eugenio" className="inline w-24 align-middle" />
+                  </h3>
+                  <div className="bg-gray-200 p-1 rounded-full">
+                    <FaArrowRight className="text-gray-600" />
+                  </div>
+                </div>
+                <p className="text-xs text-gray-500 text-left">
+                  Conversazione in diretta per risolvere i tuoi dubbi.
+                </p>
+              </div>
+              {/* Box per agente */}
+              <div className="relative bg-white w-full md:w-64 h-20 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl transition-colors duration-200 flex flex-col items-start justify-center px-4">
+                <div className="w-full flex justify-between items-center">
+                  <h3 className="text-base font-medium text-left">
+                    Parla con un agente
+                  </h3>
+                  <div className="bg-gray-200 p-1 rounded-full">
+                    <FaArrowRight className="text-gray-600" />
+                  </div>
+                </div>
+                <p className="text-xs text-gray-500 text-left">
+                  Prenota subito per un'assistenza personalizzata.
+                </p>
+              </div>
             </div>
-            <div className="bg-white w-full md:w-48 h-44 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl transition-colors duration-200"></div>
+            {/* Box per descrizione cessione del quinto */}
+            <div className="relative bg-white w-full md:w-48 h-44 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl transition-colors duration-200 p-4 flex flex-col justify-start">
+              <h3 className="text-base font-medium text-left mb-2">
+                Come funziona la cessione del quinto?
+              </h3>
+              <p className="text-xs text-gray-500 text-left">
+                Scopri il processo e i benefici in pochi semplici passaggi.
+              </p>
+              <div className="absolute right-4 bottom-4 bg-gray-200 p-1 rounded-full">
+                <FaArrowRight className="text-gray-600" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
