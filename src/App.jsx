@@ -3,6 +3,7 @@ import { FaArrowRight } from 'react-icons/fa'
 import logo_creditplan from './assets/LOGO-CREDITPLAN.png'
 import logo_negro_eugenio from './assets/logo_negro_eugenio.png'
 import family_w_dog from './assets/family_with_dog.jpg'
+import savingSvg from './assets/saving.svg'
 import './App.css'
 
 function App() {
@@ -88,6 +89,24 @@ function App() {
           src={family_w_dog}
           alt="family with dog"
           className="w-full md:w-96 rounded-3xl"
+        />
+      </div>
+      {/* Sección de ilustración "saving.svg" con título y párrafo responsivos */}
+      <div className="my-24 flex flex-col md:flex-row justify-center items-center px-4 max-w-4xl mx-auto">
+        {/* Contenedor para título y párrafo */}
+        <div className="order-1 md:order-2 text-center md:text-left">
+          <h5 className="font-medium text-4xl mb-2">
+            100% digitale. 100% umano.
+          </h5>
+          <p className="text-gray-700 font-normal text-xl w-3/4 mx-auto md:mx-0">
+            Sappiamo che il tuo tempo vale oro. Affida a noi tutto il lavoro, tu goditi la tranquillità.
+          </p>
+        </div>
+        {/* Ilustración */}
+        <img
+          src={savingSvg}
+          alt="Ilustración de ahorro"
+          className="order-2 md:order-1 w-full max-w-sm"
         />
       </div>
       <Footer />
