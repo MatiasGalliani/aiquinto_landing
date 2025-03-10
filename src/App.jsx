@@ -1,35 +1,22 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import React from 'react'
+import logo_creditplan from './assets/LOGO-CREDITPLAN.png'
+import family_w_dog from './assets/family_with_dog.jpg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="flex justify-between items-start mt-12 mx-12">
+      <div className=" bg-gray-100 rounded-3xl p-6 mr-12">
+        <h1>
+          <img src={logo_creditplan} alt="logo" className="w-56 mt-8 ml-8" />
+        </h1>
+        <h2 className="w-3/4 text-5xl font-semibold mt-12 ml-8 text-gray-800">
+          Chiedi subito fino a 70.000€ con la tua Cessione del Quinto!
+        </h2>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      <img src={family_w_dog} alt="family with dog" className="w-96 rounded-3xl" />
+    </div>
   )
 }
 
-export default App
+export default App;
