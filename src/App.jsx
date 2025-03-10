@@ -219,7 +219,7 @@ export function Footer() {
       {/* Copyright */}
       <div className="border-t border-gray-700 mt-8 pt-4 px-4 sm:px-6 lg:px-8">
         <p className="text-xs text-center">
-          Copyright © 2024 – Creditplan Italia Network di mediazione
+          Copyright © 2025 – Creditplan Italia Network di mediazione
           creditizia srl. All Rights Reserved.<br />
           Designed &amp; developed by Matias Galliani :)
         </p>
