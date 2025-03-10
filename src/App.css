@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* filepath: c:\Users\matia\Desktop\landing pages\aimutui\aimutui_landing\src\App.css */
+@media (max-width: 1200px) {
+  .mobile-version {
+    /* Aquí defines los estilos para la versión móvil */
+    flex-direction: column;
+  }
+}
