@@ -1,7 +1,6 @@
 import React from 'react'
 import { FaArrowRight } from 'react-icons/fa'
 import logo_creditplan from './assets/LOGO-CREDITPLAN.png'
-import logo_eugenio from './assets/logo_eugenio.png'
 import logo_negro_eugenio from './assets/logo_negro_eugenio.png'
 import family_w_dog from './assets/family_with_dog.jpg'
 import './App.css'
