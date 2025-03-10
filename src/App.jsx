@@ -7,7 +7,7 @@ import './App.css'
 
 function App() {
   return (
-    <div className="flex flex-col md:flex-row justify-between items-stretch mt-12 mx-4 md:mx-12">
+    <div className="flex flex-col md:flex-row justify-between items-stretch mt-3 md:mt-12 mx-4 md:mx-12">
       <div className="bg-gray-100 rounded-3xl p-6 md:mr-12 mb-6 md:mb-0">
         <div className="px-4 md:px-16">
           <h1>
