@@ -35,7 +35,7 @@ function App() {
           <div className="mt-6 flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
             <div className="flex flex-col space-y-4">
               {/* Box per Eugenio */}
-              <div className="relative bg-white w-full md:w-64 h-20 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl transition-colors duration-200 flex flex-col items-start justify-center px-4">
+              <div className="relative bg-white w-full md:w-64 h-20 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl transition-colors duration-200 flex flex-col items-start justify-center px-4 transform hover:scale-110 transition-transform duration-300 ease-in-out">
                 <div className="w-full flex justify-between items-center">
                   <h3 className="text-base font-medium text-left">
                     Parla con <img src={logo_negro_eugenio} alt="Logo Eugenio" className="inline w-24 align-middle" />
@@ -49,7 +49,7 @@ function App() {
                 </p>
               </div>
               {/* Box per agente */}
-              <div className="relative bg-white w-full md:w-64 h-20 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl transition-colors duration-200 flex flex-col items-start justify-center px-4">
+              <div className="relative bg-white w-full md:w-64 h-20 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl transition-colors duration-200 flex flex-col items-start justify-center px-4 transform hover:scale-110 transition-transform duration-300 ease-in-out">
                 <div className="w-full flex justify-between items-center">
                   <h3 className="text-base font-medium text-left">
                     Parla con un agente
@@ -64,7 +64,7 @@ function App() {
               </div>
             </div>
             {/* Box per descrizione cessione del quinto */}
-            <div className="relative bg-white w-full md:w-48 h-44 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl transition-colors duration-200 p-4 flex flex-col justify-start">
+            <div className="relative bg-white w-full md:w-48 h-44 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl transition-colors duration-200 p-4 flex flex-col justify-start transform hover:scale-110 transition-transform duration-300 ease-in-out">
               <h3 className="text-base font-medium text-left mb-2">
                 Come funziona la cessione del quinto?
               </h3>
