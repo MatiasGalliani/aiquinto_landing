@@ -5,6 +5,7 @@ import logo_negro_eugenio from './assets/logo_negro_eugenio.png'
 import family_w_dog from './assets/family_with_dog.jpg'
 import savingSvg from './assets/saving.svg'
 import './App.css'
+import ChatWidget from './components/ChatWidget';
 
 function FAQ() {
   const [activeIndex, setActiveIndex] = useState(null)
@@ -212,6 +213,9 @@ function App() {
 
       </main>
       <Footer />
+      <div className="fixed bottom-4 right-4 z-50">
+        <ChatWidget />
+      </div>
     </div>
   )
 }
