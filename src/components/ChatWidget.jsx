@@ -36,7 +36,7 @@ export function ChatWidget({ open, setOpen }) {
     setIsTyping(true);
 
     try {
-      const response = await fetch('http://localhost:5000/webhook', {
+      const response = await fetch('https://cc03-151-48-64-113.ngrok-free.app/webhook', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ Body: messageText, From: 'web-user' }),

@@ -141,20 +141,27 @@ function App() {
                       Conversazione in diretta per risolvere i tuoi dubbi.
                     </p>
                   </div>
-                  {/* Box para agente */}
-                  <div className="relative bg-white w-full md:w-64 h-20 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex flex-col items-start justify-center px-4 transform hover:scale-110 transition-transform duration-300 ease-in-out">
-                    <div className="w-full flex justify-between items-center">
-                      <h3 className="text-base font-medium text-left">
-                        Parla con un agente
-                      </h3>
-                      <div className="bg-gray-100 p-1 rounded-full">
-                        <FaArrowRight className="text-xs text-gray-600" />
+                  {/* Box per agente - enlace a https://calendar.creditplan.it/cqsagents */}
+                  <a
+                    href="https://calendar.creditplan.it/cqsagents"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block"
+                  >
+                    <div className="relative bg-white w-full md:w-64 h-20 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex flex-col items-start justify-center px-4 transform hover:scale-110 transition-transform duration-300 ease-in-out">
+                      <div className="w-full flex justify-between items-center">
+                        <h3 className="text-base font-medium text-left">
+                          Parla con un agente
+                        </h3>
+                        <div className="bg-gray-100 p-1 rounded-full">
+                          <FaArrowRight className="text-xs text-gray-600" />
+                        </div>
                       </div>
+                      <p className="text-xs text-gray-500 text-left">
+                        Prenota subito per un'assistenza personalizzata.
+                      </p>
                     </div>
-                    <p className="text-xs text-gray-500 text-left">
-                      Prenota subito per un'assistenza personalizzata.
-                    </p>
-                  </div>
+                  </a>
                 </div>
                 {/* Box para descripción cessione del quinto */}
                 <a href="#faq" className="block">
@@ -289,7 +296,18 @@ export function Footer() {
           </div>
           {/* Link Utili */}
           <div>
-            <h3 className="text-lg font-bold mb-2">Trova il tuo consulente Creditplan</h3>
+            <a 
+              href="https://calendar.creditplan.it" 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              <div className="group inline-block transition-transform duration-300 transform hover:scale-105">
+                <h3 className="text-lg font-bold mb-2 flex items-center">
+                  Trova il tuo consulente Creditplan
+                  <FaArrowRight className="ml-2 transition-opacity duration-300 opacity-0 group-hover:opacity-100" />
+                </h3>
+              </div>
+            </a>
             <h4 className="text-lg font-bold mb-2 mt-4">Link Utili</h4>
             <ul className="text-sm space-y-1">
               <li>
