@@ -188,7 +188,7 @@ function App() {
           />
         </div>
         {/* Sección de ilustración con texto e imagen juntos centrados */}
-        <div className="my-24 w-full max-w-4xl mx-auto px-16 bg-gray-100 p-8 rounded-3xl flex justify-center">
+        <div className="my-24 w-full max-w-4xl mx-auto bg-gray-100 p-4 sm:p-8 md:p-8 rounded-3xl flex justify-center">
           <div className="inline-flex flex-col md:flex-row items-center gap-4 md:gap-8">
             {/* Bloque de texto sin margen extra */}
             <div className="text-center md:text-left">
@@ -204,7 +204,7 @@ function App() {
               <img
                 src={savingSvg}
                 alt="Ilustración de ahorro"
-                className="max-w-sm"
+                className="max-w-sm mx-auto"
               />
             </div>
           </div>
@@ -217,12 +217,14 @@ function App() {
               <img
                 src={family_with_dog_no_background}
                 alt="Family with dog no background"
-                className="max-w-md"
+                className="w-full max-w-xs sm:max-w-md mx-auto"
               />
             </div>
             {/* Columna derecha con el texto */}
             <div className="flex-1 text-center md:text-left">
-              <h5 className="font-medium text-4xl mb-2">Tranquillità per la tua famiglia, zero pensieri per te.</h5>
+              <h5 className="font-medium text-4xl mb-2">
+                Tranquillità per la tua famiglia, zero pensieri per te.
+              </h5>
               <p className="text-gray-700 font-normal text-xl mt-2">
                 Serenità per la tua famiglia, sicurezza per il tuo futuro.
               </p>
