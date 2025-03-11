@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaArrowRight } from 'react-icons/fa'
 import logo_creditplan from './assets/LOGO-CREDITPLAN.png'
 import logo_negro_eugenio from './assets/logo_negro_eugenio.png'
@@ -6,111 +6,185 @@ import family_w_dog from './assets/family_with_dog.jpg'
 import savingSvg from './assets/saving.svg'
 import './App.css'
 
+function FAQ() {
+  const [activeIndex, setActiveIndex] = useState(null)
+  const faqs = [
+    {
+      question: "¿Cómo funciona el proceso de financiación?",
+      answer:
+        "La financiación se realiza en pocos clics y siguiendo un proceso rápido y seguro, ajustado a tus necesidades."
+    },
+    {
+      question: "¿Cuánto tiempo tarda la aprobación?",
+      answer:
+        "La aprobación se efectúa generalmente en menos de 24 horas, siempre que la documentación esté completa."
+    },
+    {
+      question: "¿Existen costos adicionales?",
+      answer:
+        "No, el proceso es completamente transparente y no hay costos ocultos."
+    }
+  ]
+
+  return (
+    <div id="faq" className="scroll-mt-20 my-16 w-full max-w-4xl mx-auto px-4">
+      <h2 className="text-3xl font-semibold text-center mb-8">Preguntas Frecuentes</h2>
+      {faqs.map((faq, index) => {
+        const isActive = index === activeIndex
+        return (
+          <div key={index} className="border-b border-gray-300">
+            <button
+              className="w-full text-left py-4 flex justify-between items-center focus:outline-none"
+              onClick={() => setActiveIndex(isActive ? null : index)}
+            >
+              <span className="text-lg font-medium">{faq.question}</span>
+              <FaArrowRight
+                className={`transition-transform duration-300 ${isActive ? "rotate-90" : ""}`}
+              />
+            </button>
+            <div
+              className={`overflow-hidden transition-all duration-300 ${
+                isActive ? "max-h-40" : "max-h-0"
+              }`}
+            >
+              <p className="text-gray-600 pb-4">{faq.answer}</p>
+            </div>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
 function App() {
   return (
-    <>
-      <div className="flex flex-col md:flex-row justify-between items-stretch mt-3 md:mt-12 mx-4 md:mx-12">
-        <div className="bg-gray-100 rounded-3xl p-6 md:mr-12 mb-6 md:mb-0">
-          <div className="px-4 md:px-16">
-            <h1>
-              <img
-                src={logo_creditplan}
-                alt="logo"
-                className="w-40 md:w-56 mt-8"
-              />
-            </h1>
-            <p className="inline-block text-xs font-medium text-green-950 mt-4 py-0.5 bg-green-200 px-2">
-              Offerta a tempo limitato
-            </p>
-            <h2 className="text-3xl md:text-5xl font-semibold mt-4 text-gray-800">
-              Chiedi subito fino a 70.000€ con la tua Cessione del Quinto!
-            </h2>
-            <p className="text-lg text-gray-600 mt-4">
-              Risparmia tempo e denaro.
-            </p>
-            <p className="text-lg text-gray-600 mt-1">
-              Migliori tassi di mercato!
-            </p>
-            <p className="text-2xl font-medium text-gray-800 mt-8">
-              Come vuoi procedere?
-            </p>
-            <div className="mt-6 flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
-              <div className="flex flex-col space-y-4">
-                {/* Box per Eugenio */}
-                <div className="relative bg-white w-full md:w-64 h-20 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl transition-colors duration-200 flex flex-col items-start justify-center px-4 transform hover:scale-110 transition-transform duration-300 ease-in-out">
-                  <div className="w-full flex justify-between items-center">
-                    <h3 className="text-base font-medium text-left">
-                      Parla con{" "}
-                      <img
-                        src={logo_negro_eugenio}
-                        alt="Logo Eugenio"
-                        className="inline w-24 align-middle"
-                      />
+    <div className="flex flex-col min-h-screen">
+      <main className="flex-grow">
+        <div className="flex flex-col md:flex-row justify-center items-stretch mt-3 md:mt-12 mx-4 md:mx-12 gap-6">
+          <div className="bg-gray-100 rounded-3xl p-6 md:mr-12 mb-6 md:mb-0">
+            <div className="px-4 md:px-16">
+              <h1>
+                <img
+                  src={logo_creditplan}
+                  alt="logo"
+                  className="w-40 md:w-56 mt-8"
+                />
+              </h1>
+              <p className="inline-block text-xs font-medium text-green-950 mt-4 py-0.5 bg-green-200 px-2">
+                Offerta a tempo limitato
+              </p>
+              <h2 className="text-3xl md:text-5xl font-semibold mt-4 text-gray-800">
+                Chiedi subito fino a 70.000€ con la tua Cessione del Quinto!
+              </h2>
+              <p className="text-lg text-gray-600 mt-4">
+                Risparmia tempo e denaro.
+              </p>
+              <p className="text-lg text-gray-600 mt-1">
+                Migliori tassi di mercato!
+              </p>
+              <p className="text-2xl font-medium text-gray-800 mt-8">
+                Come vuoi procedere?
+              </p>
+              <div className="mt-6 flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
+                <div className="flex flex-col space-y-4">
+                  {/* Box para Eugenio */}
+                  <div className="relative bg-white w-full md:w-64 h-20 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex flex-col items-start justify-center px-4 transform hover:scale-110 transition-transform duration-300 ease-in-out">
+                    <div className="w-full flex justify-between items-center">
+                      <h3 className="text-base font-medium text-left">
+                        Parla con{" "}
+                        <img
+                          src={logo_negro_eugenio}
+                          alt="Logo Eugenio"
+                          className="inline w-24 align-middle"
+                        />
+                      </h3>
+                      <div className="bg-gray-100 p-1 rounded-full">
+                        <FaArrowRight className="text-xs text-gray-600" />
+                      </div>
+                    </div>
+                    <p className="text-xs text-gray-500 text-left">
+                      Conversazione in diretta per risolvere i tuoi dubbi.
+                    </p>
+                  </div>
+                  {/* Box para agente */}
+                  <div className="relative bg-white w-full md:w-64 h-20 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex flex-col items-start justify-center px-4 transform hover:scale-110 transition-transform duration-300 ease-in-out">
+                    <div className="w-full flex justify-between items-center">
+                      <h3 className="text-base font-medium text-left">
+                        Parla con un agente
+                      </h3>
+                      <div className="bg-gray-100 p-1 rounded-full">
+                        <FaArrowRight className="text-xs text-gray-600" />
+                      </div>
+                    </div>
+                    <p className="text-xs text-gray-500 text-left">
+                      Prenota subito per un'assistenza personalizzata.
+                    </p>
+                  </div>
+                </div>
+                {/* Box para descripción cessione del quinto */}
+                <a href="#faq" className="block">
+                  <div className="relative bg-white w-full md:w-48 h-44 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl p-4 flex flex-col justify-start transform hover:scale-110 transition-transform duration-300 ease-in-out">
+                    <h3 className="text-base font-medium text-left mb-2">
+                      Come funziona la cessione del quinto?
                     </h3>
-                    <div className="bg-gray-100 p-1 rounded-full">
+                    <p className="text-xs text-gray-500 text-left">
+                      Scopri il processo e i benefici in pochi semplici passaggi.
+                    </p>
+                    <div className="absolute right-4 bottom-4 bg-gray-100 p-1 rounded-full">
                       <FaArrowRight className="text-xs text-gray-600" />
                     </div>
                   </div>
-                  <p className="text-xs text-gray-500 text-left">
-                    Conversazione in diretta per risolvere i tuoi dubbi.
-                  </p>
-                </div>
-                {/* Box per agente */}
-                <div className="relative bg-white w-full md:w-64 h-20 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl transition-colors duration-200 flex flex-col items-start justify-center px-4 transform hover:scale-110 transition-transform duration-300 ease-in-out">
-                  <div className="w-full flex justify-between items-center">
-                    <h3 className="text-base font-medium text-left">
-                      Parla con un agente
-                    </h3>
-                    <div className="bg-gray-100 p-1 rounded-full">
-                      <FaArrowRight className="text-xs text-gray-600" />
-                    </div>
-                  </div>
-                  <p className="text-xs text-gray-500 text-left">
-                    Prenota subito per un'assistenza personalizzata.
-                  </p>
-                </div>
-              </div>
-              {/* Box per descrizione cessione del quinto */}
-              <div className="relative bg-white w-full md:w-48 h-44 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl transition-colors duration-200 p-4 flex flex-col justify-start transform hover:scale-110 transition-transform duration-300 ease-in-out">
-                <h3 className="text-base font-medium text-left mb-2">
-                  Come funziona la cessione del quinto?
-                </h3>
-                <p className="text-xs text-gray-500 text-left">
-                  Scopri il processo e i benefici in pochi semplici passaggi.
-                </p>
-                <div className="absolute right-4 bottom-4 bg-gray-100 p-1 rounded-full">
-                  <FaArrowRight className="text-xs text-gray-600" />
-                </div>
+                </a>
               </div>
             </div>
           </div>
+          <img
+            src={family_w_dog}
+            alt="family with dog"
+            className="w-full md:w-96 h-full object-cover rounded-3xl"
+          />
         </div>
-        <img
-          src={family_w_dog}
-          alt="family with dog"
-          className="w-full md:w-96 rounded-3xl"
-        />
-      </div>
-      {/* Sección de ilustración "saving.svg" con título y párrafo responsivos */}
-      <div className="my-24 flex flex-col md:flex-row gap-4 justify-center items-center px-4 max-w-4xl mx-auto">
-        {/* Contenedor para título y párrafo */}
-        <div className="order-1 md:order-2 text-center md:text-left">
-          <h5 className="font-medium text-4xl mb-4">
-            100% digitale. 100% umano.
-          </h5>
-          <p className="text-gray-700 font-normal text-xl w-3/4 mx-auto md:mx-0">
-            Sappiamo che il tuo tempo vale oro. Affida a noi tutto il lavoro, tu goditi la tranquillità.
+        {/* Sección de ilustración con texto e imagen juntos centrados */}
+        <div className="my-24 w-full max-w-4xl mx-auto px-4 flex justify-center">
+          <div className="inline-flex flex-col md:flex-row items-center flex-nowrap">
+            {/* Bloque de texto sin margen extra */}
+            <div className="text-center md:text-left">
+              <h5 className="font-medium text-4xl mb-2">
+                100% digitale. 100% umano.
+              </h5>
+              <p className="text-gray-700 font-normal text-xl">
+                Sappiamo che il tuo tempo vale oro. Affida a noi tutto il lavoro, tu goditi la tranquillità.
+              </p>
+            </div>
+            {/* Imagen de ahorro justo al lado */}
+            <div>
+              <img
+                src={savingSvg}
+                alt="Ilustración de ahorro"
+                className="max-w-sm"
+              />
+            </div>
+          </div>
+        </div>
+        {/* Nuevo párrafo debajo de la sección de ilustración con efecto reactivo */}
+        <div className="my-32 text-center bg-gray-100 p-8 mx-4 md:mx-auto rounded-3xl max-w-4xl transition-transform duration-300 hover:scale-105">
+          <p className="text-4xl font-semibold">
+            Scopri subito quanto puoi ottenere!
           </p>
+          <p className="text-lg text-gray-600 mt-4">
+            Calcola in pochi clic il tuo finanziamento su misura: semplice, veloce e senza impegno.
+          </p>
+          <button className="bg-white text-black px-8 py-2 rounded-2xl mt-8 border border-gray-400 hover:border-gray-700">
+            Parla con un consulente gratis
+          </button>
         </div>
-        {/* Ilustración */}
-        <img
-          src={savingSvg}
-          alt="Ilustración de ahorro"
-          className="order-2 md:order-1 w-full max-w-sm"
-        />
-      </div>
+
+        {/* Insertamos el FAQ debajo */}
+        <FAQ />
+
+      </main>
       <Footer />
-    </>
+    </div>
   )
 }
 
