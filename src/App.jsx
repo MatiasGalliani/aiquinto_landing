@@ -3,6 +3,7 @@ import { FaArrowRight } from 'react-icons/fa'
 import logo_creditplan from './assets/LOGO-CREDITPLAN.png'
 import logo_negro_eugenio from './assets/logo_negro_eugenio.png'
 import family_w_dog from './assets/family_with_dog.jpg'
+import family_with_dog_no_background from './assets/family_with_dog_no_background.png'
 import savingSvg from './assets/saving.svg'
 import './App.css'
 import ChatWidget from './components/ChatWidget';
@@ -187,7 +188,7 @@ function App() {
           />
         </div>
         {/* Sección de ilustración con texto e imagen juntos centrados */}
-        <div className="my-24 w-full max-w-4xl mx-auto px-4 flex justify-center">
+        <div className="my-24 w-full max-w-4xl mx-auto px-16 bg-gray-100 p-8 rounded-3xl flex justify-center">
           <div className="inline-flex flex-col md:flex-row items-center gap-4 md:gap-8">
             {/* Bloque de texto sin margen extra */}
             <div className="text-center md:text-left">
@@ -208,8 +209,28 @@ function App() {
             </div>
           </div>
         </div>
+        {/* Bloque de imagen y texto responsive */}
+        <div className="my-8 w-full max-w-4xl mx-auto px-4 flex justify-center">
+          <div className="inline-flex flex-col md:flex-row items-center gap-4 md:gap-8">
+            {/* Columna izquierda con la imagen */}
+            <div className="flex-1">
+              <img
+                src={family_with_dog_no_background}
+                alt="Family with dog no background"
+                className="max-w-md"
+              />
+            </div>
+            {/* Columna derecha con el texto */}
+            <div className="flex-1 text-center md:text-left">
+              <h5 className="font-medium text-4xl mb-2">Tranquillità per la tua famiglia, zero pensieri per te.</h5>
+              <p className="text-gray-700 font-normal text-xl mt-2">
+                Serenità per la tua famiglia, sicurezza per il tuo futuro.
+              </p>
+            </div>
+          </div>
+        </div>
         {/* Nuevo párrafo debajo de la sección de ilustración con efecto reactivo */}
-        <div className="my-32 text-center bg-gray-100 p-8 mx-4 md:mx-auto rounded-3xl max-w-4xl transition-transform duration-300 hover:scale-105">
+        <div className="my-32 text-center bg-gray-100 p-8 mx-8 md:mx-auto rounded-3xl max-w-4xl transition-transform duration-300 hover:scale-105">
           <p className="text-4xl font-semibold">
             Scopri subito quanto puoi ottenere!
           </p>
@@ -296,9 +317,9 @@ export function Footer() {
           </div>
           {/* Link Utili */}
           <div>
-            <a 
-              href="https://calendar.creditplan.it" 
-              target="_blank" 
+            <a
+              href="https://calendar.creditplan.it"
+              target="_blank"
               rel="noopener noreferrer"
             >
               <div className="group inline-block transition-transform duration-300 transform hover:scale-105">
