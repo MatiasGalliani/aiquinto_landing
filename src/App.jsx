@@ -146,7 +146,7 @@ function App() {
         </div>
         {/* Sección de ilustración con texto e imagen juntos centrados */}
         <div className="my-24 w-full max-w-4xl mx-auto px-4 flex justify-center">
-          <div className="inline-flex flex-col md:flex-row items-center flex-nowrap">
+          <div className="inline-flex flex-col md:flex-row items-center gap-4 md:gap-8">
             {/* Bloque de texto sin margen extra */}
             <div className="text-center md:text-left">
               <h5 className="font-medium text-4xl mb-2">
