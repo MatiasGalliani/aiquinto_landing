@@ -26,10 +26,10 @@ function App() {
               Chiedi subito fino a 70.000€ con la tua Cessione del Quinto!
             </h2>
             <p className="text-lg text-gray-600 mt-4">
-              Risparmia tempo con noi.
+              Risparmia tempo e denaro.
             </p>
             <p className="text-lg text-gray-600 mt-1">
-              100% digitale. 100% umano.
+              Migliori tassi di mercato!
             </p>
             <p className="text-2xl font-medium text-gray-800 mt-8">
               Come vuoi procedere?
@@ -92,10 +92,10 @@ function App() {
         />
       </div>
       {/* Sección de ilustración "saving.svg" con título y párrafo responsivos */}
-      <div className="my-24 flex flex-col md:flex-row justify-center items-center px-4 max-w-4xl mx-auto">
+      <div className="my-24 flex flex-col md:flex-row gap-4 justify-center items-center px-4 max-w-4xl mx-auto">
         {/* Contenedor para título y párrafo */}
         <div className="order-1 md:order-2 text-center md:text-left">
-          <h5 className="font-medium text-4xl mb-2">
+          <h5 className="font-medium text-4xl mb-4">
             100% digitale. 100% umano.
           </h5>
           <p className="text-gray-700 font-normal text-xl w-3/4 mx-auto md:mx-0">
