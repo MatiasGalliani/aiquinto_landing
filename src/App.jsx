@@ -10,25 +10,55 @@ function FAQ() {
   const [activeIndex, setActiveIndex] = useState(null)
   const faqs = [
     {
-      question: "¿Cómo funciona el proceso de financiación?",
+      question: "Cos'è la Cessione del Quinto?",
       answer:
-        "La financiación se realiza en pocos clics y siguiendo un proceso rápido y seguro, ajustado a tus necesidades."
+        "La Cessione del Quinto è un prestito personale con una rata mensile che non supera il quinto (20%) del tuo stipendio netto o della tua pensione, trattenuta direttamente in busta paga o sulla pensione."
     },
     {
-      question: "¿Cuánto tiempo tarda la aprobación?",
+      question: "Quanto tempo serve per ottenere il prestito?",
       answer:
-        "La aprobación se efectúa generalmente en menos de 24 horas, siempre que la documentación esté completa."
+        "Con Creditplan puoi ottenere la liquidità necessaria in pochi giorni grazie ai nostri partner bancari specializzati."
     },
     {
-      question: "¿Existen costos adicionales?",
+      question: "Quali requisiti devo avere per richiedere la Cessione del Quinto?",
       answer:
-        "No, el proceso es completamente transparente y no hay costos ocultos."
+        "Puoi richiedere la Cessione del Quinto se sei un lavoratore dipendente (pubblico o privato) con contratto a tempo indeterminato o un pensionato. Non è richiesto alcun garante."
+    },
+    {
+      question: "Esiste un limite massimo di età per la Cessione del Quinto?",
+      answer:
+        "Sì, i pensionati possono ottenere il prestito fino a 89 anni alla scadenza del finanziamento."
+    },
+    {
+      question: "Cosa succede se non raggiungo i requisiti per rinnovare una Cessione del Quinto già in corso?",
+      answer:
+        "In caso di mancato raggiungimento dei termini per il rinnovo, possiamo valutare insieme la Delegazione di Pagamento, una seconda trattenuta sullo stipendio che permette di ottenere ulteriore liquidità."
+    },
+    {
+      question: "Perché dovrei scegliere Creditplan?",
+      answer:
+        "Offriamo tempi rapidi di erogazione. Collaboriamo con partner bancari convenzionati INPS, garantendo sicurezza e affidabilità. Abbiamo un team dedicato di professionisti a tua disposizione. Nessuna spesa aggiuntiva né consulenza gratuita. Tassi altamente competitivi."
+    },
+    {
+      question: "Posso richiedere il prestito se sono stato segnalato come cattivo pagatore?",
+      answer:
+        "Sì, la Cessione del Quinto è accessibile anche in caso di segnalazioni o protesti, in quanto non si basa sulla tua storia creditizia, ma sul tuo stipendio o pensione."
+    },
+    {
+      question: "È possibile estinguere anticipatamente la Cessione del Quinto?",
+      answer:
+        "Sì, puoi estinguere anticipatamente il prestito in qualsiasi momento beneficiando della riduzione degli interessi residui."
+    },
+    {
+      question: "Quanto costa la consulenza iniziale con Creditplan?",
+      answer:
+        "La consulenza iniziale con i nostri esperti è completamente gratuita e senza impegno."
     }
   ]
 
   return (
     <div id="faq" className="scroll-mt-20 my-16 w-full max-w-4xl mx-auto px-4">
-      <h2 className="text-3xl font-semibold text-center mb-8">Preguntas Frecuentes</h2>
+      <h2 className="text-3xl font-semibold text-center mb-8">Domande Frequenti</h2>
       {faqs.map((faq, index) => {
         const isActive = index === activeIndex
         return (
@@ -43,9 +73,7 @@ function FAQ() {
               />
             </button>
             <div
-              className={`overflow-hidden transition-all duration-300 ${
-                isActive ? "max-h-40" : "max-h-0"
-              }`}
+              className={`overflow-hidden transition-all duration-500 ease-in-out ${isActive ? "max-h-40" : "max-h-0"}`}
             >
               <p className="text-gray-600 pb-4">{faq.answer}</p>
             </div>
@@ -74,10 +102,10 @@ function App() {
                 Offerta a tempo limitato
               </p>
               <h2 className="text-3xl md:text-5xl font-semibold mt-4 text-gray-800">
-                Chiedi subito fino a 70.000€ con la tua Cessione del Quinto!
+                Chiedi subito fino a 75.000€ con la tua Cessione del Quinto!
               </h2>
               <p className="text-lg text-gray-600 mt-4">
-                Risparmia tempo e denaro.
+                Risparmia tempo e denaro
               </p>
               <p className="text-lg text-gray-600 mt-1">
                 Migliori tassi di mercato!
