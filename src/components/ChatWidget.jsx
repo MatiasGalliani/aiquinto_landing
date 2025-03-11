@@ -57,7 +57,7 @@ export function ChatWidget({ open, setOpen }) {
   };
 
   const handleAutoMessage = () => {
-    sendMessage("Mostrami cosa sai fare");
+    sendMessage("Ho domande sulla cessione del quinto");
     setShowInput(true);
   };
 
@@ -117,7 +117,7 @@ export function ChatWidget({ open, setOpen }) {
                 onClick={handleAutoMessage}
                 className="w-full bg-sky-300 text-black py-3 rounded-full hover:bg-sky-500 transition-colors duration-500"
               >
-                Mostrami cosa sai fare
+                Ho domande sulla cessione del quinto
               </button>
             ) : (
               <form onSubmit={handleSubmit} className="flex items-center">
