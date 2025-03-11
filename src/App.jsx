@@ -238,16 +238,31 @@ export function Footer() {
               alt="Logo Creditplan"
               className="w-32 mb-2"
             />
-            <h3 className="text-lg font-bold mb-2">
-              Creditplan Italia Network di Mediazione Creditizia SRL
-            </h3>
-            <p className="text-sm">
-              Iscr. OAM n.M30<br />
-              P.IVA 06197620963<br />
-              REA MB-1856950
-            </p>
+            <div className="flex flex-col items-start">
+              <div>
+                <h3 className="text-lg font-bold mb-2">
+                  Creditplan Italia Network di Mediazione Creditizia SRL
+                </h3>
+                <p className="text-sm">
+                  Iscr. OAM n.M30<br />
+                  P.IVA 06197620963<br />
+                  REA MB-1856950
+                </p>
+              </div>
+              <a
+                href="https://www.organismo-am.it/b/0/06197620963/F311BEF5-24B7-4A32-AB79-567598386DBC/g.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2"  // agrega margen superior para separar la imagen del texto
+              >
+                <img
+                  src="https://www.organismo-am.it/b/0/c3f18c274847902265f07537ce366a8eJO5NMdSW1LRcd_pl_8_eq_/1.png"
+                  alt="Iscrizione OAM"
+                  className="w-24"
+                />
+              </a>
+            </div>
           </div>
-
           {/* Contatti */}
           <div>
             <h3 className="text-lg font-bold mb-2">Contatti</h3>
@@ -272,7 +287,6 @@ export function Footer() {
               </a>
             </p>
           </div>
-
           {/* Link Utili */}
           <div>
             <h3 className="text-lg font-bold mb-2">Trova il tuo consulente Creditplan</h3>
