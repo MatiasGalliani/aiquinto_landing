@@ -139,7 +139,7 @@ function App() {
                       </div>
                     </div>
                     <p className="text-xs text-gray-500 text-left">
-                      Conversazione in diretta per risolvere i tuoi dubbi.
+                      Conversazione in diretta per risolvere i tuoi dubbi e fissare un appuntamento.
                     </p>
                   </div>
                   {/* Box per agente - enlace a https://calendar.creditplan.it/cqsagents */}
