@@ -86,6 +86,9 @@ function FAQ() {
 }
 
 function App() {
+  // Nueva variable de estado para controlar la apertura del ChatWidget
+  const [chatOpen, setChatOpen] = useState(false);
+
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-grow">
@@ -116,8 +119,11 @@ function App() {
               </p>
               <div className="mt-6 flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
                 <div className="flex flex-col space-y-4">
-                  {/* Box para Eugenio */}
-                  <div className="relative bg-white w-full md:w-64 h-20 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex flex-col items-start justify-center px-4 transform hover:scale-110 transition-transform duration-300 ease-in-out">
+                  {/* Box para Eugenio con onClick para abrir ChatWidget */}
+                  <div
+                    className="relative bg-white w-full md:w-64 h-20 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex flex-col items-start justify-center px-4 transform hover:scale-110 transition-transform duration-300 ease-in-out"
+                    onClick={() => setChatOpen(true)}
+                  >
                     <div className="w-full flex justify-between items-center">
                       <h3 className="text-base font-medium text-left">
                         Parla con{" "}
@@ -214,7 +220,7 @@ function App() {
       </main>
       <Footer />
       <div className="fixed bottom-4 right-4 z-50">
-        <ChatWidget />
+        <ChatWidget open={chatOpen} setOpen={setChatOpen} />
       </div>
     </div>
   )

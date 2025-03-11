@@ -3,8 +3,8 @@ import TextareaAutosize from 'react-textarea-autosize';
 import logo from '../assets/logo_negro_eugenio.png';
 import { FiSend } from "react-icons/fi";
 
-export function ChatWidget() {
-  const [open, setOpen] = useState(false); // Ahora inicia cerrado
+export function ChatWidget({ open, setOpen }) {
+  // Se elimina el estado interno de "open"
   const [messages, setMessages] = useState([
     {
       sender: 'bot',
@@ -70,21 +70,20 @@ export function ChatWidget() {
   return (
     <>
       {open && (
-        <div className="fixed bottom-5 right-5 w-96 h-[650px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden transform transition-all duration-700 ease-in-out animate-fadeIn">
-          {/* Header: se cambió el bg a celeste y el texto a negro */}
-          <div className="bg-sky-200 text-black px-6 py-4 flex justify-between items-center transition-all duration-700 ease-in-out">
+        <div className="fixed bottom-5 right-5 w-96 h-[650px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden transform transition-all duration-1000 ease-in-out animate-fadeInUp">          {/* Header: se cambió el bg a celeste y el texto a negro */}
+          <div className="bg-sky-200 text-black px-6 py-4 flex justify-between items-center transition-all duration-500 ease-out">
             <img src={logo} alt="€ugenio logo" className="h-10" />
             <button onClick={toggleChat} className="text-3xl focus:outline-none">&times;</button>
           </div>
           {/* Mensajes */}
-          <div ref={messagesContainerRef} className="flex-1 p-6 bg-gray-50 overflow-y-auto space-y-4 transition-all duration-700 ease-in-out">
+          <div ref={messagesContainerRef} className="flex-1 p-6 bg-gray-50 overflow-y-auto space-y-4 transition-all duration-500 ease-out">
             {messages.map((msg, idx) => (
               <div
                 key={idx}
                 className={
                   msg.sender === 'bot'
-                    ? 'w-full p-4 text-base transition-all duration-700 ease-in-out self-start'
-                    : 'inline-block max-w-[80%] p-4 rounded-2xl text-base transition-all duration-700 ease-in-out bg-gray-200 self-end ml-auto text-left'
+                    ? 'w-full p-4 text-base transition-all duration-500 ease-out self-start'
+                    : 'inline-block max-w-[80%] p-4 rounded-2xl text-base transition-all duration-500 ease-out bg-gray-200 self-end ml-auto text-left'
                 }
               >
                 {msg.text}
@@ -106,7 +105,7 @@ export function ChatWidget() {
             <div ref={messagesEndRef} />
           </div>
           {/* Área inferior con el botón modificado a celeste */}
-          <div className="px-6 py-4 flex flex-col space-y-3 transition-all duration-700 ease-in-out bg-white">
+          <div className="px-6 py-4 flex flex-col space-y-3 transition-all duration-500 ease-out bg-white">
             {!showInput ? (
               <button
                 onClick={handleAutoMessage}
@@ -143,7 +142,7 @@ export function ChatWidget() {
       {!open && (
         <button
           onClick={toggleChat}
-          className="fixed bottom-5 right-5 bg-white text-black border border-gray-400 px-6 py-4 rounded-3xl shadow-lg transition-transform duration-700 ease-in-out hover:scale-110 hover:border-gray-700 animate-fadeIn"
+          className="fixed bottom-5 right-5 bg-white text-black border border-gray-400 px-6 py-4 rounded-3xl shadow-lg transition-transform duration-500 ease-out hover:scale-110 hover:border-gray-700 animate-fadeIn"
         >
           <img src={logo} alt="€ugenio logo" className="h-8" />
         </button>
