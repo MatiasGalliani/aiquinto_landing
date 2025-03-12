@@ -143,7 +143,7 @@ function App() {
     <div className="flex flex-col min-h-screen">
       <main className="flex-grow">
         {/* Sección Hero con fondo celeste y olas */}
-        <div className="bg-blue-100 w-full pt-12">
+        <div className="bg-blue-100 w-full pt-4">
           <div className="flex flex-col md:flex-row justify-center items-stretch mx-4 md:mx-12 gap-6">
             <div className="p-6 md:mr-12 mb-6 md:mb-0">
               <div className="px-4 md:px-16">
