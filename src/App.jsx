@@ -6,7 +6,58 @@ import family_w_dog from './assets/family_with_dog.jpg'
 import family_with_dog_no_background from './assets/family_with_dog_no_background.png'
 import savingSvg from './assets/saving.svg'
 import './App.css'
-import ChatWidget from './components/ChatWidget';
+import ChatWidget from './components/ChatWidget'
+
+// Componente HeroWave actualizado para múltiples olas superpuestas
+function HeroWave() {
+  return (
+    <div className="relative h-40 overflow-hidden">
+      <svg className="absolute block top-0 left-0 w-full h-full" viewBox="0 0 1440 320" preserveAspectRatio="none">
+        <path
+          fill="#0099ff"
+          fillOpacity="0.8"
+          d="M0,160 C480,320 960,0 1440,160 L1440,320 L0,320 Z"
+        />
+      </svg>
+      <svg className="absolute block top-4 left-0 w-full h-full" viewBox="0 0 1440 320" preserveAspectRatio="none">
+        <path
+          fill="#0099ff"
+          fillOpacity="0.6"
+          d="M0,200 C480,100 960,300 1440,200 L1440,320 L0,320 Z"
+        />
+      </svg>
+      <svg className="absolute block top-8 left-0 w-full h-full" viewBox="0 0 1440 320" preserveAspectRatio="none">
+        <path
+          fill="#d1d5db"
+          fillOpacity="0.8"
+          d="M0,240 C480,80 960,240 1440,240 L1440,320 L0,320 Z"
+        />
+      </svg>
+      <svg className="absolute block top-12 left-0 w-full h-full" viewBox="0 0 1440 320" preserveAspectRatio="none">
+        <path
+          fill="#d1d5db"
+          fillOpacity="1"
+          d="M0,260 C480,150 960,370 1440,260 L1440,320 L0,320 Z"
+        />
+      </svg>
+    </div>
+  )
+}
+
+// Componente Wave (se utiliza más abajo en la página)
+function Wave() {
+  return (
+    <div className="wave-container">
+      <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
+        <path
+          fill="#0099ff"
+          fillOpacity="1"
+          d="M0,256L1440,96L1440,320L0,320Z"
+        ></path>
+      </svg>
+    </div>
+  )
+}
 
 function FAQ() {
   const [activeIndex, setActiveIndex] = useState(null)
@@ -19,7 +70,7 @@ function FAQ() {
     {
       question: "Quanto tempo serve per ottenere il prestito?",
       answer:
-        "Con Creditplan puoi ottenere la liquidità necessaria in pochi giorni grazie ai nostri partner bancari specializzati."
+        "Con Creditplan puoi ottenere la liquidità necessaria in pocos días gracias ai nostri partner bancari specializzati."
     },
     {
       question: "Quali requisiti devo avere per richiedere la Cessione del Quinto?",
@@ -87,146 +138,127 @@ function FAQ() {
 }
 
 function App() {
-  // Nueva variable de estado para controlar la apertura del ChatWidget
-  const [chatOpen, setChatOpen] = useState(false);
+  // Estado para controlar la apertura del ChatWidget
+  const [chatOpen, setChatOpen] = useState(false)
 
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-grow">
-        <div className="flex flex-col md:flex-row justify-center items-stretch mt-3 md:mt-12 mx-4 md:mx-12 gap-6">
-          <div className="bg-gray-100 rounded-3xl p-6 md:mr-12 mb-6 md:mb-0">
-            <div className="px-4 md:px-16">
-              <h1>
-                <img
-                  src={logo_creditplan}
-                  alt="logo"
-                  className="w-40 md:w-56 mt-8"
-                />
-              </h1>
-              <p className="inline-block text-xs font-medium text-green-950 mt-4 py-0.5 bg-green-200 px-2">
-                Offerta a tempo limitato
-              </p>
-              <h2 className="text-3xl md:text-5xl font-semibold mt-4 text-gray-800">
-                Chiedi subito fino a 75.000€ con la tua Cessione del Quinto!
-              </h2>
-              <p className="text-lg text-gray-600 mt-4">
-                Risparmia tempo e denaro
-              </p>
-              <p className="text-lg text-gray-600 mt-1">
-                Migliori tassi di mercato!
-              </p>
-              <p className="text-2xl font-medium text-gray-800 mt-8">
-                Come vuoi procedere?
-              </p>
-              <div className="mt-6 flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
-                <div className="flex flex-col space-y-4">
-                  {/* Box para Eugenio con onClick para abrir ChatWidget */}
-                  <div
-                    className="relative bg-white w-full md:w-64 h-20 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex flex-col items-start justify-center px-4 transform hover:scale-110 transition-transform duration-300 ease-in-out"
-                    onClick={() => setChatOpen(true)}
-                  >
-                    <div className="w-full flex justify-between items-center">
-                      <h3 className="text-base font-medium text-left">
-                        Parla con{" "}
-                        <img
-                          src={logo_negro_eugenio}
-                          alt="Logo Eugenio"
-                          className="inline w-24 align-middle"
-                        />
-                      </h3>
-                      <div className="bg-gray-100 p-1 rounded-full">
-                        <FaArrowRight className="text-xs text-gray-600" />
+        {/* Sección Hero con fondo celeste y olas */}
+        <div className="bg-blue-100 w-full pt-12">
+          <div className="flex flex-col md:flex-row justify-center items-stretch mx-4 md:mx-12 gap-6">
+            <div className="p-6 md:mr-12 mb-6 md:mb-0">
+              <div className="px-4 md:px-16">
+                <h1>
+                  <img
+                    src={logo_creditplan}
+                    alt="logo"
+                    className="w-40 md:w-56 mt-8"
+                  />
+                </h1>
+                <p className="inline-block text-xs font-medium text-green-950 mt-4 py-0.5 bg-green-200 px-2 border border-green-500 rounded-lg">
+                  Offerta a tempo limitato
+                </p>
+                <h2 className="text-3xl md:text-5xl font-semibold mt-4 text-gray-800">
+                  Richiedi subito fino a 75.000 € per la tua Cessione del Quinto
+                </h2>
+                <p className="text-lg text-gray-900 mt-1">
+                  Risparmia tempo e denaro con AI QUINTO by Creditplan
+                </p>
+                <p className="text-2xl font-medium text-gray-800 mt-8">
+                  Richiedi la Cessione del Quinto in pochi click.
+                </p>
+                <div className="mt-6 flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
+                  <div className="flex flex-col space-y-4">
+                    {/* Box para abrir ChatWidget */}
+                    <div
+                      className="relative bg-white w-full sm:w-[90%] md:w-[1000px] h-16 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex items-center justify-center px-4 transform hover:scale-110 transition-transform duration-300 ease-in-out shadow-md"
+                      onClick={() => setChatOpen(true)}
+                    >
+                      <span className="text-xl md:text-2xl font-medium text-black mr-2">Inizia Ora</span>
+                      <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center">
+                        <FaArrowRight className="text-sm text-black" />
                       </div>
                     </div>
-                    <p className="text-xs text-gray-500 text-left">
-                      Conversazione in diretta per risolvere i tuoi dubbi e fissare un appuntamento.
+                    <p className="flex justify-center text-lg text-gray-500">
+                      Oppure
                     </p>
-                  </div>
-                  {/* Box per agente - enlace a https://calendar.creditplan.it/cqsagents */}
-                  <a
-                    href="https://calendar.creditplan.it/cqsagents"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block"
-                  >
-                    <div className="relative bg-white w-full md:w-64 h-20 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex flex-col items-start justify-center px-4 transform hover:scale-110 transition-transform duration-300 ease-in-out">
-                      <div className="w-full flex justify-between items-center">
-                        <h3 className="text-base font-medium text-left">
-                          Parla con un agente
-                        </h3>
-                        <div className="bg-gray-100 p-1 rounded-full">
-                          <FaArrowRight className="text-xs text-gray-600" />
+                    {/* Box para enlace de agente */}
+                    <a
+                      href="https://calendar.creditplan.it/cqsagents"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block"
+                    >
+                      <div className="relative bg-white w-full sm:w-[90%] md:w-[1000px] h-16 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex items-center justify-center px-4 transform hover:scale-110 transition-transform duration-300 ease-in-out shadow-md">
+                        <span className="text-xl md:text-2xl font-medium text-black mr-2">
+                          Richiedi di Essere Contattato
+                        </span>
+                        <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center">
+                          <FaArrowRight className="text-sm text-black" />
                         </div>
                       </div>
-                      <p className="text-xs text-gray-500 text-left">
-                        Prenota subito per un'assistenza personalizzata.
-                      </p>
-                    </div>
-                  </a>
-                </div>
-                {/* Box para descripción cessione del quinto */}
-                <a href="#faq" className="block">
-                  <div className="relative bg-white w-full md:w-48 h-44 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl p-4 flex flex-col justify-start transform hover:scale-110 transition-transform duration-300 ease-in-out">
-                    <h3 className="text-base font-medium text-left mb-2">
-                      Come funziona la cessione del quinto?
-                    </h3>
-                    <p className="text-xs text-gray-500 text-left">
-                      Scopri il processo e i benefici in pochi semplici passaggi.
-                    </p>
-                    <div className="absolute right-4 bottom-4 bg-gray-100 p-1 rounded-full">
-                      <FaArrowRight className="text-xs text-gray-600" />
-                    </div>
+                    </a>
                   </div>
-                </a>
+                </div>
+              </div>
+            </div>
+            <img
+              src={family_w_dog}
+              alt="family with dog"
+              className="w-full md:w-96 h-full object-cover rounded-3xl"
+            />
+          </div>
+          {/* Diseño creativo con olas que separan la sección Hero */}
+          <HeroWave />
+        </div>
+
+        {/* Resto de la página con fondo blanco */}
+        <div className="bg-white">
+          {/* Sección de Ilustración */}
+          <div className="my-24 w-full max-w-4xl mx-auto px-4 flex justify-center">
+            <div className="inline-flex flex-col md:flex-row items-center gap-4 md:gap-8">
+              <div className="text-center md:text-left">
+                <h5 className="font-medium text-4xl mb-2">
+                  Il servizio 100% digitale 100% umano.
+                </h5>
+                <p className="text-gray-700 font-normal text-xl">
+                  Gestito dalla nostra Intelligenza Artificiale e dagli esperti a te dedicati.
+                </p>
+              </div>
+              <div>
+                <img
+                  src={savingSvg}
+                  alt="Ilustración de ahorro"
+                  className="max-w-sm"
+                />
               </div>
             </div>
           </div>
-          <img
-            src={family_w_dog}
-            alt="family with dog"
-            className="w-full md:w-96 h-full object-cover rounded-3xl"
-          />
-        </div>
-        {/* Sección de ilustración con texto e imagen juntos centrados */}
-        <div className="my-24 w-full max-w-4xl mx-auto px-4 flex justify-center">
-          <div className="inline-flex flex-col md:flex-row items-center gap-4 md:gap-8">
-            {/* Bloque de texto sin margen extra */}
-            <div className="text-center md:text-left">
-              <h5 className="font-medium text-4xl mb-2">
-                100% digitale. 100% umano.
-              </h5>
-              <p className="text-gray-700 font-normal text-xl">
-                Sappiamo che il tuo tempo vale oro. Affida a noi tutto il lavoro, tu goditi la tranquillità.
-              </p>
-            </div>
-            {/* Imagen de ahorro justo al lado */}
-            <div>
-              <img
-                src={savingSvg}
-                alt="Ilustración de ahorro"
-                className="max-w-sm"
-              />
-            </div>
+
+          {/* Sección Reactiva */}
+          <div className="my-32 text-center border border-blue-600 bg-blue-100 p-8 mx-4 md:mx-auto rounded-3xl max-w-4xl transition-transform duration-300 hover:scale-105 shadow-md">
+            <p className="text-4xl font-semibold">
+              Scopri subito quanto puoi ottenere!
+            </p>
+            <p className="text-lg text-gray-600 mt-4">
+              Calcola in pochi click il tuo finanziamento su misura: semplice, veloce e senza impegno.
+            </p>
+            <button className="bg-white text-black px-8 py-2 rounded-2xl mt-8 border border-gray-400 hover:border-gray-700 shadow-md">
+              Inizia Ora
+            </button>
           </div>
-        </div>
-        {/* Nuevo párrafo debajo de la sección de ilustración con efecto reactivo */}
-        <div className="my-32 text-center bg-gray-100 p-8 mx-4 md:mx-auto rounded-3xl max-w-4xl transition-transform duration-300 hover:scale-105">
-          <p className="text-4xl font-semibold">
-            Scopri subito quanto puoi ottenere!
-          </p>
-          <p className="text-lg text-gray-600 mt-4">
-            Calcola in pochi clic il tuo finanziamento su misura: semplice, veloce e senza impegno.
-          </p>
-          <button className="bg-white text-black px-8 py-2 rounded-2xl mt-8 border border-gray-400 hover:border-gray-700">
-            Parla con un consulente gratis
-          </button>
-        </div>
 
-        {/* Insertamos el FAQ debajo */}
-        <FAQ />
+          {/* Sección FAQ */}
+          <FAQ />
 
+          {/* Componente Wave para el efecto de ola final */}
+          <Wave />
+        </div>
       </main>
+
       <Footer />
+
       <div className="fixed bottom-4 right-4 z-50">
         <ChatWidget open={chatOpen} setOpen={setChatOpen} />
       </div>
@@ -261,7 +293,7 @@ export function Footer() {
                 href="https://www.organismo-am.it/b/0/06197620963/F311BEF5-24B7-4A32-AB79-567598386DBC/g.html"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-2"  // agrega margen superior para separar la imagen del texto
+                className="mt-2"
               >
                 <img
                   src="https://www.organismo-am.it/b/0/c3f18c274847902265f07537ce366a8eJO5NMdSW1LRcd_pl_8_eq_/1.png"
@@ -297,9 +329,9 @@ export function Footer() {
           </div>
           {/* Link Utili */}
           <div>
-            <a 
-              href="https://calendar.creditplan.it" 
-              target="_blank" 
+            <a
+              href="https://calendar.creditplan.it"
+              target="_blank"
               rel="noopener noreferrer"
             >
               <div className="group inline-block transition-transform duration-300 transform hover:scale-105">
@@ -364,8 +396,8 @@ export function Footer() {
       {/* Copyright */}
       <div className="border-t border-gray-700 mt-8 pt-4 px-4 sm:px-6 lg:px-8">
         <p className="text-xs text-center">
-          Copyright © 2025 – Creditplan Italia Network di mediazione
-          creditizia srl. All Rights Reserved.<br />
+          Copyright © 2025 – Creditplan Italia Network di mediazione creditizia srl. All Rights Reserved.
+          <br />
           Designed &amp; developed by Matias Galliani :)
         </p>
       </div>
