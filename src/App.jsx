@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 import { FaArrowRight } from 'react-icons/fa'
 import logo_creditplan from './assets/LOGO-CREDITPLAN.png'
-import logo_negro_eugenio from './assets/logo_negro_eugenio.png'
-import family_w_dog from './assets/family_with_dog.jpg'
-import family_with_dog_no_background from './assets/family_with_dog_no_background.png'
+import family_w_dog from './assets/family_with_dog.png'
 import savingSvg from './assets/saving.svg'
 import './App.css'
 import ChatWidget from './components/ChatWidget'
@@ -172,11 +170,11 @@ function App() {
                   <div className="flex flex-col space-y-4">
                     {/* Box para abrir ChatWidget */}
                     <div
-                      className="relative bg-white w-full sm:w-[90%] md:w-[1000px] h-16 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex items-center justify-center px-4 transform hover:scale-110 transition-transform duration-300 ease-in-out shadow-md"
+                      className="relative bg-red-700 w-full sm:w-[90%] md:w-[1000px] h-16 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex items-center justify-center px-4 transform hover:scale-110 transition-transform duration-300 ease-in-out shadow-md"
                       onClick={() => setChatOpen(true)}
                     >
-                      <span className="text-xl md:text-2xl font-medium text-black mr-2">Inizia Ora</span>
-                      <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center">
+                      <span className="text-xl md:text-2xl font-medium text-white mr-2">Inizia Ora</span>
+                      <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center">
                         <FaArrowRight className="text-sm text-black" />
                       </div>
                     </div>
@@ -194,8 +192,8 @@ function App() {
                         <span className="text-xl md:text-2xl font-medium text-black mr-2">
                           Richiedi di Essere Contattato
                         </span>
-                        <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center">
-                          <FaArrowRight className="text-sm text-black" />
+                        <div className="w-6 h-6 rounded-full bg-red-700 flex items-center justify-center">
+                          <FaArrowRight className="text-sm text-white" />
                         </div>
                       </div>
                     </a>
