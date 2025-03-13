@@ -29,14 +29,14 @@ function FormScreen({ onClose }) {
     return (
       <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
         {/* Contenedor flex para la flecha y el título */}
-        <div className="grid grid-cols-3 items-center w-full max-w-xl mb-8">
+        <div className="grid grid-cols-3 items-center w-full max-w-5xl mb-8">
           <div>
             <button onClick={onClose}>
               <IoIosArrowBack size={32} className="text-black" />
             </button>
           </div>
           <div className="flex justify-center">
-            <h2 className="text-xl font-semibold line-clamp-2">
+            <h2 className="text-xl font-semibold">
               Qual è la tua situazione lavorativa?
             </h2>
           </div>
