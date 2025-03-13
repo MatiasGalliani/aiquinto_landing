@@ -1,12 +1,114 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { FaArrowRight } from 'react-icons/fa'
+import { IoIosArrowBack } from 'react-icons/io'
 import logo_creditplan from './assets/LOGO-CREDITPLAN.png'
 import family_w_dog from './assets/family_with_dog.png'
 import savingSvg from './assets/saving.svg'
 import './App.css'
 import ChatWidget from './components/ChatWidget'
 
-// Componente HeroWave actualizado para múltiples olas superpuestas
+function FormScreen({ onClose }) {
+  const [loading, setLoading] = useState(true)
+  const [step, setStep] = useState(1)
+  const [selectedOption, setSelectedOption] = useState(null) // "pensionato" o "dipendente"
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 3000)
+    return () => clearTimeout(timer)
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-white rounded-2xl">
+        <div className="animate-spin rounded-full h-16 w-16 border-4 border-red-700 border-t-transparent"></div>
+      </div>
+    )
+  }
+
+  if (step === 1) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
+        {/* Contenedor flex para la flecha y el título */}
+        <div className="grid grid-cols-3 items-center w-full max-w-xl mb-8">
+          <div>
+            <button onClick={onClose}>
+              <IoIosArrowBack size={32} className="text-black" />
+            </button>
+          </div>
+          <div className="w-full flex justify-center">
+            <h2 className="text-2xl font-semibold text-center whitespace-nowrap">
+              Qual è la tua situazione lavorativa?
+            </h2>
+          </div>
+          <div>{/* Espacio vacío para equilibrar la cuadrícula */}</div>
+        </div>
+        <div className="flex flex-col gap-6 w-full max-w-xl">
+          {/* Opción Pensionato */}
+          <div
+            className="flex items-center bg-white border border-gray-300 hover:border-gray-600 cursor-pointer rounded-2xl p-6 transition"
+            onClick={() => setSelectedOption("pensionato")}
+          >
+            <div
+              className={`w-6 h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center mr-4 transition 
+                ${selectedOption === "pensionato" ? "bg-red-700 border-red-700" : "bg-white border-gray-300"}`}
+              onClick={(e) => {
+                e.stopPropagation()
+                setSelectedOption("pensionato")
+              }}
+            ></div>
+            <span className="text-xl font-semibold">Pensionato</span>
+          </div>
+          {/* Opción Dipendente */}
+          <div
+            className="flex items-center bg-white border border-gray-300 hover:border-gray-600 cursor-pointer rounded-2xl p-6 transition"
+            onClick={() => setSelectedOption("dipendente")}
+          >
+            <div
+              className={`w-6 h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center mr-4 transition 
+                ${selectedOption === "dipendente" ? "bg-red-700 border-red-700" : "bg-white border-gray-300"}`}
+              onClick={(e) => {
+                e.stopPropagation()
+                setSelectedOption("dipendente")
+              }}
+            ></div>
+            <span className="text-xl font-semibold">Dipendente</span>
+          </div>
+        </div>
+        {selectedOption && (
+          <button
+            className="mt-8 bg-red-700 hover:bg-red-800 text-white px-5 py-2 text-xl rounded-2xl"
+            onClick={() => setStep(2)}
+          >
+            Avanti
+          </button>
+        )}
+      </div>
+    )
+  }
+
+  // Paso 2: Siguiente parte del formulario
+  return (
+    <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
+      {/* Contenedor flex para la flecha y el título */}
+      <div className="flex items-center w-full max-w-xl mb-8">
+        <button onClick={() => setStep(1)} className="mr-4">
+          <IoIosArrowBack size={32} className="text-blue-600" />
+        </button>
+        <h2 className="text-3xl font-semibold">
+          Scelta: {selectedOption === "pensionato" ? "Pensionato" : "Dipendente"}
+        </h2>
+      </div>
+      <p className="text-lg mb-8">[Aquí iría la siguiente parte del formulario...]</p>
+      <button
+        className="bg-red-700 hover:bg-red-800 text-white px-4 py-1 text-sm rounded-2xl border border-gray-300"
+        onClick={() => console.log("Avanzando a la siguiente parte...")}
+      >
+        Avanti
+      </button>
+    </div>
+  )
+}
+
 function HeroWave() {
   return (
     <div className="relative h-40 overflow-hidden">
@@ -42,7 +144,6 @@ function HeroWave() {
   )
 }
 
-// Componente Wave (se utiliza más abajo en la página)
 function Wave() {
   return (
     <div className="wave-container">
@@ -138,6 +239,13 @@ function FAQ() {
 function App() {
   // Estado para controlar la apertura del ChatWidget
   const [chatOpen, setChatOpen] = useState(false)
+  // Nuevo estado para activar la pantalla del formulario
+  const [showFormScreen, setShowFormScreen] = useState(false)
+
+  // Si se activa el formulario, renderizamos FormScreen
+  if (showFormScreen) {
+    return <FormScreen onClose={() => setShowFormScreen(false)} />
+  }
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -160,20 +268,22 @@ function App() {
                 <h2 className="text-3xl md:text-5xl font-semibold mt-4 text-gray-800">
                   Richiedi subito fino a 75.000 € per la tua Cessione del Quinto
                 </h2>
-                <p className="text-lg text-gray-900 mt-1">
-                  Risparmia tempo e denaro con AI QUINTO by Creditplan
+                <p className="text-lg text-gray-900 mt-4">
+                  Risparmia tempo e denaro con AI QUINTO by Creditplan.
                 </p>
-                <p className="text-2xl font-medium text-gray-800 mt-8">
+                <p className="text-2xl font-medium text-gray-800 mt-5">
                   Richiedi la Cessione del Quinto in pochi click.
                 </p>
                 <div className="mt-6 flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
                   <div className="flex flex-col space-y-4">
-                    {/* Box para abrir ChatWidget */}
+                    {/* Box para iniciar el formulario */}
                     <div
                       className="relative bg-red-700 w-full sm:w-[90%] md:w-[1000px] h-16 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex items-center justify-center px-4 transform hover:scale-110 transition-transform duration-300 ease-in-out shadow-md"
-                      onClick={() => setChatOpen(true)}
+                      onClick={() => setShowFormScreen(true)}
                     >
-                      <span className="text-xl md:text-2xl font-medium text-white mr-2">Inizia Ora</span>
+                      <span className="text-xl md:text-2xl font-medium text-white mr-2">
+                        Inizia Ora
+                      </span>
                       <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center">
                         <FaArrowRight className="text-sm text-black" />
                       </div>
@@ -235,7 +345,7 @@ function App() {
           </div>
 
           {/* Sección Reactiva */}
-          <div className="my-32 text-center border border-blue-600 bg-blue-100 p-8 mx-4 md:mx-auto rounded-3xl max-w-4xl transition-transform duration-300 hover:scale-105 shadow-md">
+          <div className="my-32 text-center border border-blue-600 bg-blue-100 p-8 mx-4 md:mx-auto rounded-3xl transition-transform duration-300 hover:scale-105 shadow-md">
             <p className="text-4xl font-semibold">
               Scopri subito quanto puoi ottenere!
             </p>
@@ -403,4 +513,4 @@ export function Footer() {
   )
 }
 
-export default App
+export default App;
