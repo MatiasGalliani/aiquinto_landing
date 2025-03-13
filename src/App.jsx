@@ -36,7 +36,7 @@ function FormScreen({ onClose }) {
             </button>
           </div>
           <div className="flex justify-center">
-            <h2 className="text-2xl font-semibold">Qual è la tua situazione lavorativa?</h2>
+            <h2 className="text-xl font-semibold">Qual è la tua situazione lavorativa?</h2>
           </div>
           <div>{/* Espacio vacío para equilibrar la cuadrícula */}</div>
         </div>
