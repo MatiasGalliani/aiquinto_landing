@@ -28,19 +28,17 @@ function FormScreen({ onClose }) {
   if (step === 1) {
     return (
       <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
-        {/* Layout actualizado: en móviles la flecha se alinea a la izquierda */}
-        <div className="flex flex-col md:grid md:grid-cols-3 items-center w-full max-w-xl mb-8">
-          <div className="mb-4 md:mb-0 self-start">
+        {/* Contenedor flex para la flecha y el título */}
+        <div className="grid grid-cols-3 items-center w-full max-w-xl mb-8">
+          <div>
             <button onClick={onClose}>
               <IoIosArrowBack size={32} className="text-black" />
             </button>
           </div>
-          <div className="w-full flex justify-center">
-            <h2 className="text-2xl font-semibold text-center whitespace-nowrap">
-              Qual è la tua situazione lavorativa?
-            </h2>
+          <div className="flex justify-center">
+            <h2 className="text-2xl font-semibold">Qual è la tua situazione lavorativa?</h2>
           </div>
-          <div className="hidden md:block"></div>
+          <div>{/* Espacio vacío para equilibrar la cuadrícula */}</div>
         </div>
         <div className="flex flex-col gap-6 w-full max-w-xl">
           {/* Opción Pensionato */}
@@ -48,7 +46,7 @@ function FormScreen({ onClose }) {
             className="flex items-center bg-white border border-gray-300 hover:border-gray-600 cursor-pointer rounded-2xl p-6 transition"
             onClick={() => setSelectedOption("pensionato")}
           >
-            <div
+            <div 
               className={`w-6 h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center mr-4 transition 
                 ${selectedOption === "pensionato" ? "bg-red-700 border-red-700" : "bg-white border-gray-300"}`}
               onClick={(e) => {
@@ -63,7 +61,7 @@ function FormScreen({ onClose }) {
             className="flex items-center bg-white border border-gray-300 hover:border-gray-600 cursor-pointer rounded-2xl p-6 transition"
             onClick={() => setSelectedOption("dipendente")}
           >
-            <div
+            <div 
               className={`w-6 h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center mr-4 transition 
                 ${selectedOption === "dipendente" ? "bg-red-700 border-red-700" : "bg-white border-gray-300"}`}
               onClick={(e) => {
@@ -513,4 +511,4 @@ export function Footer() {
   )
 }
 
-export default App
+export default App;
