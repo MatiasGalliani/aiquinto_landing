@@ -691,22 +691,18 @@ function App() {
           <div className="flex flex-col md:flex-row justify-center items-stretch mx-4 md:mx-12 gap-6">
             <div className="p-6 md:mr-12 mb-6 md:mb-0">
               <div className="px-4 md:px-16">
-                <h1 className="flex items-center space-x-4">
-                  <div className="flex flex-col items-center mt-8">
-                    <img
-                      src={aiQuintoLogo}
-                      alt="AI Quinto Logo"
-                      className="w-32 sm:w-40 md:w-56"
-                    />
-                    <span className="text-center text-base sm:text-xl font-medium my-2">
-                      by
-                    </span>
-                    <img
-                      src={logo_creditplan}
-                      alt="Creditplan Logo"
-                      className="w-32 sm:w-40 md:w-56"
-                    />
-                  </div>
+                <h1 className="flex items-center space-x-4 mt-8">
+                  <img
+                    src={aiQuintoLogo}
+                    alt="AI Quinto Logo"
+                    className="w-32 sm:w-40 md:w-56 px-2 py-2 bg-blue-800 rounded-3xl"
+                  />
+                  <span className="text-center text-base sm:text-xl font-medium">by</span>
+                  <img
+                    src={logo_creditplan}
+                    alt="Creditplan Logo"
+                    className="w-40 sm:w-48 md:w-72"
+                  />
                 </h1>
                 <p className="inline-block text-xs font-medium text-green-950 mt-4 py-0.5 bg-green-200 px-2 border border-green-500 rounded-lg">
                   Offerta a tempo limitato
@@ -724,7 +720,7 @@ function App() {
                   <div className="flex flex-col space-y-4">
                     {/* Box para iniciar el formulario */}
                     <div
-                      className="relative bg-red-700 w-full sm:w-[90%] md:w-[1000px] h-16 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex items-center justify-center px-4 transform hover:scale-110 transition-transform duration-300 ease-in-out shadow-md"
+                      className="relative bg-blue-800 w-full sm:w-[90%] md:w-[1000px] h-16 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex items-center justify-center px-4 transform hover:scale-110 transition-transform duration-300 ease-in-out shadow-md"
                       onClick={() => setShowFormScreen(true)}
                     >
                       <span className="text-xl md:text-2xl font-medium text-white mr-2">
