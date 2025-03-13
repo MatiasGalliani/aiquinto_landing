@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { FaArrowRight } from 'react-icons/fa'
-import { IoIosArrowBack } from 'react-icons/io'
+import { IoIosArrowBack, IoIosArrowDown } from 'react-icons/io'
 import logo_creditplan from './assets/LOGO-CREDITPLAN.png'
 import family_w_dog from './assets/family_with_dog.png'
 import savingSvg from './assets/saving.svg'
@@ -11,6 +11,34 @@ function FormScreen({ onClose }) {
   const [loading, setLoading] = useState(true)
   const [step, setStep] = useState(1)
   const [selectedOption, setSelectedOption] = useState(null) // "pensionato" o "dipendente"
+  const [depType, setDepType] = useState(null) // Opción del dropdown principal
+  const [dropdownOpen, setDropdownOpen] = useState(false) // Controla el desplegable principal
+
+  // NUEVOS estados para el dropdown secundario
+  const [secondaryDropdownOpen, setSecondaryDropdownOpen] = useState(false)
+  const [secondarySelection, setSecondarySelection] = useState(null)
+
+  // NUEVOS estados para la pagina adicional de "Pubblico"
+  const [contractType, setContractType] = useState("")
+  const [birthDate, setBirthDate] = useState("1968-05-23")
+  const [province, setProvince] = useState("")
+  // New state to determine if the device is mobile
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Check viewport width to set isMobile (adjust the px threshold as needed)
+  useEffect(() => {
+    const checkIsMobile = () => setIsMobile(window.innerWidth <= 768)
+    checkIsMobile()
+    window.addEventListener("resize", checkIsMobile)
+    return () => window.removeEventListener("resize", checkIsMobile)
+  }, [])
+
+  const secondaryOptionsMapping = {
+    "Pubblico": ["Ospedale", "Comune", "Medico convenzionato", "Altro"],
+    "Statale": ["Carabinieri", "Guardia di finanza", "Altro"],
+    "Parapubblico": ["Poste Italiane", "Gruppo FFSS", "Gruppo ANAS", "Altro"],
+    "Privato": ["SPA", "SRL", "Cooperativa", "Ditta Individuale"]
+  }
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 3000)
@@ -86,7 +114,197 @@ function FormScreen({ onClose }) {
     )
   }
 
-  // Paso 2: Siguiente parte del formulario
+  // Paso 2 para el formulario de Pensionato y Dipendente
+  if (step === 2) {
+    if (selectedOption === "pensionato") {
+      return (
+        <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
+          <div className="flex items-center w-full max-w-xl mb-8">
+            <button onClick={() => setStep(1)} className="mr-4">
+              <IoIosArrowBack size={32} className="text-blue-600" />
+            </button>
+            <h2 className="text-3xl font-semibold">
+              Scelta: Pensionato
+            </h2>
+          </div>
+          <p className="text-lg mb-8">[Aquí iría la siguiente parte del formulario per Pensionato...]</p>
+          <button
+            className="bg-red-700 hover:bg-red-800 text-white px-4 py-1 text-sm rounded-2xl border border-gray-300"
+            onClick={() => console.log("Avanzando a la siguiente parte...")}
+          >
+            Avanti
+          </button>
+        </div>
+      )
+    } else if (selectedOption === "dipendente") {
+      return (
+        <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
+          {/* Encabezado con botón para volver */}
+          <div className="grid grid-cols-3 items-center w-full max-w-5xl mb-8">
+            <div>
+              <button onClick={() => setStep(1)}>
+                <IoIosArrowBack size={32} className="text-black" />
+              </button>
+            </div>
+            <div className="flex flex-col items-center">
+              <span className="text-xl font-semibold">
+                Che tipo di dipendente sei
+              </span>
+            </div>
+            <div>{/* Espacio para equilibrar la cuadrícula */}</div>
+          </div>
+          {/* Desplegable principal */}
+          <div className="w-full max-w-md mb-4">
+            <div 
+              onClick={() => { 
+                setDropdownOpen(!dropdownOpen)
+                // Si se abre el principal se cierra el secundario
+                setSecondaryDropdownOpen(false)
+              }}
+              className="border p-4 rounded-2xl cursor-pointer flex justify-between items-center"
+            >
+              <span className="text-xl font-semibold">
+                {depType ? depType : "Seleziona tipo di dipendente"}
+              </span>
+              <IoIosArrowDown className={`transition-transform duration-300 ${dropdownOpen ? "rotate-90" : ""}`} />
+            </div>
+            {dropdownOpen && (
+              <div className="mt-2 border border-gray-300 rounded-lg shadow-lg">
+                {["Pubblico", "Statale", "Parapubblico", "Privato"].map(option => (
+                  <button 
+                    key={option}
+                    onClick={() => {
+                      setDepType(option)
+                      setDropdownOpen(false)
+                      // Al seleccionar la opción principal, se reinicia la opción secundaria
+                      setSecondarySelection(null)
+                    }}
+                    className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+          {/* Desplegable secundario: se muestra si ya se seleccionó una opción principal */}
+          {depType && (
+            <div className="w-full max-w-md mb-4">
+              <div 
+                onClick={() => setSecondaryDropdownOpen(!secondaryDropdownOpen)}
+                className="border p-4 rounded-2xl cursor-pointer flex justify-between items-center"
+              >
+                <span className="text-xl font-semibold">
+                  {secondarySelection ? secondarySelection : "Seleziona il sottotipo"}
+                </span>
+                <IoIosArrowDown className={`transition-transform duration-300 ${secondaryDropdownOpen ? "rotate-90" : ""}`} />
+              </div>
+              {secondaryDropdownOpen && (
+                <div className="mt-2 border border-gray-300 rounded-lg shadow-lg">
+                  {secondaryOptionsMapping[depType].map(subOption => (
+                    <button
+                      key={subOption}
+                      onClick={() => {
+                        setSecondarySelection(subOption)
+                        setSecondaryDropdownOpen(false)
+                      }}
+                      className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                    >
+                      {subOption}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+          <button
+            className="bg-red-700 hover:bg-red-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
+            onClick={() => {
+              if(depType === "Pubblico") {
+                setStep(3)
+              } else {
+                console.log("Dipendente data submitted", { depType, secondarySelection })
+              }
+            }}
+          >
+            Avanti
+          </button>
+        </div>
+      )
+    }
+  }
+
+  // Paso 3: Campos adicionales para "Pubblico"
+  if (step === 3 && selectedOption === "dipendente" && depType === "Pubblico") {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
+        <div className="flex items-center w-full max-w-xl mb-8">
+          <button onClick={() => setStep(2)} className="mr-4">
+            <IoIosArrowBack size={32} className="text-black" />
+          </button>
+          <h2 className="text-3xl font-semibold">
+            Informazioni Aggiuntive
+          </h2>
+        </div>
+        <div className="w-full max-w-md space-y-4">
+          {/* Tipologia di contratto */}
+          <div className="flex flex-col">
+            <label className="text-xl font-semibold mb-2">
+              Tipologia di contratto?*
+            </label>
+            <select
+              value={contractType}
+              onChange={(e) => setContractType(e.target.value)}
+              className="border p-4 rounded-2xl"
+            >
+              <option value="">Seleziona</option>
+              <option value="determinato">Tempo Determinato</option>
+              <option value="indeterminato">Tempo Indeterminato</option>
+              <option value="altro">Altro</option>
+            </select>
+          </div>
+          {/* Anno di nascita */}
+          <div className="flex flex-col">
+            <label className="text-xl font-semibold mb-2">
+              Anno di nascita?*
+            </label>
+            <input
+              type="date"
+              value={birthDate}
+              onChange={(e) => setBirthDate(e.target.value)}
+              className="border p-4 rounded-2xl"
+              readOnly={!isMobile} // On desktop, this prevents opening the calendar
+            />
+          </div>
+          {/* Provincia */}
+          <div className="flex flex-col">
+            <label className="text-xl font-semibold mb-2">
+              Provincia*
+            </label>
+            <select
+              value={province}
+              onChange={(e) => setProvince(e.target.value)}
+              className="border p-4 rounded-2xl"
+            >
+              <option value="">Seleziona</option>
+              <option value="MI">MI</option>
+              <option value="RM">RM</option>
+              <option value="NA">NA</option>
+            </select>
+          </div>
+        </div>
+        <button
+          className="mt-8 bg-red-700 hover:bg-red-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
+          onClick={() =>
+            console.log("Pubblico dipendente additional data", { contractType, birthDate, province })
+          }
+        >
+          Avanti
+        </button>
+      </div>
+    )
+  }
+
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
       {/* Contenedor flex para la flecha y el título */}
@@ -98,7 +316,7 @@ function FormScreen({ onClose }) {
           Scelta: {selectedOption === "pensionato" ? "Pensionato" : "Dipendente"}
         </h2>
       </div>
-      <p className="text-lg mb-8">[Aquí iría la siguiente parte del formulario...]</p>
+      <p className="text-lg mb-8">[Aquí iría la seguente parte del formulario...]</p>
       <button
         className="bg-red-700 hover:bg-red-800 text-white px-4 py-1 text-sm rounded-2xl border border-gray-300"
         onClick={() => console.log("Avanzando a la siguiente parte...")}
@@ -345,14 +563,14 @@ function App() {
           </div>
 
           {/* Sección Reactiva */}
-          <div className="my-32 text-center border border-blue-600 bg-blue-100 p-8 mx-4 md:mx-auto rounded-3xl transition-transform duration-300 hover:scale-105 shadow-md">
+          <div className="my-32 text-center bg-blue-100 p-8 mx-4 md:mx-auto shadow-md">
             <p className="text-4xl font-semibold">
               Scopri subito quanto puoi ottenere!
             </p>
             <p className="text-lg text-gray-600 mt-4">
               Calcola in pochi click il tuo finanziamento su misura: semplice, veloce e senza impegno.
             </p>
-            <button className="bg-white text-black px-8 py-2 rounded-2xl mt-8 border border-gray-400 hover:border-gray-700 shadow-md">
+            <button className="bg-white text-black px-8 py-2 rounded-2xl mt-8 border border-gray-400 hover:border-gray-700 shadow-md transition-transform duration-300 hover:scale-105">
               Inizia Ora
             </button>
           </div>
