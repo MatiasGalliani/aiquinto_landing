@@ -61,7 +61,7 @@ function FormScreen({ onClose }) {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen bg-white rounded-2xl">
-        <div className="animate-spin rounded-full h-16 w-16 border-4 border-red-700 border-t-transparent"></div>
+        <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-700 border-t-transparent"></div>
       </div>
     )
   }
@@ -91,7 +91,7 @@ function FormScreen({ onClose }) {
           >
             <div
               className={`w-6 h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center mr-4 transition 
-                ${selectedOption === "pensionato" ? "bg-red-700 border-red-700" : "bg-white border-gray-300"}`}
+                ${selectedOption === "pensionato" ? "bg-blue-700 border-blue-700" : "bg-white border-gray-300"}`}
               onClick={(e) => {
                 e.stopPropagation()
                 setSelectedOption("pensionato")
@@ -106,7 +106,7 @@ function FormScreen({ onClose }) {
           >
             <div
               className={`w-6 h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center mr-4 transition 
-                ${selectedOption === "dipendente" ? "bg-red-700 border-red-700" : "bg-white border-gray-300"}`}
+                ${selectedOption === "dipendente" ? "bg-blue-700 border-blue-700" : "bg-white border-gray-300"}`}
               onClick={(e) => {
                 e.stopPropagation()
                 setSelectedOption("dipendente")
@@ -117,7 +117,7 @@ function FormScreen({ onClose }) {
         </div>
         {selectedOption && (
           <button
-            className="mt-8 bg-red-700 hover:bg-red-800 text-white px-5 py-2 text-xl rounded-2xl"
+            className="mt-8 bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 text-xl rounded-2xl"
             onClick={() => setStep(2)}
           >
             Avanti
@@ -142,7 +142,7 @@ function FormScreen({ onClose }) {
           </div>
           <p className="text-lg mb-8">[Aquí iría la siguiente parte del formulario per Pensionato...]</p>
           <button
-            className="bg-red-700 hover:bg-red-800 text-white px-4 py-1 text-sm rounded-2xl border border-gray-300"
+            className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-1 text-sm rounded-2xl border border-gray-300"
             onClick={() => console.log("Avanzando a la siguiente parte...")}
           >
             Avanti
@@ -231,7 +231,7 @@ function FormScreen({ onClose }) {
             </div>
           )}
           <button
-            className="bg-red-700 hover:bg-red-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
+            className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
             onClick={() => {
               if (
                 depType === "Pubblico" ||
@@ -462,7 +462,7 @@ function FormScreen({ onClose }) {
           </div>
         </div>
         <button
-          className="mt-8 bg-red-700 hover:bg-red-800 text-white px-5 py-3 text-lg rounded-2xl border border-gray-300 w-full max-w-md"
+          className="mt-8 bg-blue-700 hover:bg-blue-800 text-white px-5 py-3 text-lg rounded-2xl border border-gray-300 w-full max-w-md"
           onClick={() => setStep(4)}
         >
           Avanti
@@ -487,32 +487,32 @@ function FormScreen({ onClose }) {
             placeholder="Nome"
             value={nome}
             onChange={(e) => setNome(e.target.value)}
-            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-red-700 transition duration-200 ease-in-out"
+            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
           />
           <input
             type="text"
             placeholder="Cognome"
             value={cognome}
             onChange={(e) => setCognome(e.target.value)}
-            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-red-700 transition duration-200 ease-in-out"
+            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
           />
           <input
             type="email"
             placeholder="Mail"
             value={mail}
             onChange={(e) => setMail(e.target.value)}
-            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-red-700 transition duration-200 ease-in-out"
+            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
           />
           <input
             type="tel"
             placeholder="Telefono"
             value={telefono}
             onChange={(e) => setTelefono(e.target.value)}
-            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-red-700 transition duration-200 ease-in-out"
+            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
           />
         </div>
         <button
-          className="mt-8 bg-red-700 hover:bg-red-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
+          className="mt-8 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
           onClick={() =>
             console.log("Informazioni Contatto", { nome, cognome, mail, telefono })
           }
@@ -536,7 +536,7 @@ function FormScreen({ onClose }) {
       </div>
       <p className="text-lg mb-8">[Aquí iría la seguente parte del formulario...]</p>
       <button
-        className="bg-red-700 hover:bg-red-800 text-white px-4 py-1 text-sm rounded-2xl border border-gray-300"
+        className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-1 text-sm rounded-2xl border border-gray-300"
         onClick={() => console.log("Avanzando a la siguiente parte...")}
       >
         Avanti
@@ -672,97 +672,163 @@ function FAQ() {
   )
 }
 
+// Nuevo componente ContactPage
+function ContactPage() {
+  const [loading, setLoading] = useState(true)
+  const [nome, setNome] = useState("")
+  const [cognome, setCognome] = useState("")
+  const [mail, setMail] = useState("")
+  const [telefono, setTelefono] = useState("")
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 3000)
+    return () => clearTimeout(timer)
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-white rounded-2xl">
+        <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-700 border-t-transparent"></div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
+      <div className="grid grid-cols-2 gap-4 w-full max-w-md">
+        <input
+          type="text"
+          placeholder="Nome"
+          value={nome}
+          onChange={(e) => setNome(e.target.value)}
+          className="border p-4 rounded-2xl text-xl w-full"
+        />
+        <input
+          type="text"
+          placeholder="Cognome"
+          value={cognome}
+          onChange={(e) => setCognome(e.target.value)}
+          className="border p-4 rounded-2xl text-xl w-full"
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          value={mail}
+          onChange={(e) => setMail(e.target.value)}
+          className="border p-4 rounded-2xl text-xl w-full"
+        />
+        <input
+          type="tel"
+          placeholder="Telefono"
+          value={telefono}
+          onChange={(e) => setTelefono(e.target.value)}
+          className="border p-4 rounded-2xl text-xl w-full"
+        />
+      </div>
+      <button
+        className="mt-8 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
+        onClick={() =>
+          console.log("Informazioni Contatto", { nome, cognome, mail, telefono })
+        }
+      >
+        Invia
+      </button>
+    </div>
+  )
+}
+
 function App() {
-  // Estado para controlar la apertura del ChatWidget
   const [chatOpen, setChatOpen] = useState(false)
-  // Nuevo estado para activar la pantalla del formulario
   const [showFormScreen, setShowFormScreen] = useState(false)
+  const [showContactPage, setShowContactPage] = useState(false)
+  const [showContactFields, setShowContactFields] = useState(false)
 
   // Si se activa el formulario, renderizamos FormScreen
   if (showFormScreen) {
     return <FormScreen onClose={() => setShowFormScreen(false)} />
   }
 
+  // Nueva ruta para la página de contacto
+  if (showContactPage) {
+    return <ContactPage />
+  }
+
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-grow">
         {/* Sección Hero con fondo celeste y olas */}
-        <div className="bg-gradient-to-r from-blue-100 to-blue-300 w-full pt-4">          <div className="flex flex-col md:flex-row justify-center items-stretch mx-4 md:mx-12 gap-6">
-          <div className="p-6 md:mr-12 mb-6 md:mb-0">
-            <div className="px-4 md:px-16">
-              <h1 className="flex items-center space-x-2 mt-8">
-                <img
-                  src={aiQuintoLogo}
-                  alt="AI Quinto Logo"
-                  className="w-32 sm:w-40 md:w-56 px-2 py-0 bg-blue-800 rounded-full"
-                />
-                <span className="text-center text-base sm:text-xl font-medium">by</span>
-                <img
-                  src={logo_creditplan}
-                  alt="Creditplan Logo"
-                  className="w-40 sm:w-48 md:w-72"
-                />
-              </h1>
-              <p className="inline-block text-xs font-medium text-green-950 mt-4 py-0.5 bg-green-200 px-2 border border-green-500 rounded-lg">
-                Offerta a tempo limitato
-              </p>
-              <h2 className="text-3xl md:text-5xl font-semibold mt-4 text-gray-800">
-                Richiedi subito fino a 75.000 € per la tua Cessione del Quinto
-              </h2>
-              <p className="text-lg text-gray-900 mt-4">
-                Risparmia tempo e denaro con AIquinto.it by Creditplan.
-              </p>
-              <p className="text-2xl font-medium text-gray-800 mt-5">
-                Richiedi la Cessione del Quinto in pochi click.
-              </p>
-              <div className="mt-6 flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
-                <div className="flex flex-col space-y-4">
-                  {/* Box para iniciar el formulario */}
-                  <div
-                    className="relative bg-blue-800 w-full sm:w-[90%] md:w-[1000px] h-16 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex items-center justify-center px-4 transform hover:scale-110 transition-transform duration-300 ease-in-out shadow-md"
-                    onClick={() => setShowFormScreen(true)}
-                  >
-                    <span className="text-xl md:text-2xl font-medium text-white mr-2">
-                      Inizia Ora
-                    </span>
-                    <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center">
-                      <FaArrowRight className="text-sm text-black" />
-                    </div>
-                  </div>
-                  <p className="flex justify-center text-lg text-gray-500">
-                    Oppure
-                  </p>
-                  {/* Box para enlace de agente */}
-                  <a
-                    href="https://calendar.creditplan.it/cqsagents"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block"
-                  >
-                    <div className="relative bg-white w-full sm:w-[90%] md:w-[1000px] h-16 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex items-center justify-center px-4 transform hover:scale-110 transition-transform duration-300 ease-in-out shadow-md">
-                      <span className="text-xl md:text-2xl font-medium text-black mr-2">
-                        Richiedi di Essere Contattato
+        <div className="bg-gradient-to-r from-blue-100 to-blue-300 w-full pt-4">
+          <div className="flex flex-col md:flex-row justify-center items-stretch mx-4 md:mx-12 gap-6">
+            <div className="p-6 md:mr-12 mb-6 md:mb-0">
+              <div className="px-4 md:px-16">
+                <h1 className="flex items-center space-x-2 mt-8">
+                  <img
+                    src={aiQuintoLogo}
+                    alt="AI Quinto Logo"
+                    className="w-32 sm:w-40 md:w-56 px-2 py-0 bg-blue-800 rounded-full"
+                  />
+                  <span className="text-center text-base sm:text-xl font-medium">by</span>
+                  <img
+                    src={logo_creditplan}
+                    alt="Creditplan Logo"
+                    className="w-40 sm:w-48 md:w-72"
+                  />
+                </h1>
+                <p className="inline-block text-xs font-medium text-green-950 mt-4 py-0.5 bg-green-200 px-2 border border-green-500 rounded-lg">
+                  Offerta a tempo limitato
+                </p>
+                <h2 className="text-3xl md:text-5xl font-semibold mt-4 text-gray-800">
+                  Richiedi subito fino a 75.000 € per la tua Cessione del Quinto
+                </h2>
+                <p className="text-lg text-gray-900 mt-4">
+                  Risparmia tempo e denaro con AIquinto.it by Creditplan.
+                </p>
+                <p className="text-2xl font-medium text-gray-800 mt-5">
+                  Richiedi la Cessione del Quinto in pochi click.
+                </p>
+                <div className="mt-6 flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
+                  <div className="flex flex-col space-y-4">
+                    {/* Box para iniciar el formulario */}
+                    <div
+                      className="relative bg-blue-800 w-full sm:w-[90%] md:w-[1000px] h-16 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex items-center justify-center px-4 transform hover:scale-110 transition-transform duration-300 ease-in-out shadow-md"
+                      onClick={() => setShowFormScreen(true)}
+                    >
+                      <span className="text-xl md:text-2xl font-medium text-white mr-2">
+                        Inizia Ora
                       </span>
-                      <div className="w-6 h-6 rounded-full bg-blue-800 flex items-center justify-center">
-                        <FaArrowRight className="text-sm text-white" />
+                      <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center">
+                        <FaArrowRight className="text-sm text-black" />
                       </div>
                     </div>
-                  </a>
+                    <p className="flex justify-center text-lg text-gray-500">
+                      Oppure
+                    </p>
+                    {/* Box para enlace de agente */}
+                    <div>
+                      <div className="relative bg-white w-full sm:w-[90%] md:w-[1000px] h-16 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex items-center justify-center px-4 transform hover:scale-110 transition-transform duration-300 ease-in-out shadow-md"
+                        onClick={() => setShowContactPage(true)}
+                      >
+                        <span className="text-xl md:text-2xl font-medium text-black mr-2">
+                          Richiedi di Essere Contattato
+                        </span>
+                        <div className="w-6 h-6 rounded-full bg-blue-800 flex items-center justify-center">
+                          <FaArrowRight className="text-sm text-white" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+            <img
+              src={family_w_dog}
+              alt="family with dog"
+              className="w-full md:w-96 h-full object-cover rounded-3xl"
+            />
           </div>
-          <img
-            src={family_w_dog}
-            alt="family with dog"
-            className="w-full md:w-96 h-full object-cover rounded-3xl"
-          />
-        </div>
-          {/* Diseño creativo con olas que separan la sección Hero */}
           <HeroWave />
         </div>
-
-        {/* Resto de la página con fondo blanco */}
+        {/* Resto de la página */}
         <div className="bg-white">
           {/* Sección de Ilustración */}
           <div className="my-24 w-full max-w-4xl mx-auto px-4 flex justify-center">
@@ -802,21 +868,56 @@ function App() {
           <FAQ />
 
           {/* New clickable buttons section placed above the Wave */}
-          <div className="w-full sm:w-[90%] md:w-[1000px] mx-auto bg-gradient-to-r from-blue-100 to-blue-300 p-8 rounded-2xl shadow-md">
-            <h2 className="text-3xl font-semibold text-center mb-8">
-              Richiedi subito la tua
-              <br />
-              Cessione del Quinto!
-            </h2>
-            <div className="my-8 flex flex-col md:flex-row justify-center items-center gap-4">
-              <div className="flex-1 cursor-pointer bg-blue-800 hover:bg-blue-700 text-white px-8 py-3 rounded-2xl text-xl text-center">
-                Inizia Ora
-              </div>
-              <div className="flex-1 cursor-pointer bg-white hover:bg-gray-100 text-black px-8 py-3 rounded-2xl text-xl text-center border border-gray-400">
-                Richiedi di Essere Contattato
+          {!showContactFields ? (
+            // Sección de botones clicables
+            <div className="w-full sm:w-[90%] md:w-[1000px] mx-auto bg-gradient-to-r from-blue-100 to-blue-300 p-8 rounded-2xl shadow-md">
+              <h2 className="text-3xl font-semibold text-center mb-8">
+                Richiedi subito la tua
+                <br />
+                Cessione del Quinto!
+              </h2>
+              <div className="my-8 flex flex-col md:flex-row justify-center items-center gap-4">
+                <div className="flex-1 cursor-pointer bg-blue-800 hover:bg-blue-700 text-white px-8 py-3 rounded-2xl text-xl text-center">
+                  Inizia Ora
+                </div>
+                <div
+                  onClick={() => setShowContactFields(true)}
+                  className="flex-1 cursor-pointer bg-white hover:bg-gray-100 text-black px-8 py-3 rounded-2xl text-xl text-center border border-gray-400"
+                >
+                  Richiedi di Essere Contattato
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            // Nueva sección con 4 inputs en grid de 2 columnas
+            <div className="w-full sm:w-[90%] md:w-[1000px] mx-auto bg-gradient-to-r from-blue-100 to-blue-300 p-8 rounded-2xl shadow-md">
+              <h2 className="text-3xl font-semibold text-center mb-8">
+                Inserisci i tuoi dati per essere contattato
+              </h2>
+              <div className="grid grid-cols-2 gap-4">
+                <input
+                  type="text"
+                  placeholder="Nome"
+                  className="border p-4 rounded-2xl text-xl w-full"
+                />
+                <input
+                  type="text"
+                  placeholder="Cognome"
+                  className="border p-4 rounded-2xl text-xl w-full"
+                />
+                <input
+                  type="email"
+                  placeholder="Email"
+                  className="border p-4 rounded-2xl text-xl w-full"
+                />
+                <input
+                  type="tel"
+                  placeholder="Telefono"
+                  className="border p-4 rounded-2xl text-xl w-full"
+                />
+              </div>
+            </div>
+          )}
 
           {/* Wave */}
           <Wave />
