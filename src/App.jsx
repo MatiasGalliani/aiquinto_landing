@@ -48,7 +48,7 @@ function FormScreen({ onClose }) {
 
   const secondaryOptionsMapping = {
     "Pubblico": ["Ospedale", "Comune", "Medico convenzionato", "Altro"],
-    "Statale": ["Carabinieri", "Guardia di finanza", "Altro"],
+    "Statale": ["Carabinieri", "Guardia di finanza", "Vigili del Fuoco", "Esercito", "Marina Militare", "Aeronautica", "Polizia", "Scuole", "Università", "Altro"],
     "Parapubblico": ["Poste Italiane", "Gruppo FFSS", "Gruppo ANAS", "Altro"],
     "Privato": ["SPA", "SRL", "Cooperativa", "Ditta Individuale"]
   }
@@ -691,7 +691,7 @@ function App() {
           <div className="flex flex-col md:flex-row justify-center items-stretch mx-4 md:mx-12 gap-6">
             <div className="p-6 md:mr-12 mb-6 md:mb-0">
               <div className="px-4 md:px-16">
-                <h1 className="flex items-center space-x-4 mt-8">
+                <h1 className="flex items-center space-x-2 mt-8">
                   <img
                     src={aiQuintoLogo}
                     alt="AI Quinto Logo"
@@ -711,7 +711,7 @@ function App() {
                   Richiedi subito fino a 75.000 € per la tua Cessione del Quinto
                 </h2>
                 <p className="text-lg text-gray-900 mt-4">
-                  Risparmia tempo e denaro con AI QUINTO® by Creditplan.
+                  Risparmia tempo e denaro con AIquinto.it by Creditplan.
                 </p>
                 <p className="text-2xl font-medium text-gray-800 mt-5">
                   Richiedi la Cessione del Quinto in pochi click.
@@ -744,7 +744,7 @@ function App() {
                         <span className="text-xl md:text-2xl font-medium text-black mr-2">
                           Richiedi di Essere Contattato
                         </span>
-                        <div className="w-6 h-6 rounded-full bg-red-700 flex items-center justify-center">
+                        <div className="w-6 h-6 rounded-full bg-blue-800 flex items-center justify-center">
                           <FaArrowRight className="text-sm text-white" />
                         </div>
                       </div>
