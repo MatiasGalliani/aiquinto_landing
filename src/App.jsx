@@ -89,7 +89,7 @@ function FormScreen({ onClose }) {
             className="flex items-center bg-white border border-gray-300 hover:border-gray-600 cursor-pointer rounded-2xl p-6 transition"
             onClick={() => setSelectedOption("pensionato")}
           >
-            <div 
+            <div
               className={`w-6 h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center mr-4 transition 
                 ${selectedOption === "pensionato" ? "bg-red-700 border-red-700" : "bg-white border-gray-300"}`}
               onClick={(e) => {
@@ -104,7 +104,7 @@ function FormScreen({ onClose }) {
             className="flex items-center bg-white border border-gray-300 hover:border-gray-600 cursor-pointer rounded-2xl p-6 transition"
             onClick={() => setSelectedOption("dipendente")}
           >
-            <div 
+            <div
               className={`w-6 h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center mr-4 transition 
                 ${selectedOption === "dipendente" ? "bg-red-700 border-red-700" : "bg-white border-gray-300"}`}
               onClick={(e) => {
@@ -168,8 +168,8 @@ function FormScreen({ onClose }) {
           </div>
           {/* Desplegable principal */}
           <div className="w-full max-w-md mb-4">
-            <div 
-              onClick={() => { 
+            <div
+              onClick={() => {
                 setDropdownOpen(!dropdownOpen)
                 // Si se abre el principal se cierra el secundario
                 setSecondaryDropdownOpen(false)
@@ -184,7 +184,7 @@ function FormScreen({ onClose }) {
             {dropdownOpen && (
               <div className="mt-2 border border-gray-300 rounded-lg shadow-lg">
                 {["Pubblico", "Statale", "Parapubblico", "Privato"].map(option => (
-                  <button 
+                  <button
                     key={option}
                     onClick={() => {
                       setDepType(option)
@@ -203,7 +203,7 @@ function FormScreen({ onClose }) {
           {/* Desplegable secundario: se muestra si ya se seleccionó una opción principal */}
           {depType && (
             <div className="w-full max-w-md mb-4">
-              <div 
+              <div
                 onClick={() => setSecondaryDropdownOpen(!secondaryDropdownOpen)}
                 className="border p-4 rounded-2xl cursor-pointer flex justify-between items-center"
               >
@@ -282,8 +282,8 @@ function FormScreen({ onClose }) {
                   ? contractType === "determinato"
                     ? "Tempo Determinato"
                     : contractType === "indeterminato"
-                    ? "Tempo Indeterminato"
-                    : "Altro"
+                      ? "Tempo Indeterminato"
+                      : "Altro"
                   : "Seleziona"}
               </span>
               <IoIosArrowDown className={`transition-transform duration-300 ${contractDropdownOpen ? "rotate-90" : ""}`} />
@@ -550,7 +550,7 @@ function HeroWave() {
     <div className="relative h-40 overflow-hidden">
       <svg className="absolute block top-0 left-0 w-full h-full" viewBox="0 0 1440 320" preserveAspectRatio="none">
         <path
-          fill="#0099ff"
+          fill="#1e40af" // updated to blue-800
           fillOpacity="0.8"
           d="M0,160 C480,320 960,0 1440,160 L1440,320 L0,320 Z"
         />
@@ -695,7 +695,7 @@ function App() {
                   <img
                     src={aiQuintoLogo}
                     alt="AI Quinto Logo"
-                    className="w-32 sm:w-40 md:w-56 px-2 py-2 bg-blue-800 rounded-3xl"
+                    className="w-32 sm:w-40 md:w-56 px-2 py-0 bg-blue-800 rounded-full"
                   />
                   <span className="text-center text-base sm:text-xl font-medium">by</span>
                   <img
@@ -794,7 +794,7 @@ function App() {
             <p className="text-lg text-gray-600 mt-4">
               Calcola in pochi click il tuo finanziamento su misura: semplice, veloce e senza impegno.
             </p>
-            <button className="bg-white text-black px-8 py-2 rounded-2xl mt-8 border border-gray-400 hover:border-gray-700 shadow-md transition-transform duration-300 hover:scale-105">
+            <button className="bg-blue-700 text-white px-8 py-2 rounded-2xl mt-8 border border-gray-400 hover shadow-md transition-transform duration-300 hover:scale-110">
               Inizia Ora
             </button>
           </div>
@@ -802,7 +802,24 @@ function App() {
           {/* Sección FAQ */}
           <FAQ />
 
-          {/* Componente Wave para el efecto de ola final */}
+          {/* New clickable buttons section placed above the Wave */}
+          <div className="w-full sm:w-[90%] md:w-[1000px] mx-auto bg-blue-100 p-8 rounded-2xl shadow-md">
+            <h2 className="text-3xl font-semibold text-center mb-8">
+              Richiedi subito la tua
+              <br />
+              Cessione del Quinto!
+            </h2>
+            <div className="my-8 flex flex-col md:flex-row justify-center items-center gap-4">
+              <div className="flex-1 cursor-pointer bg-blue-800 hover:bg-blue-700 text-white px-8 py-3 rounded-2xl text-xl text-center">
+                Inizia Ora
+              </div>
+              <div className="flex-1 cursor-pointer bg-white hover:bg-gray-100 text-black px-8 py-3 rounded-2xl text-xl text-center border border-gray-400">
+                Richiedi di Essere Contattato
+              </div>
+            </div>
+          </div>
+
+          {/* Wave */}
           <Wave />
         </div>
       </main>
