@@ -26,6 +26,12 @@ function FormScreen({ onClose }) {
   // New state to determine if the device is mobile
   const [isMobile, setIsMobile] = useState(false)
 
+  // Agrega los nuevos estados al inicio del componente FormScreen, junto a los demás:
+  const [nome, setNome] = useState("")
+  const [cognome, setCognome] = useState("")
+  const [mail, setMail] = useState("")
+  const [telefono, setTelefono] = useState("")
+
   // Check viewport width to set isMobile (adjust the px threshold as needed)
   useEffect(() => {
     const checkIsMobile = () => setIsMobile(window.innerWidth <= 768)
@@ -282,7 +288,6 @@ function FormScreen({ onClose }) {
               value={birthDate}
               onChange={(e) => setBirthDate(e.target.value)}
               className="border p-4 rounded-2xl"
-              readOnly={!isMobile}
             />
           </div>
           {/* Provincia */}
@@ -407,10 +412,62 @@ function FormScreen({ onClose }) {
         <button
           className="mt-8 bg-red-700 hover:bg-red-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
           onClick={() =>
-            console.log("Dipendente additional data", { contractType, birthDate, province })
+            setStep(4)
           }
         >
           Avanti
+        </button>
+      </div>
+    )
+  }
+
+  // Después del bloque del step === 3, agrega la siguiente condición para el step 4:
+  if (step === 4) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
+        <div className="flex items-center w-full max-w-xl mb-8">
+          <button onClick={() => setStep(3)} className="mr-4">
+            <IoIosArrowBack size={32} className="text-black" />
+          </button>
+          <h2 className="text-3xl font-semibold">Informazioni Contatto</h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-3xl">
+          <input
+            type="text"
+            placeholder="Nome"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-red-700 transition duration-200 ease-in-out"
+          />
+          <input
+            type="text"
+            placeholder="Cognome"
+            value={cognome}
+            onChange={(e) => setCognome(e.target.value)}
+            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-red-700 transition duration-200 ease-in-out"
+          />
+          <input
+            type="email"
+            placeholder="Mail"
+            value={mail}
+            onChange={(e) => setMail(e.target.value)}
+            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-red-700 transition duration-200 ease-in-out"
+          />
+          <input
+            type="tel"
+            placeholder="Telefono"
+            value={telefono}
+            onChange={(e) => setTelefono(e.target.value)}
+            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-red-700 transition duration-200 ease-in-out"
+          />
+        </div>
+        <button
+          className="mt-8 bg-red-700 hover:bg-red-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
+          onClick={() =>
+            console.log("Informazioni Contatto", { nome, cognome, mail, telefono })
+          }
+        >
+          Invia
         </button>
       </div>
     )
