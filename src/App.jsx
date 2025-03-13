@@ -6,6 +6,7 @@ import family_w_dog from './assets/family_with_dog.png'
 import savingSvg from './assets/saving.svg'
 import './App.css'
 import ChatWidget from './components/ChatWidget'
+import aiQuintoLogo from './assets/ai_quinto_logo.png'
 
 function FormScreen({ onClose }) {
   const [loading, setLoading] = useState(true)
@@ -575,10 +576,16 @@ function App() {
           <div className="flex flex-col md:flex-row justify-center items-stretch mx-4 md:mx-12 gap-6">
             <div className="p-6 md:mr-12 mb-6 md:mb-0">
               <div className="px-4 md:px-16">
-                <h1>
+                <h1 className="flex items-center space-x-4">
+                  <img
+                    src={aiQuintoLogo}
+                    alt="AI Quinto Logo"
+                    className="w-40 md:w-56 mt-8"
+                  />
+                  <span className="text-xl font-medium mt-8">by</span>
                   <img
                     src={logo_creditplan}
-                    alt="logo"
+                    alt="Creditplan Logo"
                     className="w-40 md:w-56 mt-8"
                   />
                 </h1>
