@@ -604,7 +604,7 @@ function App() {
                   Richiedi subito fino a 75.000 € per la tua Cessione del Quinto
                 </h2>
                 <p className="text-lg text-gray-900 mt-4">
-                  Risparmia tempo e denaro con AI QUINTO by Creditplan.
+                  Risparmia tempo e denaro con AI QUINTO® by Creditplan.
                 </p>
                 <p className="text-2xl font-medium text-gray-800 mt-5">
                   Richiedi la Cessione del Quinto in pochi click.
