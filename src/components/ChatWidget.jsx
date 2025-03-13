@@ -71,7 +71,7 @@ export function ChatWidget({ open, setOpen }) {
     <>
       {open && (
         <div className="fixed bottom-5 right-5 max-sm:left-1/2 max-sm:-translate-x-1/2 w-96 h-[650px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden transform transition-all duration-1000 ease-in-out animate-fadeInUp">          {/* Header: se cambió el bg a celeste y el texto a negro */}
-          <div className="bg-sky-200 text-black px-6 py-4 flex justify-between items-center transition-all duration-500 ease-out">
+          <div className="bg-gradient-to-r from-blue-100 to-blue-300 text-black px-6 py-4 flex justify-between items-center transition-all duration-500 ease-out">
             <img src={logo} alt="€ugenio logo" className="h-10" />
             <button onClick={toggleChat} className="text-3xl focus:outline-none">&times;</button>
           </div>
@@ -115,7 +115,7 @@ export function ChatWidget({ open, setOpen }) {
             {!showInput ? (
               <button
                 onClick={handleAutoMessage}
-                className="w-full bg-sky-300 text-black py-3 rounded-full hover:bg-sky-500 transition-colors duration-500"
+                className="w-full bg-gradient-to-r from-blue-100 to-blue-300 text-black py-3 rounded-full hover:bg-sky-500 transition-colors duration-500"
               >
                 Ho domande sulla cessione del quinto
               </button>
