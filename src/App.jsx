@@ -642,17 +642,21 @@ function App() {
             <div className="p-6 md:mr-12 mb-6 md:mb-0">
               <div className="px-4 md:px-16">
                 <h1 className="flex items-center space-x-4">
-                  <img
-                    src={aiQuintoLogo}
-                    alt="AI Quinto Logo"
-                    className="w-40 md:w-56 mt-8"
-                  />
-                  <span className="text-xl font-medium mt-8">by</span>
-                  <img
-                    src={logo_creditplan}
-                    alt="Creditplan Logo"
-                    className="w-40 md:w-56 mt-8"
-                  />
+                  <div className="flex flex-col items-center mt-8">
+                    <img
+                      src={aiQuintoLogo}
+                      alt="AI Quinto Logo"
+                      className="w-32 sm:w-40 md:w-56"
+                    />
+                    <span className="text-center text-base sm:text-xl font-medium my-2">
+                      by
+                    </span>
+                    <img
+                      src={logo_creditplan}
+                      alt="Creditplan Logo"
+                      className="w-32 sm:w-40 md:w-56"
+                    />
+                  </div>
                 </h1>
                 <p className="inline-block text-xs font-medium text-green-950 mt-4 py-0.5 bg-green-200 px-2 border border-green-500 rounded-lg">
                   Offerta a tempo limitato
