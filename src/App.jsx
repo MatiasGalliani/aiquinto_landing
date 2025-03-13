@@ -28,9 +28,9 @@ function FormScreen({ onClose }) {
   if (step === 1) {
     return (
       <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
-        {/* Contenedor flex para la flecha y el título */}
-        <div className="grid grid-cols-3 items-center w-full max-w-xl mb-8">
-          <div>
+        {/* Layout actualizado: en móviles la flecha se alinea a la izquierda */}
+        <div className="flex flex-col md:grid md:grid-cols-3 items-center w-full max-w-xl mb-8">
+          <div className="mb-4 md:mb-0 self-start">
             <button onClick={onClose}>
               <IoIosArrowBack size={32} className="text-black" />
             </button>
@@ -40,7 +40,7 @@ function FormScreen({ onClose }) {
               Qual è la tua situazione lavorativa?
             </h2>
           </div>
-          <div>{/* Espacio vacío para equilibrar la cuadrícula */}</div>
+          <div className="hidden md:block"></div>
         </div>
         <div className="flex flex-col gap-6 w-full max-w-xl">
           {/* Opción Pensionato */}
@@ -513,4 +513,4 @@ export function Footer() {
   )
 }
 
-export default App;
+export default App
