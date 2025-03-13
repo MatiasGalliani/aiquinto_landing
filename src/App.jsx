@@ -154,7 +154,7 @@ function FormScreen({ onClose }) {
               </button>
             </div>
             <div className="flex flex-col items-center">
-              <span className="text-xl font-semibold">
+              <span className="text-3xl font-semibold">
                 Che tipo di dipendente sei
               </span>
             </div>
