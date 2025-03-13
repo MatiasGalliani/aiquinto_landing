@@ -221,7 +221,11 @@ function FormScreen({ onClose }) {
           <button
             className="bg-red-700 hover:bg-red-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
             onClick={() => {
-              if(depType === "Pubblico") {
+              if (
+                depType === "Pubblico" ||
+                depType === "Statale" ||
+                depType === "Parapubblico"
+              ) {
                 setStep(3)
               } else {
                 console.log("Dipendente data submitted", { depType, secondarySelection })
@@ -235,8 +239,12 @@ function FormScreen({ onClose }) {
     }
   }
 
-  // Paso 3: Campos adicionales para "Pubblico"
-  if (step === 3 && selectedOption === "dipendente" && depType === "Pubblico") {
+  // Paso 3: Campos adicionales para "Pubblico", "Statale" o "Parapubblico"
+  if (
+    step === 3 &&
+    selectedOption === "dipendente" &&
+    (depType === "Pubblico" || depType === "Statale" || depType === "Parapubblico")
+  ) {
     return (
       <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
         <div className="flex items-center w-full max-w-xl mb-8">
@@ -274,7 +282,7 @@ function FormScreen({ onClose }) {
               value={birthDate}
               onChange={(e) => setBirthDate(e.target.value)}
               className="border p-4 rounded-2xl"
-              readOnly={!isMobile} // On desktop, this prevents opening the calendar
+              readOnly={!isMobile}
             />
           </div>
           {/* Provincia */}
@@ -399,7 +407,7 @@ function FormScreen({ onClose }) {
         <button
           className="mt-8 bg-red-700 hover:bg-red-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
           onClick={() =>
-            console.log("Pubblico dipendente additional data", { contractType, birthDate, province })
+            console.log("Dipendente additional data", { contractType, birthDate, province })
           }
         >
           Avanti
