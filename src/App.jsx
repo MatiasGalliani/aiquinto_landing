@@ -252,25 +252,25 @@ function FormScreen({ onClose }) {
     (depType === "Pubblico" || depType === "Statale" || depType === "Parapubblico")
   ) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
+      <div className="flex flex-col items-center justify-center min-h-screen bg-white px-4 sm:px-6 rounded-2xl">
         <div className="flex items-center w-full max-w-xl mb-8">
           <button onClick={() => setStep(2)} className="mr-4">
             <IoIosArrowBack size={32} className="text-black" />
           </button>
-          <h2 className="text-3xl font-semibold">
+          <h2 className="text-3xl sm:text-4xl font-semibold">
             Informazioni Aggiuntive
           </h2>
         </div>
         <div className="w-full max-w-md space-y-4">
           {/* Tipologia di contratto */}
           <div className="flex flex-col">
-            <label className="text-xl font-semibold mb-2">
+            <label className="text-base sm:text-xl font-semibold mb-2">
               Tipologia di contratto?*
             </label>
             <select
               value={contractType}
               onChange={(e) => setContractType(e.target.value)}
-              className="border p-4 rounded-2xl"
+              className="border p-3 sm:p-4 rounded-2xl text-base sm:text-lg"
             >
               <option value="">Seleziona</option>
               <option value="determinato">Tempo Determinato</option>
@@ -280,25 +280,25 @@ function FormScreen({ onClose }) {
           </div>
           {/* Anno di nascita */}
           <div className="flex flex-col">
-            <label className="text-xl font-semibold mb-2">
+            <label className="text-base sm:text-xl font-semibold mb-2">
               Anno di nascita?*
             </label>
             <input
               type="date"
               value={birthDate}
               onChange={(e) => setBirthDate(e.target.value)}
-              className="border p-4 rounded-2xl"
+              className="border p-3 sm:p-4 rounded-2xl text-base sm:text-lg"
             />
           </div>
           {/* Provincia */}
           <div className="flex flex-col">
-            <label className="text-xl font-semibold mb-2">
+            <label className="text-base sm:text-xl font-semibold mb-2">
               Provincia*
             </label>
             <select
               value={province}
               onChange={(e) => setProvince(e.target.value)}
-              className="border p-4 rounded-2xl"
+              className="border p-3 sm:p-4 rounded-2xl text-base sm:text-lg"
             >
               <option value="">Seleziona</option>
               <option value="AG">Agrigento</option>
@@ -410,10 +410,8 @@ function FormScreen({ onClose }) {
           </div>
         </div>
         <button
-          className="mt-8 bg-red-700 hover:bg-red-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
-          onClick={() =>
-            setStep(4)
-          }
+          className="mt-8 bg-red-700 hover:bg-red-800 text-white px-5 py-3 text-lg rounded-2xl border border-gray-300 w-full max-w-md"
+          onClick={() => setStep(4)}
         >
           Avanti
         </button>
