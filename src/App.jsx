@@ -687,78 +687,77 @@ function App() {
     <div className="flex flex-col min-h-screen">
       <main className="flex-grow">
         {/* Sección Hero con fondo celeste y olas */}
-        <div className="bg-blue-100 w-full pt-4">
-          <div className="flex flex-col md:flex-row justify-center items-stretch mx-4 md:mx-12 gap-6">
-            <div className="p-6 md:mr-12 mb-6 md:mb-0">
-              <div className="px-4 md:px-16">
-                <h1 className="flex items-center space-x-2 mt-8">
-                  <img
-                    src={aiQuintoLogo}
-                    alt="AI Quinto Logo"
-                    className="w-32 sm:w-40 md:w-56 px-2 py-0 bg-blue-800 rounded-full"
-                  />
-                  <span className="text-center text-base sm:text-xl font-medium">by</span>
-                  <img
-                    src={logo_creditplan}
-                    alt="Creditplan Logo"
-                    className="w-40 sm:w-48 md:w-72"
-                  />
-                </h1>
-                <p className="inline-block text-xs font-medium text-green-950 mt-4 py-0.5 bg-green-200 px-2 border border-green-500 rounded-lg">
-                  Offerta a tempo limitato
-                </p>
-                <h2 className="text-3xl md:text-5xl font-semibold mt-4 text-gray-800">
-                  Richiedi subito fino a 75.000 € per la tua Cessione del Quinto
-                </h2>
-                <p className="text-lg text-gray-900 mt-4">
-                  Risparmia tempo e denaro con AIquinto.it by Creditplan.
-                </p>
-                <p className="text-2xl font-medium text-gray-800 mt-5">
-                  Richiedi la Cessione del Quinto in pochi click.
-                </p>
-                <div className="mt-6 flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
-                  <div className="flex flex-col space-y-4">
-                    {/* Box para iniciar el formulario */}
-                    <div
-                      className="relative bg-blue-800 w-full sm:w-[90%] md:w-[1000px] h-16 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex items-center justify-center px-4 transform hover:scale-110 transition-transform duration-300 ease-in-out shadow-md"
-                      onClick={() => setShowFormScreen(true)}
-                    >
-                      <span className="text-xl md:text-2xl font-medium text-white mr-2">
-                        Inizia Ora
+        <div className="bg-gradient-to-r from-blue-100 to-blue-300 w-full pt-4">          <div className="flex flex-col md:flex-row justify-center items-stretch mx-4 md:mx-12 gap-6">
+          <div className="p-6 md:mr-12 mb-6 md:mb-0">
+            <div className="px-4 md:px-16">
+              <h1 className="flex items-center space-x-2 mt-8">
+                <img
+                  src={aiQuintoLogo}
+                  alt="AI Quinto Logo"
+                  className="w-32 sm:w-40 md:w-56 px-2 py-0 bg-blue-800 rounded-full"
+                />
+                <span className="text-center text-base sm:text-xl font-medium">by</span>
+                <img
+                  src={logo_creditplan}
+                  alt="Creditplan Logo"
+                  className="w-40 sm:w-48 md:w-72"
+                />
+              </h1>
+              <p className="inline-block text-xs font-medium text-green-950 mt-4 py-0.5 bg-green-200 px-2 border border-green-500 rounded-lg">
+                Offerta a tempo limitato
+              </p>
+              <h2 className="text-3xl md:text-5xl font-semibold mt-4 text-gray-800">
+                Richiedi subito fino a 75.000 € per la tua Cessione del Quinto
+              </h2>
+              <p className="text-lg text-gray-900 mt-4">
+                Risparmia tempo e denaro con AIquinto.it by Creditplan.
+              </p>
+              <p className="text-2xl font-medium text-gray-800 mt-5">
+                Richiedi la Cessione del Quinto in pochi click.
+              </p>
+              <div className="mt-6 flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
+                <div className="flex flex-col space-y-4">
+                  {/* Box para iniciar el formulario */}
+                  <div
+                    className="relative bg-blue-800 w-full sm:w-[90%] md:w-[1000px] h-16 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex items-center justify-center px-4 transform hover:scale-110 transition-transform duration-300 ease-in-out shadow-md"
+                    onClick={() => setShowFormScreen(true)}
+                  >
+                    <span className="text-xl md:text-2xl font-medium text-white mr-2">
+                      Inizia Ora
+                    </span>
+                    <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center">
+                      <FaArrowRight className="text-sm text-black" />
+                    </div>
+                  </div>
+                  <p className="flex justify-center text-lg text-gray-500">
+                    Oppure
+                  </p>
+                  {/* Box para enlace de agente */}
+                  <a
+                    href="https://calendar.creditplan.it/cqsagents"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block"
+                  >
+                    <div className="relative bg-white w-full sm:w-[90%] md:w-[1000px] h-16 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex items-center justify-center px-4 transform hover:scale-110 transition-transform duration-300 ease-in-out shadow-md">
+                      <span className="text-xl md:text-2xl font-medium text-black mr-2">
+                        Richiedi di Essere Contattato
                       </span>
-                      <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center">
-                        <FaArrowRight className="text-sm text-black" />
+                      <div className="w-6 h-6 rounded-full bg-blue-800 flex items-center justify-center">
+                        <FaArrowRight className="text-sm text-white" />
                       </div>
                     </div>
-                    <p className="flex justify-center text-lg text-gray-500">
-                      Oppure
-                    </p>
-                    {/* Box para enlace de agente */}
-                    <a
-                      href="https://calendar.creditplan.it/cqsagents"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block"
-                    >
-                      <div className="relative bg-white w-full sm:w-[90%] md:w-[1000px] h-16 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex items-center justify-center px-4 transform hover:scale-110 transition-transform duration-300 ease-in-out shadow-md">
-                        <span className="text-xl md:text-2xl font-medium text-black mr-2">
-                          Richiedi di Essere Contattato
-                        </span>
-                        <div className="w-6 h-6 rounded-full bg-blue-800 flex items-center justify-center">
-                          <FaArrowRight className="text-sm text-white" />
-                        </div>
-                      </div>
-                    </a>
-                  </div>
+                  </a>
                 </div>
               </div>
             </div>
-            <img
-              src={family_w_dog}
-              alt="family with dog"
-              className="w-full md:w-96 h-full object-cover rounded-3xl"
-            />
           </div>
+          <img
+            src={family_w_dog}
+            alt="family with dog"
+            className="w-full md:w-96 h-full object-cover rounded-3xl"
+          />
+        </div>
           {/* Diseño creativo con olas que separan la sección Hero */}
           <HeroWave />
         </div>
@@ -787,7 +786,7 @@ function App() {
           </div>
 
           {/* Sección Reactiva */}
-          <div className="my-32 text-center bg-blue-100 p-8 mx-4 md:mx-auto shadow-md">
+          <div className="my-32 text-center bg-gradient-to-r from-blue-100 to-blue-300 p-8 mx-4 md:mx-auto shadow-md">
             <p className="text-4xl font-semibold">
               Scopri subito quanto puoi ottenere!
             </p>
@@ -803,7 +802,7 @@ function App() {
           <FAQ />
 
           {/* New clickable buttons section placed above the Wave */}
-          <div className="w-full sm:w-[90%] md:w-[1000px] mx-auto bg-blue-100 p-8 rounded-2xl shadow-md">
+          <div className="w-full sm:w-[90%] md:w-[1000px] mx-auto bg-gradient-to-r from-blue-100 to-blue-300 p-8 rounded-2xl shadow-md">
             <h2 className="text-3xl font-semibold text-center mb-8">
               Richiedi subito la tua
               <br />
