@@ -32,6 +32,12 @@ function FormScreen({ onClose }) {
   const [mail, setMail] = useState("")
   const [telefono, setTelefono] = useState("")
 
+  // Dentro del componente FormScreen, agrega el nuevo estado junto a los demás:
+  const [contractDropdownOpen, setContractDropdownOpen] = useState(false);
+
+  // Dentro del componente FormScreen, agrega el estado para controlar el dropdown de provincia:
+  const [provinceDropdownOpen, setProvinceDropdownOpen] = useState(false);
+
   // Check viewport width to set isMobile (adjust the px threshold as needed)
   useEffect(() => {
     const checkIsMobile = () => setIsMobile(window.innerWidth <= 768)
@@ -263,20 +269,46 @@ function FormScreen({ onClose }) {
         </div>
         <div className="w-full max-w-md space-y-4">
           {/* Tipologia di contratto */}
-          <div className="flex flex-col">
-            <label className="text-base sm:text-xl font-semibold mb-2">
+          <div className="w-full max-w-md mb-4">
+            <label className="text-base sm:text-xl font-semibold mb-2 block">
               Tipologia di contratto?*
             </label>
-            <select
-              value={contractType}
-              onChange={(e) => setContractType(e.target.value)}
-              className="border p-3 sm:p-4 rounded-2xl text-base sm:text-lg"
+            <div
+              onClick={() => setContractDropdownOpen(!contractDropdownOpen)}
+              className="border p-4 rounded-2xl cursor-pointer flex justify-between items-center"
             >
-              <option value="">Seleziona</option>
-              <option value="determinato">Tempo Determinato</option>
-              <option value="indeterminato">Tempo Indeterminato</option>
-              <option value="altro">Altro</option>
-            </select>
+              <span className="text-xl font-semibold">
+                {contractType
+                  ? contractType === "determinato"
+                    ? "Tempo Determinato"
+                    : contractType === "indeterminato"
+                    ? "Tempo Indeterminato"
+                    : "Altro"
+                  : "Seleziona"}
+              </span>
+              <IoIosArrowDown className={`transition-transform duration-300 ${contractDropdownOpen ? "rotate-90" : ""}`} />
+            </div>
+            {contractDropdownOpen && (
+              <div className="mt-2 border border-gray-300 rounded-lg shadow-lg">
+                {[
+                  { value: "", label: "Seleziona" },
+                  { value: "determinato", label: "Tempo Determinato" },
+                  { value: "indeterminato", label: "Tempo Indeterminato" },
+                  { value: "altro", label: "Altro" }
+                ].map((option) => (
+                  <button
+                    key={option.value}
+                    onClick={() => {
+                      setContractType(option.value)
+                      setContractDropdownOpen(false)
+                    }}
+                    className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
           {/* Anno di nascita */}
           <div className="flex flex-col">
@@ -291,122 +323,142 @@ function FormScreen({ onClose }) {
             />
           </div>
           {/* Provincia */}
-          <div className="flex flex-col">
-            <label className="text-base sm:text-xl font-semibold mb-2">
+          <div className="w-full max-w-md mb-4">
+            <label className="text-base sm:text-xl font-semibold mb-2 block">
               Provincia*
             </label>
-            <select
-              value={province}
-              onChange={(e) => setProvince(e.target.value)}
-              className="border p-3 sm:p-4 rounded-2xl text-base sm:text-lg"
+            <div
+              onClick={() => setProvinceDropdownOpen(!provinceDropdownOpen)}
+              className="border p-4 rounded-2xl cursor-pointer flex justify-between items-center"
             >
-              <option value="">Seleziona</option>
-              <option value="AG">Agrigento</option>
-              <option value="AL">Alessandria</option>
-              <option value="AN">Ancona</option>
-              <option value="AO">Aosta</option>
-              <option value="AR">Arezzo</option>
-              <option value="AP">Ascoli Piceno</option>
-              <option value="AT">Asti</option>
-              <option value="AV">Avellino</option>
-              <option value="BA">Bari</option>
-              <option value="BT">Barletta-Andria-Trani</option>
-              <option value="BL">Belluno</option>
-              <option value="BN">Benevento</option>
-              <option value="BG">Bergamo</option>
-              <option value="BI">Biella</option>
-              <option value="BO">Bologna</option>
-              <option value="BZ">Bolzano</option>
-              <option value="BS">Brescia</option>
-              <option value="BR">Brindisi</option>
-              <option value="CA">Cagliari</option>
-              <option value="CL">Caltanissetta</option>
-              <option value="CB">Campobasso</option>
-              <option value="CI">Carbonia-Iglesias</option>
-              <option value="CE">Caserta</option>
-              <option value="CT">Catania</option>
-              <option value="CZ">Catanzaro</option>
-              <option value="CH">Chieti</option>
-              <option value="CO">Como</option>
-              <option value="CS">Cosenza</option>
-              <option value="CR">Cremona</option>
-              <option value="KR">Crotone</option>
-              <option value="CN">Cuneo</option>
-              <option value="EN">Enna</option>
-              <option value="FM">Fermo</option>
-              <option value="FE">Ferrara</option>
-              <option value="FI">Firenze</option>
-              <option value="FG">Foggia</option>
-              <option value="FC">Forlì-Cesena</option>
-              <option value="FR">Frosinone</option>
-              <option value="GE">Genova</option>
-              <option value="GO">Gorizia</option>
-              <option value="GR">Grosseto</option>
-              <option value="IM">Imperia</option>
-              <option value="IS">Isernia</option>
-              <option value="SP">La Spezia</option>
-              <option value="LT">Latina</option>
-              <option value="LE">Lecce</option>
-              <option value="LC">Lecco</option>
-              <option value="LO">Lodi</option>
-              <option value="LU">Lucca</option>
-              <option value="MC">Macerata</option>
-              <option value="MN">Mantova</option>
-              <option value="MS">Massa-Carrara</option>
-              <option value="MT">Matera</option>
-              <option value="ME">Messina</option>
-              <option value="MI">Milano</option>
-              <option value="MO">Modena</option>
-              <option value="MB">Monza-Brianza</option>
-              <option value="NA">Napoli</option>
-              <option value="NO">Novara</option>
-              <option value="NU">Nuoro</option>
-              <option value="OR">Olbia-Tempio</option>
-              <option value="PD">Padova</option>
-              <option value="PA">Palermo</option>
-              <option value="PR">Parma</option>
-              <option value="PV">Pavia</option>
-              <option value="PG">Perugia</option>
-              <option value="PU">Pesaro e Urbino</option>
-              <option value="PE">Pescara</option>
-              <option value="PC">Piacenza</option>
-              <option value="PI">Pisa</option>
-              <option value="PT">Pistoia</option>
-              <option value="PN">Pordenone</option>
-              <option value="PZ">Potenza</option>
-              <option value="PO">Prato</option>
-              <option value="RG">Ragusa</option>
-              <option value="RA">Ravenna</option>
-              <option value="RC">Reggio Calabria</option>
-              <option value="RE">Reggio Emilia</option>
-              <option value="RI">Rieti</option>
-              <option value="RN">Rimini</option>
-              <option value="RM">Roma</option>
-              <option value="RO">Rovigo</option>
-              <option value="SA">Salerno</option>
-              <option value="SS">Sassari</option>
-              <option value="SV">Savona</option>
-              <option value="SI">Siena</option>
-              <option value="SR">Siracusa</option>
-              <option value="SO">Sondrio</option>
-              <option value="TA">Taranto</option>
-              <option value="TE">Teramo</option>
-              <option value="TR">Terni</option>
-              <option value="TO">Torino</option>
-              <option value="TP">Trapani</option>
-              <option value="TN">Trento</option>
-              <option value="TV">Treviso</option>
-              <option value="TS">Trieste</option>
-              <option value="UD">Udine</option>
-              <option value="VA">Varese</option>
-              <option value="VE">Venezia</option>
-              <option value="VB">Verbano-Cusio-Ossola</option>
-              <option value="VC">Vercelli</option>
-              <option value="VR">Verona</option>
-              <option value="VV">Vibo Valentia</option>
-              <option value="VI">Vicenza</option>
-              <option value="VT">Viterbo</option>
-            </select>
+              <span className="text-xl font-semibold">
+                {province ? province : "Seleziona"}
+              </span>
+              <IoIosArrowDown className={`transition-transform duration-300 ${provinceDropdownOpen ? "rotate-90" : ""}`} />
+            </div>
+            {provinceDropdownOpen && (
+              <div className="mt-2 border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-auto">
+                {[
+                  { value: "", label: "Seleziona" },
+                  { value: "AG", label: "Agrigento" },
+                  { value: "AL", label: "Alessandria" },
+                  { value: "AN", label: "Ancona" },
+                  { value: "AO", label: "Aosta" },
+                  { value: "AR", label: "Arezzo" },
+                  { value: "AP", label: "Ascoli Piceno" },
+                  { value: "AT", label: "Asti" },
+                  { value: "AV", label: "Avellino" },
+                  { value: "BA", label: "Bari" },
+                  { value: "BT", label: "Barletta-Andria-Trani" },
+                  { value: "BL", label: "Belluno" },
+                  { value: "BN", label: "Benevento" },
+                  { value: "BG", label: "Bergamo" },
+                  { value: "BI", label: "Biella" },
+                  { value: "BO", label: "Bologna" },
+                  { value: "BZ", label: "Bolzano" },
+                  { value: "BS", label: "Brescia" },
+                  { value: "BR", label: "Brindisi" },
+                  { value: "CA", label: "Cagliari" },
+                  { value: "CL", label: "Caltanissetta" },
+                  { value: "CB", label: "Campobasso" },
+                  { value: "CI", label: "Carbonia-Iglesias" },
+                  { value: "CE", label: "Caserta" },
+                  { value: "CT", label: "Catania" },
+                  { value: "CZ", label: "Catanzaro" },
+                  { value: "CH", label: "Chieti" },
+                  { value: "CO", label: "Como" },
+                  { value: "CS", label: "Cosenza" },
+                  { value: "CR", label: "Cremona" },
+                  { value: "KR", label: "Crotone" },
+                  { value: "CN", label: "Cuneo" },
+                  { value: "EN", label: "Enna" },
+                  { value: "FM", label: "Fermo" },
+                  { value: "FE", label: "Ferrara" },
+                  { value: "FI", label: "Firenze" },
+                  { value: "FG", label: "Foggia" },
+                  { value: "FC", label: "Forlì-Cesena" },
+                  { value: "FR", label: "Frosinone" },
+                  { value: "GE", label: "Genova" },
+                  { value: "GO", label: "Gorizia" },
+                  { value: "GR", label: "Grosseto" },
+                  { value: "IM", label: "Imperia" },
+                  { value: "IS", label: "Isernia" },
+                  { value: "SP", label: "La Spezia" },
+                  { value: "LT", label: "Latina" },
+                  { value: "LE", label: "Lecce" },
+                  { value: "LC", label: "Lecco" },
+                  { value: "LO", label: "Lodi" },
+                  { value: "LU", label: "Lucca" },
+                  { value: "MC", label: "Macerata" },
+                  { value: "MN", label: "Mantova" },
+                  { value: "MS", label: "Massa-Carrara" },
+                  { value: "MT", label: "Matera" },
+                  { value: "ME", label: "Messina" },
+                  { value: "MI", label: "Milano" },
+                  { value: "MO", label: "Modena" },
+                  { value: "MB", label: "Monza-Brianza" },
+                  { value: "NA", label: "Napoli" },
+                  { value: "NO", label: "Novara" },
+                  { value: "NU", label: "Nuoro" },
+                  { value: "OR", label: "Olbia-Tempio" },
+                  { value: "PD", label: "Padova" },
+                  { value: "PA", label: "Palermo" },
+                  { value: "PR", label: "Parma" },
+                  { value: "PV", label: "Pavia" },
+                  { value: "PG", label: "Perugia" },
+                  { value: "PU", label: "Pesaro e Urbino" },
+                  { value: "PE", label: "Pescara" },
+                  { value: "PC", label: "Piacenza" },
+                  { value: "PI", label: "Pisa" },
+                  { value: "PT", label: "Pistoia" },
+                  { value: "PN", label: "Pordenone" },
+                  { value: "PZ", label: "Potenza" },
+                  { value: "PO", label: "Prato" },
+                  { value: "RG", label: "Ragusa" },
+                  { value: "RA", label: "Ravenna" },
+                  { value: "RC", label: "Reggio Calabria" },
+                  { value: "RE", label: "Reggio Emilia" },
+                  { value: "RI", label: "Rieti" },
+                  { value: "RN", label: "Rimini" },
+                  { value: "RM", label: "Roma" },
+                  { value: "RO", label: "Rovigo" },
+                  { value: "SA", label: "Salerno" },
+                  { value: "SS", label: "Sassari" },
+                  { value: "SV", label: "Savona" },
+                  { value: "SI", label: "Siena" },
+                  { value: "SR", label: "Siracusa" },
+                  { value: "SO", label: "Sondrio" },
+                  { value: "TA", label: "Taranto" },
+                  { value: "TE", label: "Teramo" },
+                  { value: "TR", label: "Terni" },
+                  { value: "TO", label: "Torino" },
+                  { value: "TP", label: "Trapani" },
+                  { value: "TN", label: "Trento" },
+                  { value: "TV", label: "Treviso" },
+                  { value: "TS", label: "Trieste" },
+                  { value: "UD", label: "Udine" },
+                  { value: "VA", label: "Varese" },
+                  { value: "VE", label: "Venezia" },
+                  { value: "VB", label: "Verbano-Cusio-Ossola" },
+                  { value: "VC", label: "Vercelli" },
+                  { value: "VR", label: "Verona" },
+                  { value: "VV", label: "Vibo Valentia" },
+                  { value: "VI", label: "Vicenza" },
+                  { value: "VT", label: "Viterbo" }
+                ].map((option) => (
+                  <button
+                    key={option.value}
+                    onClick={() => {
+                      setProvince(option.value)
+                      setProvinceDropdownOpen(false)
+                    }}
+                    className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
         <button
