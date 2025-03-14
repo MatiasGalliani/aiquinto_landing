@@ -7,6 +7,9 @@ import savingSvg from './assets/saving.svg'
 import './App.css'
 import ChatWidget from './components/ChatWidget'
 import aiQuintoLogo from './assets/ai_quinto_logo.png'
+import { HelmetProvider } from "react-helmet-async";
+import ReactDOM from "react-dom/client";
+import { Helmet } from "react-helmet-async";
 
 function FormScreen({ onClose }) {
   const [loading, setLoading] = useState(true)
@@ -879,8 +882,59 @@ function App() {
     return <ContactPage />
   }
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "FinancialProduct",
+    "name": "Cessione del Quinto - Prestiti per Dipendenti e Pensionati",
+    "description": "Ottieni un prestito sicuro con la cessione del quinto per dipendenti pubblici e pensionati con tassi agevolati e rate fisse.",
+    "provider": {
+      "@type": "FinancialService",
+      "name": "Creditplan",
+      "url": "https://aiquinto.it",
+      "logo": "https://aiquinto.it/logo.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "areaServed": "IT",
+        "availableLanguage": ["Italian", "English"]
+      }
+    },
+    "offers": {
+      "@type": "LoanOrCredit",
+      "name": "Cessione del Quinto Creditplan",
+      "loanType": "Cessione del Quinto",
+      "interestRate": "3.5",
+      "loanTerm": "120 mesi",
+      "amount": {
+        "@type": "MonetaryAmount",
+        "currency": "EUR",
+        "value": "5000-75000"
+      },
+      "eligibleCustomerType": ["Pensionati", "Dipendenti Pubblici", "Dipendenti Privati"],
+      "provider": {
+        "@type": "FinancialService",
+        "name": "Creditplan"
+      },
+      "termsOfService": "https://aiquinto.it/termini"
+    },
+    "review": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "127",
+      "bestRating": "5",
+      "worstRating": "1"
+    }
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
+      <Helmet>
+        <title>Cessione del Quinto - Creditplan</title>
+        <meta name="description" content="Ottieni un prestito sicuro con la cessione del quinto per dipendenti pubblici e pensionati con tassi agevolati." />
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+      </Helmet>
       <main className="flex-grow">
         {/* Sección Hero con fondo celeste y olas */}
         <div className="bg-gradient-to-r from-blue-100 to-blue-300 w-full pt-4">
