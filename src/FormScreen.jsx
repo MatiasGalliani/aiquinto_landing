@@ -19,7 +19,7 @@ function FormScreen({ onClose, onFormSubmit }) {
   // New state to determine if the device is mobile
   const [isMobile, setIsMobile] = useState(false)
 
-  // Agrega los nuevos estados al inicio del componente FormScreen, junto a los demás:
+  // Estados de Informazioni Contatto
   const [nome, setNome] = useState("")
   const [cognome, setCognome] = useState("")
   const [mail, setMail] = useState("")
@@ -27,15 +27,17 @@ function FormScreen({ onClose, onFormSubmit }) {
   // Estado para aceptar la Privacy Policy
   const [privacyAccepted, setPrivacyAccepted] = useState(false)
 
-  // Dentro del componente FormScreen, agrega el nuevo estado junto a los demás:
+  // NUEVOS estados para el dropdown de contrato y provincia
   const [contractDropdownOpen, setContractDropdownOpen] = useState(false);
-
-  // Dentro del componente FormScreen, agrega el estado para controlar el dropdown de provincia:
   const [provinceDropdownOpen, setProvinceDropdownOpen] = useState(false);
 
   // NUEVOS estados para el flujo "Dipendente"
   const [amountRequested, setAmountRequested] = useState("")
   const [netSalary, setNetSalary] = useState("")
+
+  // NUEVOS estados para el flujo "Dipendente Privato"
+  const [over12Months, setOver12Months] = useState("")
+  const [numEmployees, setNumEmployees] = useState("")
 
   // Check viewport width to set isMobile (adjust the px threshold as needed)
   useEffect(() => {
@@ -277,8 +279,12 @@ function FormScreen({ onClose, onFormSubmit }) {
               depType === "Parapubblico"
             ) {
               setStep(4)
-            } else {
-              console.log("Dipendente data submitted", { depType, secondarySelection })
+            } else if (depType === "Privato") {
+              if (secondarySelection) { // validamos que se haya seleccionado un subtipo
+                setStep(6)
+              } else {
+                alert("Per favore, seleziona un sottotipo per continuare.")
+              }
             }
           }}
         >
@@ -290,15 +296,11 @@ function FormScreen({ onClose, onFormSubmit }) {
 
   // STEP 4:
   // Para "Dipendente": Campos adicionales se mostrano se il tipo de dipendente es Pubblico, Statale o Parapubblico.
-  if (
-    step === 4 &&
-    selectedOption === "dipendente" &&
-    (depType === "Pubblico" || depType === "Statale" || depType === "Parapubblico")
-  ) {
+  if (step === 4 && selectedOption === "dipendente") {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-white px-4 sm:px-6 rounded-2xl">
         <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-16">
-          <button onClick={() => setStep(3)} className="mr-4">
+          <button onClick={() => setStep(selectedOption === "dipendente" && depType === "Privato" ? 6 : 3)} className="mr-4">
             <IoIosArrowBack size={32} className="text-black" />
           </button>
           <h2 className="text-3xl sm:text-4xl font-semibold">
@@ -631,6 +633,100 @@ function FormScreen({ onClose, onFormSubmit }) {
               Do il consenso a Creditplan al trattamento dei miei dati personali per contattarmi via email o telefono, valutare il mio profilo creditizio e creare un preventivo personalizzato. *Con l'invio della richiesta, dichiaro di aver preso visione dell'informativa sulla privacy.
             </label>
           </div>
+        </div>
+        <button
+          className="mt-8 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
+          onClick={onFormSubmit}
+        >
+          Invia la Tua Richiesta
+        </button>
+      </div>
+    )
+  }
+
+  if (step === 6 && selectedOption === "dipendente" && depType === "Privato") {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
+        <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-16">
+          <button onClick={() => setStep(3)} className="mr-4">
+            <IoIosArrowBack size={32} className="text-black" />
+          </button>
+          <h2 className="text-3xl font-semibold">Informazioni Privato</h2>
+        </div>
+        <div className="w-full max-w-md space-y-4">
+          <div className="flex flex-col">
+            <label className="text-base sm:text-xl font-semibold mb-2">
+              Sei dipendente da più di 12 mesi?
+            </label>
+            <input
+              type="text"
+              value={over12Months}
+              onChange={(e) => setOver12Months(e.target.value)}
+              placeholder="Rispondi qui"
+              className="border p-3 sm:p-4 rounded-2xl text-base sm:text-lg"
+            />
+          </div>
+          <div className="flex flex-col">
+            <label className="text-base sm:text-xl font-semibold mb-2">
+              Numero dipendenti?
+            </label>
+            <input
+              type="text"
+              value={numEmployees}
+              onChange={(e) => setNumEmployees(e.target.value)}
+              placeholder="Inserisci il numero"
+              className="border p-3 sm:p-4 rounded-2xl text-base sm:text-lg"
+            />
+          </div>
+        </div>
+        <button
+          className="mt-8 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl"
+          onClick={() => setStep(4)}
+        >
+          Avanti
+        </button>
+      </div>
+    )
+  }
+
+  if (step === 7 && selectedOption === "dipendente" && depType === "Privato") {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
+        <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-20">
+          <button onClick={() => setStep(6)} className="mr-4">
+            <IoIosArrowBack size={32} className="text-black" />
+          </button>
+          <h2 className="text-3xl font-semibold">Informazioni Contatto</h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-3xl">
+          <input
+            type="text"
+            placeholder="Nome"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
+          />
+          <input
+            type="text"
+            placeholder="Cognome"
+            value={cognome}
+            onChange={(e) => setCognome(e.target.value)}
+            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
+          />
+          <input
+            type="email"
+            placeholder="Mail"
+            value={mail}
+            onChange={(e) => setMail(e.target.value)}
+            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
+          />
+          <input
+            type="tel"
+            placeholder="Telefono"
+            value={telefono}
+            onChange={(e) => setTelefono(e.target.value)}
+            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
+          />
         </div>
         <button
           className="mt-8 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
