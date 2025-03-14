@@ -681,58 +681,9 @@ function FormScreen({ onClose, onFormSubmit }) {
         </div>
         <button
           className="mt-8 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl"
-          onClick={() => setStep(4)}
+          onClick={() => setStep(4)} // Reutilizamos la pantalla de Informazioni Aggiuntive.
         >
           Avanti
-        </button>
-      </div>
-    )
-  }
-
-  if (step === 7 && selectedOption === "dipendente" && depType === "Privato") {
-    return (
-      <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
-        <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-20">
-          <button onClick={() => setStep(6)} className="mr-4">
-            <IoIosArrowBack size={32} className="text-black" />
-          </button>
-          <h2 className="text-3xl font-semibold">Informazioni Contatto</h2>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-3xl">
-          <input
-            type="text"
-            placeholder="Nome"
-            value={nome}
-            onChange={(e) => setNome(e.target.value)}
-            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
-          />
-          <input
-            type="text"
-            placeholder="Cognome"
-            value={cognome}
-            onChange={(e) => setCognome(e.target.value)}
-            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
-          />
-          <input
-            type="email"
-            placeholder="Mail"
-            value={mail}
-            onChange={(e) => setMail(e.target.value)}
-            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
-          />
-          <input
-            type="tel"
-            placeholder="Telefono"
-            value={telefono}
-            onChange={(e) => setTelefono(e.target.value)}
-            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
-          />
-        </div>
-        <button
-          className="mt-8 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
-          onClick={onFormSubmit}
-        >
-          Invia la Tua Richiesta
         </button>
       </div>
     )
