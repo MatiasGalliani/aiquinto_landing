@@ -140,7 +140,7 @@ function FormScreen({ onClose }) {
         <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
           <div className="flex items-center w-full max-w-xl mb-8">
             <button onClick={() => setStep(1)} className="mr-4">
-              <IoIosArrowBack size={32} className="text-blue-600" />
+              <IoIosArrowBack size={32} className="text-black" />
             </button>
             <h2 className="text-3xl font-semibold">
               Scelta: Pensionato
@@ -610,18 +610,32 @@ function FormScreen({ onClose }) {
             className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
           />
         </div>
-        {/* Checkbox de Privacy Policy */}
-        <div className="flex items-center mt-4">
-          <input
-            type="checkbox"
-            id="privacy"
-            checked={privacyAccepted}
-            onChange={(e) => setPrivacyAccepted(e.target.checked)}
-            className="mr-2"
-          />
-          <label htmlFor="privacy" className="text-lg">
-            Accetto la Privacy Policy
-          </label>
+        {/* Checkbox de Privacy Policy centradas y con texto compacto */}
+        <div className="mt-4 space-y-2 max-w-md mx-auto text-center">
+          <div className="flex items-start mt-6">
+            <input
+              type="checkbox"
+              id="privacy1"
+              checked={privacyAccepted}
+              onChange={(e) => setPrivacyAccepted(e.target.checked)}
+              className="mr-2 mt-1"
+            />
+            <label htmlFor="privacy1" className="text-sm text-gray-800 leading-snug">
+              Dichiaro di aver preso visione dell'Informativa ai sensi del Decreto Legislativo 196/2003 e del Regolamento (UE) 2016/679 (GDPR).
+            </label>
+          </div>
+          <div className="flex items-start">
+            <input
+              type="checkbox"
+              id="privacy2"
+              checked={privacyAccepted}
+              onChange={(e) => setPrivacyAccepted(e.target.checked)}
+              className="mr-2 mt-1"
+            />
+            <label htmlFor="privacy2" className="text-sm text-gray-800 leading-snug">
+              Do il consenso a Creditplan al trattamento dei miei dati personali per contattarmi via email o telefono, valutare il mio profilo creditizio e creare un preventivo personalizzato. *Con l'invio della richiesta, dichiaro di aver preso visione dell'informativa sulla privacy.
+            </label>
+          </div>
         </div>
         <button
           className="mt-8 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
@@ -629,7 +643,7 @@ function FormScreen({ onClose }) {
             console.log("Informazioni Contatto", { nome, cognome, mail, telefono, privacyAccepted })
           }
         >
-          Invia
+          Invia la Tua Richiesta
         </button>
       </div>
     )
@@ -640,7 +654,7 @@ function FormScreen({ onClose }) {
       {/* Contenedor flex para la flecha y el título */}
       <div className="flex items-center w-full max-w-xl mb-8">
         <button onClick={() => setStep(1)} className="mr-4">
-          <IoIosArrowBack size={32} className="text-blue-600" />
+          <IoIosArrowBack size={32} className="text-black" />
         </button>
         <h2 className="text-3xl font-semibold">
           Scelta: {selectedOption === "pensionato" ? "Pensionato" : "Dipendente"}
