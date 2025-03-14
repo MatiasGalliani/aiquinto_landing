@@ -7,8 +7,6 @@ import savingSvg from './assets/saving.svg'
 import './App.css'
 import ChatWidget from './components/ChatWidget'
 import aiQuintoLogo from './assets/ai_quinto_logo.png'
-import { HelmetProvider } from "react-helmet-async";
-import ReactDOM from "react-dom/client";
 import { Helmet } from "react-helmet-async";
 
 function FormScreen({ onClose }) {
