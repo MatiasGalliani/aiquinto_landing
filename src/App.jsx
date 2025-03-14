@@ -5,7 +5,6 @@ import logo_creditplan from './assets/LOGO-CREDITPLAN.png'
 import family_w_dog from './assets/family_with_dog.png'
 import savingSvg from './assets/saving.svg'
 import './App.css'
-import ChatWidget from './components/ChatWidget'
 import aiQuintoLogo from './assets/ai_quinto_logo.png'
 import { Helmet } from "react-helmet-async";
 import ThankYouPage from './ThankYouPage'
@@ -1084,13 +1083,13 @@ function App() {
               <div className="my-8 flex flex-col md:flex-row justify-center items-center gap-4">
                 <div
                   onClick={() => setShowFormScreen(true)}
-                  className="flex-1 cursor-pointer bg-blue-800 hover:bg-blue-700 text-white px-8 py-3 rounded-2xl text-xl text-center"
+                  className="flex-1 cursor-pointer bg-blue-800 hover:bg-blue-700 text-white px-8 py-3 rounded-2xl text-xl text-center transform hover:scale-105 transition-transform duration-300 ease-in-out"
                 >
                   Inizia Ora
                 </div>
                 <div
                   onClick={() => setShowContactFields(true)}
-                  className="flex-1 cursor-pointer bg-white hover:bg-gray-100 text-black px-8 py-3 rounded-2xl text-xl text-center border border-gray-400"
+                  className="flex-1 cursor-pointer bg-white hover:bg-gray-100 text-black px-8 py-3 rounded-2xl text-xl text-center border border-gray-400 transform hover:scale-105 transition-transform duration-300 ease-in-out"
                 >
                   Richiedi di Essere Contattato
                 </div>
@@ -1134,9 +1133,6 @@ function App() {
 
       <Footer />
 
-      <div className="fixed bottom-4 right-4 z-50">
-        <ChatWidget open={chatOpen} setOpen={setChatOpen} />
-      </div>
     </div>
   )
 }

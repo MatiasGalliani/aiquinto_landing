@@ -14,7 +14,7 @@ function ThankYouPage() {
       
       {/* Contenedor principal que centra el contenido */}
       <div className="flex-grow flex items-center justify-center">
-        <div className="bg-white rounded-xl shadow-2xl p-10 max-w-md text-center my-44">
+        <div className="bg-white rounded-xl shadow-2xl p-10 max-w-md text-center mt-36 mb-48">
           <div className="flex justify-center items-center space-x-6 mb-8">
             <img 
               src={aiQuintoLogo} 
