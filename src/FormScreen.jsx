@@ -167,23 +167,29 @@ function FormScreen({ onClose, onFormSubmit }) {
               <label className="text-base sm:text-xl font-semibold mb-2">
                 L'importo richiesto?
               </label>
-              <input
-                type="text"
-                value={amountRequested}
-                onChange={(e) => setAmountRequested(e.target.value)}
-                className="border p-3 sm:p-4 rounded-2xl text-base sm:text-lg"
-              />
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-xl text-gray-500">€</span>
+                <input
+                  type="text"
+                  value={amountRequested}
+                  onChange={(e) => setAmountRequested(e.target.value)}
+                  className="border pl-10 pr-3 p-3 sm:p-4 w-full rounded-2xl text-base sm:text-lg"
+                />
+              </div>
             </div>
             <div className="flex flex-col">
               <label className="text-base sm:text-xl font-semibold mb-2">
                 Stipendio netto mensile?
               </label>
-              <input
-                type="text"
-                value={netSalary}
-                onChange={(e) => setNetSalary(e.target.value)}
-                className="border p-3 sm:p-4 rounded-2xl text-base sm:text-lg"
-              />
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-xl text-gray-500">€</span>
+                <input
+                  type="text"
+                  value={netSalary}
+                  onChange={(e) => setNetSalary(e.target.value)}
+                  className="border pl-10 pr-3 p-3 sm:p-4 w-full rounded-2xl text-base sm:text-lg"
+                />
+              </div>
             </div>
           </div>
           <button
@@ -209,12 +215,12 @@ function FormScreen({ onClose, onFormSubmit }) {
           </button>
           <h2 className="text-3xl font-semibold">Che tipo di dipendente sei</h2>
         </div>
-        {/* Desplegable principal */}
+        {/* Desplegable principal "Seleziona tipo di dipendente" */}
         <div className="w-full max-w-md mb-4">
           <div
             onClick={() => {
               setDropdownOpen(!dropdownOpen)
-              setSecondaryDropdownOpen(false)
+              setSecondaryDropdownOpen(false)  // Cierra el desplegable del subtipo
             }}
             className="border p-4 rounded-2xl cursor-pointer flex justify-between items-center"
           >
@@ -241,10 +247,15 @@ function FormScreen({ onClose, onFormSubmit }) {
             </div>
           )}
         </div>
+
+        {/* Desplegable secundario "Seleziona il sottotipo" */}
         {depType && (
           <div className="w-full max-w-md mb-4">
             <div
-              onClick={() => setSecondaryDropdownOpen(!secondaryDropdownOpen)}
+              onClick={() => {
+                setSecondaryDropdownOpen(!secondaryDropdownOpen)
+                setDropdownOpen(false)  // Cierra el desplegable principal
+              }}
               className="border p-4 rounded-2xl cursor-pointer flex justify-between items-center"
             >
               <span className="text-xl font-semibold">
@@ -253,7 +264,7 @@ function FormScreen({ onClose, onFormSubmit }) {
               <IoIosArrowDown className={`transition-transform duration-300 ${secondaryDropdownOpen ? "rotate-90" : ""}`} />
             </div>
             {secondaryDropdownOpen && (
-              <div className="mt-2 border border-gray-300 rounded-lg shadow-lg">
+              <div className="mt-2 border border-gray-300 rounded-lg shadow-lg max-h-32 overflow-y-auto">
                 {secondaryOptionsMapping[depType].map(subOption => (
                   <button
                     key={subOption}
@@ -298,7 +309,7 @@ function FormScreen({ onClose, onFormSubmit }) {
   // Para "Dipendente": Campos adicionales se mostrano se il tipo de dipendente es Pubblico, Statale o Parapubblico.
   if (step === 4 && selectedOption === "dipendente") {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-white px-4 sm:px-6 rounded-2xl">
+      <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
         <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-16">
           <button onClick={() => setStep(selectedOption === "dipendente" && depType === "Privato" ? 6 : 3)} className="mr-4">
             <IoIosArrowBack size={32} className="text-black" />
@@ -309,13 +320,16 @@ function FormScreen({ onClose, onFormSubmit }) {
         </div>
         <div className="w-full max-w-md space-y-4">
           {/* Tipologia di contratto */}
-          <div className="w-full max-w-md mb-4">
+          <div className="w-full max-w-lg">
             <label className="text-base sm:text-xl font-semibold mb-2 block">
               Tipologia di contratto?
             </label>
             <div
-              onClick={() => setContractDropdownOpen(!contractDropdownOpen)}
-              className="border p-4 rounded-2xl cursor-pointer flex justify-between items-center"
+              onClick={() => {
+                setContractDropdownOpen(!contractDropdownOpen)
+                setProvinceDropdownOpen(false)  // Cierra el de provincia
+              }}
+              className="border p-3 rounded-2xl cursor-pointer flex justify-between items-center"
             >
               <span className="text-xl font-semibold">
                 {contractType
@@ -350,7 +364,7 @@ function FormScreen({ onClose, onFormSubmit }) {
               </div>
             )}
           </div>
-          {/* Anno di nascita */}
+          {/* Data di nascita */}
           <div className="flex flex-col">
             <label className="text-base sm:text-xl font-semibold mb-2">
               Data di nascita
@@ -359,17 +373,20 @@ function FormScreen({ onClose, onFormSubmit }) {
               type="date"
               value={birthDate}
               onChange={(e) => setBirthDate(e.target.value)}
-              className="border p-3 sm:p-4 rounded-2xl text-base sm:text-lg"
+              className="border p-3 rounded-2xl text-base sm:text-lg"
             />
           </div>
-          {/* Provincia */}
-          <div className="w-full max-w-md mb-4">
+          {/* Provincia di Residenza */}
+          <div className="w-full max-w-md">
             <label className="text-base sm:text-xl font-semibold mb-2 block">
               Provincia di Residenza
             </label>
             <div
-              onClick={() => setProvinceDropdownOpen(!provinceDropdownOpen)}
-              className="border p-4 rounded-2xl cursor-pointer flex justify-between items-center"
+              onClick={() => {
+                setProvinceDropdownOpen(!provinceDropdownOpen)
+                setContractDropdownOpen(false)  // Cierra el de contrato
+              }}
+              className="border p-3 rounded-2xl cursor-pointer flex justify-between items-center"
             >
               <span className="text-xl font-semibold">
                 {province ? province : "Seleziona"}
@@ -377,7 +394,7 @@ function FormScreen({ onClose, onFormSubmit }) {
               <IoIosArrowDown className={`transition-transform duration-300 ${provinceDropdownOpen ? "rotate-90" : ""}`} />
             </div>
             {provinceDropdownOpen && (
-              <div className="mt-2 border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-auto">
+              <div className="mt-2 border border-gray-300 rounded-lg shadow-lg max-h-44 overflow-auto">
                 {[
                   { value: "", label: "Seleziona" },
                   { value: "AG", label: "Agrigento" },
@@ -502,7 +519,7 @@ function FormScreen({ onClose, onFormSubmit }) {
           </div>
         </div>
         <button
-          className="mt-8 bg-blue-700 hover:bg-blue-800 text-white px-5 py-3 text-lg rounded-2xl border border-gray-300 w-full max-w-md"
+          className="mt-8 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
           onClick={() => setStep(5)}
         >
           Avanti
@@ -638,7 +655,7 @@ function FormScreen({ onClose, onFormSubmit }) {
           className="mt-8 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
           onClick={onFormSubmit}
         >
-          Invia la Tua Richiesta
+          Invia Questa Richiesta
         </button>
       </div>
     )
@@ -658,13 +675,15 @@ function FormScreen({ onClose, onFormSubmit }) {
             <label className="text-base sm:text-xl font-semibold mb-2">
               Sei dipendente da più di 12 mesi?
             </label>
-            <input
-              type="text"
+            <select
               value={over12Months}
               onChange={(e) => setOver12Months(e.target.value)}
-              placeholder="Rispondi qui"
               className="border p-3 sm:p-4 rounded-2xl text-base sm:text-lg"
-            />
+            >
+              <option value="">Seleziona</option>
+              <option value="si">Si</option>
+              <option value="no">No</option>
+            </select>
           </div>
           <div className="flex flex-col">
             <label className="text-base sm:text-xl font-semibold mb-2">

@@ -1,4 +1,4 @@
-- finish the dipendente - privato
+- finish the dipendente - privato DONE
 - finish the pensionato part
 - make the middle inizia ora button work
 - finish the richiedi di essere contatatto button up
