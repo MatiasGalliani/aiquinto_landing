@@ -1,0 +1,10 @@
+- finish the dipendente - privato
+- finish the pensionato part
+- make the middle inizia ora button work
+- finish the richiedi di essere contatatto button up
+- finish the richiedi di essere contatatto button down
+- make every part of the form mandatory
+- connect form to google sheets
+- connect form to eugenio with simple behavior for fixing appointments
+- make the we're sorry page for refusals
+- set the refusals conditions
