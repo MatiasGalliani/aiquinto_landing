@@ -8,8 +8,9 @@ import './App.css'
 import ChatWidget from './components/ChatWidget'
 import aiQuintoLogo from './assets/ai_quinto_logo.png'
 import { Helmet } from "react-helmet-async";
+import ThankYouPage from './ThankYouPage'
 
-function FormScreen({ onClose }) {
+function FormScreen({ onClose, onFormSubmit }) {
   const [loading, setLoading] = useState(true)
   const [step, setStep] = useState(1)
   const [selectedOption, setSelectedOption] = useState(null) // "pensionato" o "dipendente"
@@ -573,7 +574,7 @@ function FormScreen({ onClose }) {
   if (step === 5 && selectedOption === "dipendente") {
     return (
       <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
-        {/* Botón para volver al step precedente */}
+        {/* Cabecera con flecha */}
         <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-20">
           <button onClick={() => setStep(4)} className="mr-4">
             <IoIosArrowBack size={32} className="text-black" />
@@ -611,8 +612,9 @@ function FormScreen({ onClose }) {
             className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
           />
         </div>
-        {/* Checkbox de Privacy Policy centradas y con texto compacto */}
+        {/* Checkbox de Privacy Policy */}
         <div className="mt-4 space-y-2 max-w-md mx-auto text-center">
+          {/* Checkbox 1 */}
           <div className="flex items-start mt-6">
             <input
               type="checkbox"
@@ -625,6 +627,7 @@ function FormScreen({ onClose }) {
               Dichiaro di aver preso visione dell'Informativa ai sensi del Decreto Legislativo 196/2003 e del Regolamento (UE) 2016/679 (GDPR).
             </label>
           </div>
+          {/* Checkbox 2 */}
           <div className="flex items-start">
             <input
               type="checkbox"
@@ -640,9 +643,7 @@ function FormScreen({ onClose }) {
         </div>
         <button
           className="mt-8 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
-          onClick={() =>
-            console.log("Informazioni Contatto", { nome, cognome, mail, telefono, privacyAccepted })
-          }
+          onClick={onFormSubmit}
         >
           Invia la Tua Richiesta
         </button>
@@ -869,13 +870,39 @@ function App() {
   const [showFormScreen, setShowFormScreen] = useState(false)
   const [showContactPage, setShowContactPage] = useState(false)
   const [showContactFields, setShowContactFields] = useState(false)
+  const [showThankYou, setShowThankYou] = useState(false)
+  const [submissionLoading, setSubmissionLoading] = useState(false)
 
-  // Si se activa el formulario, renderizamos FormScreen
-  if (showFormScreen) {
-    return <FormScreen onClose={() => setShowFormScreen(false)} />
+  // Función de callback para envío de formulario
+  const onFormSubmit = () => {
+    // Muestra un spinner de envío
+    setSubmissionLoading(true)
+    setTimeout(() => {
+      setSubmissionLoading(false)
+      // Cierra el formulario y muestra la Thank You page
+      setShowFormScreen(false)
+      setShowThankYou(true)
+    }, 2000) // Ajusta el tiempo según tu necesidad
   }
 
-  // Nueva ruta para la página de contacto
+  if (showThankYou) {
+    // Renderizamos la Thank You page
+    return <ThankYouPage />
+  }
+
+  if (submissionLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-white rounded-2xl">
+        <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-700 border-t-transparent"></div>
+      </div>
+    )
+  }
+
+  if (showFormScreen) {
+    // Se pasa el callback onFormSubmit a FormScreen
+    return <FormScreen onClose={() => setShowFormScreen(false)} onFormSubmit={onFormSubmit} />
+  }
+
   if (showContactPage) {
     return <ContactPage />
   }
