@@ -84,9 +84,9 @@ function FormScreen({ onClose, onFormSubmit }) {
           </div>
           <div>{/* Espacio vacío */}</div>
         </div>
-        <div className="flex flex-col gap-6 w-full max-w-xl">
+        <div className="flex flex-col gap-6 w-full max-w-lg">
           <div
-            className="flex items-center bg-white border border-gray-300 hover:border-gray-600 cursor-pointer rounded-2xl p-6 transition"
+            className="flex items-center bg-white border border-gray-300 hover:border-gray-600 cursor-pointer rounded-2xl p-4 transition"
             onClick={() => setSelectedOption("pensionato")}
           >
             <div
@@ -100,7 +100,7 @@ function FormScreen({ onClose, onFormSubmit }) {
             <span className="text-xl font-semibold">Pensionato</span>
           </div>
           <div
-            className="flex items-center bg-white border border-gray-300 hover:border-gray-600 cursor-pointer rounded-2xl p-6 transition"
+            className="flex items-center bg-white border border-gray-300 hover:border-gray-600 cursor-pointer rounded-2xl p-4 transition"
             onClick={() => setSelectedOption("dipendente")}
           >
             <div
