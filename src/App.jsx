@@ -31,6 +31,8 @@ function FormScreen({ onClose }) {
   const [cognome, setCognome] = useState("")
   const [mail, setMail] = useState("")
   const [telefono, setTelefono] = useState("")
+  // Estado para aceptar la Privacy Policy
+  const [privacyAccepted, setPrivacyAccepted] = useState(false)
 
   // Dentro del componente FormScreen, agrega el nuevo estado junto a los demás:
   const [contractDropdownOpen, setContractDropdownOpen] = useState(false);
@@ -74,14 +76,14 @@ function FormScreen({ onClose }) {
   if (step === 1) {
     return (
       <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
-        <div className="grid grid-cols-3 items-center w-full max-w-5xl mb-8">
+        <div className="flex items-center w-full max-w-xl mb-8">
           <div>
             <button onClick={onClose}>
-              <IoIosArrowBack size={32} className="text-black" />
+              <IoIosArrowBack size={32} className="text-black mr-4" />
             </button>
           </div>
           <div className="flex justify-center">
-            <h2 className="text-xl font-semibold">
+            <h2 className="text-3xl font-semibold">
               Qual è la tua situazione lavorativa?
             </h2>
           </div>
@@ -159,7 +161,7 @@ function FormScreen({ onClose }) {
           {/* Botón para volver */}
           <div className="flex items-center w-full max-w-xl mb-8">
             <button onClick={() => setStep(1)} className="mr-4">
-              <IoIosArrowBack size={32} className="text-blue-600" />
+              <IoIosArrowBack size={32} className="text-black" />
             </button>
             <h2 className="text-3xl font-semibold">
               Inserisci i tuoi dati iniziali
@@ -205,19 +207,12 @@ function FormScreen({ onClose }) {
   if (step === 3 && selectedOption === "dipendente") {
     return (
       <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
-        {/* Encabezado con botón para volver al step preliminare */}
-        <div className="grid grid-cols-3 items-center w-full max-w-5xl mb-8">
-          <div>
-            <button onClick={() => setStep(2)}>
-              <IoIosArrowBack size={32} className="text-black" />
-            </button>
-          </div>
-          <div className="flex flex-col items-center">
-            <span className="text-3xl font-semibold">
-              Che tipo di dipendente sei
-            </span>
-          </div>
-          <div>{/* Espacio para equilibrar la cuadrícula */}</div>
+        {/* Cabecera unificada */}
+        <div className="flex items-center w-full max-w-xl mb-8">
+          <button onClick={() => setStep(2)} className="mr-4">
+            <IoIosArrowBack size={32} className="text-black" />
+          </button>
+          <h2 className="text-3xl font-semibold">Che tipo di dipendente sei</h2>
         </div>
         {/* Desplegable principal */}
         <div className="w-full max-w-md mb-4">
@@ -565,6 +560,73 @@ function FormScreen({ onClose }) {
           className="mt-8 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
           onClick={() =>
             console.log("Informazioni Contatto", { nome, cognome, mail, telefono })
+          }
+        >
+          Invia
+        </button>
+      </div>
+    )
+  }
+
+  // STEP 5: Último paso para "Dipendente": Informazioni Contatto con Privacy Policy
+  if (step === 5 && selectedOption === "dipendente") {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
+        {/* Botón para volver al step precedente */}
+        <div className="flex items-center w-full max-w-xl mb-8">
+          <button onClick={() => setStep(4)} className="mr-4">
+            <IoIosArrowBack size={32} className="text-black" />
+          </button>
+          <h2 className="text-3xl font-semibold">Informazioni Contatto</h2>
+        </div>
+        {/* Campos de contacto */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-3xl">
+          <input
+            type="text"
+            placeholder="Nome"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
+          />
+          <input
+            type="text"
+            placeholder="Cognome"
+            value={cognome}
+            onChange={(e) => setCognome(e.target.value)}
+            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
+          />
+          <input
+            type="email"
+            placeholder="Mail"
+            value={mail}
+            onChange={(e) => setMail(e.target.value)}
+            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
+          />
+          <input
+            type="tel"
+            placeholder="Telefono"
+            value={telefono}
+            onChange={(e) => setTelefono(e.target.value)}
+            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
+          />
+        </div>
+        {/* Checkbox de Privacy Policy */}
+        <div className="flex items-center mt-4">
+          <input
+            type="checkbox"
+            id="privacy"
+            checked={privacyAccepted}
+            onChange={(e) => setPrivacyAccepted(e.target.checked)}
+            className="mr-2"
+          />
+          <label htmlFor="privacy" className="text-lg">
+            Accetto la Privacy Policy
+          </label>
+        </div>
+        <button
+          className="mt-8 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
+          onClick={() =>
+            console.log("Informazioni Contatto", { nome, cognome, mail, telefono, privacyAccepted })
           }
         >
           Invia
