@@ -76,7 +76,7 @@ function FormScreen({ onClose }) {
   if (step === 1) {
     return (
       <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
-        <div className="flex items-center w-full max-w-xl mb-8">
+        <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-16">
           <div>
             <button onClick={onClose}>
               <IoIosArrowBack size={32} className="text-black mr-4" />
@@ -159,7 +159,7 @@ function FormScreen({ onClose }) {
       return (
         <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
           {/* Botón para volver */}
-          <div className="flex items-center w-full max-w-xl mb-8">
+          <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-16">
             <button onClick={() => setStep(1)} className="mr-4">
               <IoIosArrowBack size={32} className="text-black" />
             </button>
@@ -207,8 +207,8 @@ function FormScreen({ onClose }) {
   if (step === 3 && selectedOption === "dipendente") {
     return (
       <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
-        {/* Cabecera unificada */}
-        <div className="flex items-center w-full max-w-xl mb-8">
+        {/* Cabecera unificada con padding para mover a la derecha */}
+        <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-16">
           <button onClick={() => setStep(2)} className="mr-4">
             <IoIosArrowBack size={32} className="text-black" />
           </button>
@@ -304,10 +304,9 @@ function FormScreen({ onClose }) {
   ) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-white px-4 sm:px-6 rounded-2xl">
-        <div className="flex items-center w-full max-w-xl mb-8">
-          <button onClick={() => setStep(3)} className="mr-4">
-            <IoIosArrowBack size={32} className="text-black" />
-          </button>
+        <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-16">          <button onClick={() => setStep(3)} className="mr-4">
+          <IoIosArrowBack size={32} className="text-black" />
+        </button>
           <h2 className="text-3xl sm:text-4xl font-semibold">
             Informazioni Aggiuntive
           </h2>
@@ -520,7 +519,7 @@ function FormScreen({ onClose }) {
   if (step === 4) {
     return (
       <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
-        <div className="flex items-center w-full max-w-xl mb-8">
+        <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-16">
           <button onClick={() => setStep(3)} className="mr-4">
             <IoIosArrowBack size={32} className="text-black" />
           </button>
