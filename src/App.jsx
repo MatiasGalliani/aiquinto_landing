@@ -89,7 +89,7 @@ function FAQ() {
     {
       question: "Perché dovrei scegliere Creditplan?",
       answer:
-        "Offriamo tempi rapidi di erogazione. Collaboriamo con partner bancari convenzionati INPS, garantendo sicurezza e affidabilità. Abbiamo un team dedicato di professionisti a tua disposizione. Nessuna spesa aggiuntiva né consulenza gratuita. Tassi altamente competitivi."
+        "Offriamo tempi rapidi di erogazione. Collaboriamo con partner bancari convenzionati INPS, garantendo sicurezza e affidabilità. Abbiamo un team dedicato di professionisti a tua disposizione. Nessuna spesa aggiuntiva la consulenza è gratuita. Tassi altamente competitivi."
     },
     {
       question: "Posso richiedere il prestito se sono stato segnalato come cattivo pagatore?",
@@ -538,7 +538,7 @@ export function Footer() {
           {/* Link Utili */}
           <div>
             <a
-              href="https://calendar.creditplan.it"
+              href="https://creditplan.it/dove-siamo/"
               target="_blank"
               rel="noopener noreferrer"
             >

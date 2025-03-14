@@ -29,7 +29,7 @@ function ThankYouPage() {
           </div>
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Grazie!</h1>
           <p className="text-lg text-gray-700 mb-6">
-            La tua richiesta è stata inviata con successo. Il nostro team ti contatterà al più presto per offrirti l'assistenza necessaria.
+            La tua richiesta è stata inviata con successo. €ugenio IA di Creditplan ti scriverà subito su WhatsApp per fissare una videochiamata con un nostro esperto.
           </p>
           <button 
             className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg transition duration-200"
