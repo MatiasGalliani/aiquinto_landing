@@ -76,7 +76,7 @@ function FormScreen({ onClose }) {
   if (step === 1) {
     return (
       <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
-        <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-16">
+        <div className="flex items-center w-full max-w-xl mb-8">
           <div>
             <button onClick={onClose}>
               <IoIosArrowBack size={32} className="text-black mr-4" />
@@ -170,7 +170,7 @@ function FormScreen({ onClose }) {
           <div className="w-full max-w-md space-y-4">
             <div className="flex flex-col">
               <label className="text-base sm:text-xl font-semibold mb-2">
-                L'importo richiesto?*
+                L'importo richiesto?
               </label>
               <input
                 type="text"
@@ -181,7 +181,7 @@ function FormScreen({ onClose }) {
             </div>
             <div className="flex flex-col">
               <label className="text-base sm:text-xl font-semibold mb-2">
-                Stipendio netto mensile?*
+                Stipendio netto mensile?
               </label>
               <input
                 type="text"
@@ -304,9 +304,10 @@ function FormScreen({ onClose }) {
   ) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-white px-4 sm:px-6 rounded-2xl">
-        <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-16">          <button onClick={() => setStep(3)} className="mr-4">
-          <IoIosArrowBack size={32} className="text-black" />
-        </button>
+        <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-16">
+          <button onClick={() => setStep(3)} className="mr-4">
+            <IoIosArrowBack size={32} className="text-black" />
+          </button>
           <h2 className="text-3xl sm:text-4xl font-semibold">
             Informazioni Aggiuntive
           </h2>
@@ -315,7 +316,7 @@ function FormScreen({ onClose }) {
           {/* Tipologia di contratto */}
           <div className="w-full max-w-md mb-4">
             <label className="text-base sm:text-xl font-semibold mb-2 block">
-              Tipologia di contratto?*
+              Tipologia di contratto?
             </label>
             <div
               onClick={() => setContractDropdownOpen(!contractDropdownOpen)}
@@ -357,7 +358,7 @@ function FormScreen({ onClose }) {
           {/* Anno di nascita */}
           <div className="flex flex-col">
             <label className="text-base sm:text-xl font-semibold mb-2">
-              Anno di nascita?*
+              Data di nascita
             </label>
             <input
               type="date"
@@ -369,7 +370,7 @@ function FormScreen({ onClose }) {
           {/* Provincia */}
           <div className="w-full max-w-md mb-4">
             <label className="text-base sm:text-xl font-semibold mb-2 block">
-              Provincia*
+              Provincia di Residenza
             </label>
             <div
               onClick={() => setProvinceDropdownOpen(!provinceDropdownOpen)}
@@ -519,7 +520,7 @@ function FormScreen({ onClose }) {
   if (step === 4) {
     return (
       <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
-        <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-16">
+        <div className="flex items-center w-full max-w-xl mb-8">
           <button onClick={() => setStep(3)} className="mr-4">
             <IoIosArrowBack size={32} className="text-black" />
           </button>
@@ -572,7 +573,7 @@ function FormScreen({ onClose }) {
     return (
       <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
         {/* Botón para volver al step precedente */}
-        <div className="flex items-center w-full max-w-xl mb-8">
+        <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-20">
           <button onClick={() => setStep(4)} className="mr-4">
             <IoIosArrowBack size={32} className="text-black" />
           </button>
