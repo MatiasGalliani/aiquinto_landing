@@ -38,6 +38,10 @@ function FormScreen({ onClose }) {
   // Dentro del componente FormScreen, agrega el estado para controlar el dropdown de provincia:
   const [provinceDropdownOpen, setProvinceDropdownOpen] = useState(false);
 
+  // NUEVOS estados para el flujo "Dipendente"
+  const [amountRequested, setAmountRequested] = useState("")
+  const [netSalary, setNetSalary] = useState("")
+
   // Check viewport width to set isMobile (adjust the px threshold as needed)
   useEffect(() => {
     const checkIsMobile = () => setIsMobile(window.innerWidth <= 768)
@@ -66,10 +70,10 @@ function FormScreen({ onClose }) {
     )
   }
 
+  // Step 1: Selección entre Pensionato y Dipendente
   if (step === 1) {
     return (
       <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
-        {/* Contenedor flex para la flecha y el título */}
         <div className="grid grid-cols-3 items-center w-full max-w-5xl mb-8">
           <div>
             <button onClick={onClose}>
@@ -81,10 +85,9 @@ function FormScreen({ onClose }) {
               Qual è la tua situazione lavorativa?
             </h2>
           </div>
-          <div>{/* Espacio vacío para equilibrar la cuadrícula */}</div>
+          <div>{/* Espacio vacío */}</div>
         </div>
         <div className="flex flex-col gap-6 w-full max-w-xl">
-          {/* Opción Pensionato */}
           <div
             className="flex items-center bg-white border border-gray-300 hover:border-gray-600 cursor-pointer rounded-2xl p-6 transition"
             onClick={() => setSelectedOption("pensionato")}
@@ -99,7 +102,6 @@ function FormScreen({ onClose }) {
             ></div>
             <span className="text-xl font-semibold">Pensionato</span>
           </div>
-          {/* Opción Dipendente */}
           <div
             className="flex items-center bg-white border border-gray-300 hover:border-gray-600 cursor-pointer rounded-2xl p-6 transition"
             onClick={() => setSelectedOption("dipendente")}
@@ -127,7 +129,9 @@ function FormScreen({ onClose }) {
     )
   }
 
-  // Paso 2 para el formulario de Pensionato y Dipendente
+  // STEP 2:
+  // Para Pensionato: pantalla existente
+  // Para Dipendente: NUEVA pantalla preliminar con inputs de importo e stipendio
   if (step === 2) {
     if (selectedOption === "pensionato") {
       return (
@@ -140,10 +144,10 @@ function FormScreen({ onClose }) {
               Scelta: Pensionato
             </h2>
           </div>
-          <p className="text-lg mb-8">[Aquí iría la siguiente parte del formulario per Pensionato...]</p>
+          <p className="text-lg mb-8">[Qui andrà la parte successiva del form per Pensionato...]</p>
           <button
             className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-1 text-sm rounded-2xl border border-gray-300"
-            onClick={() => console.log("Avanzando a la siguiente parte...")}
+            onClick={() => console.log("Avanzando per Pensionato...")}
           >
             Avanti
           </button>
@@ -152,97 +156,42 @@ function FormScreen({ onClose }) {
     } else if (selectedOption === "dipendente") {
       return (
         <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
-          {/* Encabezado con botón para volver */}
-          <div className="grid grid-cols-3 items-center w-full max-w-5xl mb-8">
-            <div>
-              <button onClick={() => setStep(1)}>
-                <IoIosArrowBack size={32} className="text-black" />
-              </button>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="text-3xl font-semibold">
-                Che tipo di dipendente sei
-              </span>
-            </div>
-            <div>{/* Espacio para equilibrar la cuadrícula */}</div>
+          {/* Botón para volver */}
+          <div className="flex items-center w-full max-w-xl mb-8">
+            <button onClick={() => setStep(1)} className="mr-4">
+              <IoIosArrowBack size={32} className="text-blue-600" />
+            </button>
+            <h2 className="text-3xl font-semibold">
+              Inserisci i tuoi dati iniziali
+            </h2>
           </div>
-          {/* Desplegable principal */}
-          <div className="w-full max-w-md mb-4">
-            <div
-              onClick={() => {
-                setDropdownOpen(!dropdownOpen)
-                // Si se abre el principal se cierra el secundario
-                setSecondaryDropdownOpen(false)
-              }}
-              className="border p-4 rounded-2xl cursor-pointer flex justify-between items-center"
-            >
-              <span className="text-xl font-semibold">
-                {depType ? depType : "Seleziona tipo di dipendente"}
-              </span>
-              <IoIosArrowDown className={`transition-transform duration-300 ${dropdownOpen ? "rotate-90" : ""}`} />
+          <div className="w-full max-w-md space-y-4">
+            <div className="flex flex-col">
+              <label className="text-base sm:text-xl font-semibold mb-2">
+                L'importo richiesto?*
+              </label>
+              <input
+                type="text"
+                value={amountRequested}
+                onChange={(e) => setAmountRequested(e.target.value)}
+                className="border p-3 sm:p-4 rounded-2xl text-base sm:text-lg"
+              />
             </div>
-            {dropdownOpen && (
-              <div className="mt-2 border border-gray-300 rounded-lg shadow-lg">
-                {["Pubblico", "Statale", "Parapubblico", "Privato"].map(option => (
-                  <button
-                    key={option}
-                    onClick={() => {
-                      setDepType(option)
-                      setDropdownOpen(false)
-                      // Al seleccionar la opción principal, se reinicia la opción secundaria
-                      setSecondarySelection(null)
-                    }}
-                    className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                  >
-                    {option}
-                  </button>
-                ))}
-              </div>
-            )}
+            <div className="flex flex-col">
+              <label className="text-base sm:text-xl font-semibold mb-2">
+                Stipendio netto mensile?*
+              </label>
+              <input
+                type="text"
+                value={netSalary}
+                onChange={(e) => setNetSalary(e.target.value)}
+                className="border p-3 sm:p-4 rounded-2xl text-base sm:text-lg"
+              />
+            </div>
           </div>
-          {/* Desplegable secundario: se muestra si ya se seleccionó una opción principal */}
-          {depType && (
-            <div className="w-full max-w-md mb-4">
-              <div
-                onClick={() => setSecondaryDropdownOpen(!secondaryDropdownOpen)}
-                className="border p-4 rounded-2xl cursor-pointer flex justify-between items-center"
-              >
-                <span className="text-xl font-semibold">
-                  {secondarySelection ? secondarySelection : "Seleziona il sottotipo"}
-                </span>
-                <IoIosArrowDown className={`transition-transform duration-300 ${secondaryDropdownOpen ? "rotate-90" : ""}`} />
-              </div>
-              {secondaryDropdownOpen && (
-                <div className="mt-2 border border-gray-300 rounded-lg shadow-lg">
-                  {secondaryOptionsMapping[depType].map(subOption => (
-                    <button
-                      key={subOption}
-                      onClick={() => {
-                        setSecondarySelection(subOption)
-                        setSecondaryDropdownOpen(false)
-                      }}
-                      className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                    >
-                      {subOption}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
           <button
-            className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
-            onClick={() => {
-              if (
-                depType === "Pubblico" ||
-                depType === "Statale" ||
-                depType === "Parapubblico"
-              ) {
-                setStep(3)
-              } else {
-                console.log("Dipendente data submitted", { depType, secondarySelection })
-              }
-            }}
+            className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl mt-8"
+            onClick={() => setStep(3)}
           >
             Avanti
           </button>
@@ -251,16 +200,117 @@ function FormScreen({ onClose }) {
     }
   }
 
-  // Paso 3: Campos adicionales para "Pubblico", "Statale" o "Parapubblico"
+  // STEP 3:
+  // Per "Dipendente": Schermata "Che tipo di dipendente sei"
+  if (step === 3 && selectedOption === "dipendente") {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
+        {/* Encabezado con botón para volver al step preliminare */}
+        <div className="grid grid-cols-3 items-center w-full max-w-5xl mb-8">
+          <div>
+            <button onClick={() => setStep(2)}>
+              <IoIosArrowBack size={32} className="text-black" />
+            </button>
+          </div>
+          <div className="flex flex-col items-center">
+            <span className="text-3xl font-semibold">
+              Che tipo di dipendente sei
+            </span>
+          </div>
+          <div>{/* Espacio para equilibrar la cuadrícula */}</div>
+        </div>
+        {/* Desplegable principal */}
+        <div className="w-full max-w-md mb-4">
+          <div
+            onClick={() => {
+              setDropdownOpen(!dropdownOpen)
+              setSecondaryDropdownOpen(false)
+            }}
+            className="border p-4 rounded-2xl cursor-pointer flex justify-between items-center"
+          >
+            <span className="text-xl font-semibold">
+              {depType ? depType : "Seleziona tipo di dipendente"}
+            </span>
+            <IoIosArrowDown className={`transition-transform duration-300 ${dropdownOpen ? "rotate-90" : ""}`} />
+          </div>
+          {dropdownOpen && (
+            <div className="mt-2 border border-gray-300 rounded-lg shadow-lg">
+              {["Pubblico", "Statale", "Parapubblico", "Privato"].map(option => (
+                <button
+                  key={option}
+                  onClick={() => {
+                    setDepType(option)
+                    setDropdownOpen(false)
+                    setSecondarySelection(null)
+                  }}
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+        {depType && (
+          <div className="w-full max-w-md mb-4">
+            <div
+              onClick={() => setSecondaryDropdownOpen(!secondaryDropdownOpen)}
+              className="border p-4 rounded-2xl cursor-pointer flex justify-between items-center"
+            >
+              <span className="text-xl font-semibold">
+                {secondarySelection ? secondarySelection : "Seleziona il sottotipo"}
+              </span>
+              <IoIosArrowDown className={`transition-transform duration-300 ${secondaryDropdownOpen ? "rotate-90" : ""}`} />
+            </div>
+            {secondaryDropdownOpen && (
+              <div className="mt-2 border border-gray-300 rounded-lg shadow-lg">
+                {secondaryOptionsMapping[depType].map(subOption => (
+                  <button
+                    key={subOption}
+                    onClick={() => {
+                      setSecondarySelection(subOption)
+                      setSecondaryDropdownOpen(false)
+                    }}
+                    className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                  >
+                    {subOption}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+        <button
+          className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
+          onClick={() => {
+            if (
+              depType === "Pubblico" ||
+              depType === "Statale" ||
+              depType === "Parapubblico"
+            ) {
+              setStep(4)
+            } else {
+              console.log("Dipendente data submitted", { depType, secondarySelection })
+            }
+          }}
+        >
+          Avanti
+        </button>
+      </div>
+    )
+  }
+
+  // STEP 4:
+  // Para "Dipendente": Campos adicionales se mostrano se il tipo de dipendente es Pubblico, Statale o Parapubblico.
   if (
-    step === 3 &&
+    step === 4 &&
     selectedOption === "dipendente" &&
     (depType === "Pubblico" || depType === "Statale" || depType === "Parapubblico")
   ) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-white px-4 sm:px-6 rounded-2xl">
         <div className="flex items-center w-full max-w-xl mb-8">
-          <button onClick={() => setStep(2)} className="mr-4">
+          <button onClick={() => setStep(3)} className="mr-4">
             <IoIosArrowBack size={32} className="text-black" />
           </button>
           <h2 className="text-3xl sm:text-4xl font-semibold">
@@ -463,7 +513,7 @@ function FormScreen({ onClose }) {
         </div>
         <button
           className="mt-8 bg-blue-700 hover:bg-blue-800 text-white px-5 py-3 text-lg rounded-2xl border border-gray-300 w-full max-w-md"
-          onClick={() => setStep(4)}
+          onClick={() => setStep(5)}
         >
           Avanti
         </button>
@@ -877,7 +927,10 @@ function App() {
                 Cessione del Quinto!
               </h2>
               <div className="my-8 flex flex-col md:flex-row justify-center items-center gap-4">
-                <div className="flex-1 cursor-pointer bg-blue-800 hover:bg-blue-700 text-white px-8 py-3 rounded-2xl text-xl text-center">
+                <div
+                  onClick={() => setShowFormScreen(true)}
+                  className="flex-1 cursor-pointer bg-blue-800 hover:bg-blue-700 text-white px-8 py-3 rounded-2xl text-xl text-center"
+                >
                   Inizia Ora
                 </div>
                 <div
