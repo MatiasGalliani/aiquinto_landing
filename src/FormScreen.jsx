@@ -105,7 +105,7 @@ function FormScreen({ onClose, onFormSubmit }) {
   }
 
   return (
-    <div className="min-h-screen overflow-y-auto">
+    <div className={`relative min-h-screen overflow-y-auto ${!isMobile ? "hide-scroll" : ""} overflow-x-hidden`}>
       <AnimatePresence exitBeforeEnter>
         {step === 1 && (
           <motion.div
@@ -115,7 +115,7 @@ function FormScreen({ onClose, onFormSubmit }) {
             exit="exit"
             variants={pageVariants}
             transition={pageTransition}
-            className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl"
+            className="absolute inset-0 flex flex-col items-center justify-center bg-white px-4 rounded-2xl"
           >
             <div className="flex items-center w-full max-w-xl mb-8">
               <div>
@@ -178,7 +178,7 @@ function FormScreen({ onClose, onFormSubmit }) {
             exit="exit"
             variants={pageVariants}
             transition={pageTransition}
-            className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl"
+            className="absolute inset-0 flex flex-col items-center justify-center bg-white px-4 rounded-2xl"
           >
             <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-16">
               <button onClick={() => setStep(1)} className="mr-4">
@@ -234,7 +234,7 @@ function FormScreen({ onClose, onFormSubmit }) {
             exit="exit"
             variants={pageVariants}
             transition={pageTransition}
-            className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl"
+            className="absolute inset-0 flex flex-col items-center justify-center bg-white px-4 rounded-2xl"
           >
             {/* Botón para volver */}
             <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-16">
@@ -291,7 +291,7 @@ function FormScreen({ onClose, onFormSubmit }) {
             exit="exit"
             variants={pageVariants}
             transition={pageTransition}
-            className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl"
+            className="absolute inset-0 flex flex-col items-center justify-center bg-white px-4 rounded-2xl"
           >
             {/* Cabecera unificada con padding para mover a la derecha */}
             <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-16">
@@ -396,7 +396,7 @@ function FormScreen({ onClose, onFormSubmit }) {
             exit="exit"
             variants={pageVariants}
             transition={pageTransition}
-            className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl"
+            className="absolute inset-0 flex flex-col items-center justify-center bg-white px-4 rounded-2xl"
           >
             {/* Cabecera */}
             <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-16">
@@ -513,7 +513,7 @@ function FormScreen({ onClose, onFormSubmit }) {
             exit="exit"
             variants={pageVariants}
             transition={pageTransition}
-            className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl"
+            className="absolute inset-0 flex flex-col items-center justify-center bg-white px-4 rounded-2xl"
           >
             <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-16">
               <button onClick={() => setStep(selectedOption === "dipendente" && depType === "Privato" ? 6 : 3)} className="mr-4">
@@ -739,7 +739,7 @@ function FormScreen({ onClose, onFormSubmit }) {
             exit="exit"
             variants={pageVariants}
             transition={pageTransition}
-            className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl"
+            className="absolute inset-0 flex flex-col items-center justify-center bg-white px-4 rounded-2xl"
           >
             {/* Cabecera */}
             <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-16">
@@ -918,7 +918,7 @@ function FormScreen({ onClose, onFormSubmit }) {
             exit="exit"
             variants={pageVariants}
             transition={pageTransition}
-            className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl"
+            className="absolute inset-0 flex flex-col items-center justify-center bg-white px-4 rounded-2xl"
           >
             {/* Cabecera con flecha */}
             <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-20">
@@ -1003,7 +1003,7 @@ function FormScreen({ onClose, onFormSubmit }) {
             exit="exit"
             variants={pageVariants}
             transition={pageTransition}
-            className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl"
+            className="absolute inset-0 flex flex-col items-center justify-center bg-white px-4 rounded-2xl"
           >
             <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-16">
               <button onClick={() => setStep(3)} className="mr-4">
@@ -1048,6 +1048,19 @@ function FormScreen({ onClose, onFormSubmit }) {
           </motion.div>
         )}
       </AnimatePresence>
+      {!isMobile && (
+        <style>{`
+          /* Oculta scrollbar en navegadores Webkit */
+          .hide-scroll::-webkit-scrollbar {
+            display: none;
+          }
+          /* Para Firefox e IE */
+          .hide-scroll {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+          }
+        `}</style>
+      )}
     </div>
   )
 }
