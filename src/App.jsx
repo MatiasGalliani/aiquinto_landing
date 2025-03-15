@@ -159,52 +159,54 @@ function ContactPage({ onBack }) {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
-      <div className="flex items-center mb-8 w-full">
-        <button onClick={onBack} className="mr-4">
-          <FaArrowLeft className="text-2xl text-black" />
+      <div className="w-full max-w-[38.5rem]">
+        <div className="flex items-center mb-8">
+          <button onClick={onBack} className="mr-4">
+            <FaArrowLeft className="text-2xl text-black" />
+          </button>
+          <h2 className="flex-1 text-3xl font-semibold text-center">
+            Inserisci i tuoi dati per essere contattato
+          </h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input
+            type="text"
+            placeholder="Nome"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+            className="border p-4 rounded-2xl text-xl w-full"
+          />
+          <input
+            type="text"
+            placeholder="Cognome"
+            value={cognome}
+            onChange={(e) => setCognome(e.target.value)}
+            className="border p-4 rounded-2xl text-xl w-full"
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            value={mail}
+            onChange={(e) => setMail(e.target.value)}
+            className="border p-4 rounded-2xl text-xl w-full"
+          />
+          <input
+            type="tel"
+            placeholder="Telefono"
+            value={telefono}
+            onChange={(e) => setTelefono(e.target.value)}
+            className="border p-4 rounded-2xl text-xl w-full"
+          />
+        </div>
+        <button
+          className="mt-8 w-full bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
+          onClick={() =>
+            console.log("Informazioni Contatto", { nome, cognome, mail, telefono })
+          }
+        >
+          Invia Richiesta
         </button>
-        <h2 className="flex-1 text-3xl font-semibold text-center">
-          Inserisci i tuoi dati per essere contattato
-        </h2>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-[38.5rem]">
-        <input
-          type="text"
-          placeholder="Nome"
-          value={nome}
-          onChange={(e) => setNome(e.target.value)}
-          className="border p-4 rounded-2xl text-xl w-full"
-        />
-        <input
-          type="text"
-          placeholder="Cognome"
-          value={cognome}
-          onChange={(e) => setCognome(e.target.value)}
-          className="border p-4 rounded-2xl text-xl w-full"
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={mail}
-          onChange={(e) => setMail(e.target.value)}
-          className="border p-4 rounded-2xl text-xl w-full"
-        />
-        <input
-          type="tel"
-          placeholder="Telefono"
-          value={telefono}
-          onChange={(e) => setTelefono(e.target.value)}
-          className="border p-4 rounded-2xl text-xl w-full"
-        />
-      </div>
-      <button
-        className="mt-8 w-full bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
-        onClick={() =>
-          console.log("Informazioni Contatto", { nome, cognome, mail, telefono })
-        }
-      >
-        Invia Richiesta
-      </button>
     </div>
   )
 }
