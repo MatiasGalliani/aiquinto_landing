@@ -79,6 +79,7 @@ function FormScreen({ onClose, onFormSubmit }) {
   }, [])
 
   // Elimina o comenta este useEffect
+  /*
   useEffect(() => {
     document.body.style.overflow = "hidden"
     return () => {
