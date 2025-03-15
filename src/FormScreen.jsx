@@ -78,12 +78,14 @@ function FormScreen({ onClose, onFormSubmit }) {
     return () => clearTimeout(timer)
   }, [])
 
+  // Elimina o comenta este useEffect
   useEffect(() => {
     document.body.style.overflow = "hidden"
     return () => {
       document.body.style.overflow = "auto"
     }
   }, [])
+  */
 
   if (loading) {
     return (
@@ -102,7 +104,7 @@ function FormScreen({ onClose, onFormSubmit }) {
   }
 
   return (
-    <div className={`${isMobile ? "min-h-screen overflow-y-auto" : "h-screen overflow-hidden"}`}>
+    <div className="min-h-screen overflow-y-auto">
       <AnimatePresence exitBeforeEnter>
         {step === 1 && (
           <motion.div
@@ -904,66 +906,6 @@ function FormScreen({ onClose, onFormSubmit }) {
               onClick={() => setStep(5)}
             >
               Avanti
-            </button>
-          </motion.div>
-        )}
-        {step === 4 && (
-          <motion.div
-            key="step4"
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            variants={pageVariants}
-            transition={pageTransition}
-            // En móviles se usa min-h-screen y overflow-y-auto para permitir scroll vertical
-            // En desktop se mantiene h-screen y justify-center para centrar el contenido.
-            className={`flex flex-col items-center bg-white px-4 rounded-2xl ${
-              isMobile ? "min-h-screen overflow-y-auto" : "h-screen justify-center"
-            }`}
-          >
-            <div className="flex items-center w-full max-w-xl mb-8">
-              <button onClick={() => setStep(3)} className="mr-4">
-                <IoIosArrowBack size={32} className="text-black" />
-              </button>
-              <h2 className="text-3xl font-semibold">Informazioni Contatto</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-3xl">
-              <input
-                type="text"
-                placeholder="Nome"
-                value={nome}
-                onChange={(e) => setNome(e.target.value)}
-                className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
-              />
-              <input
-                type="text"
-                placeholder="Cognome"
-                value={cognome}
-                onChange={(e) => setCognome(e.target.value)}
-                className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
-              />
-              <input
-                type="email"
-                placeholder="Mail"
-                value={mail}
-                onChange={(e) => setMail(e.target.value)}
-                className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
-              />
-              <input
-                type="tel"
-                placeholder="Telefono"
-                value={telefono}
-                onChange={(e) => setTelefono(e.target.value)}
-                className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
-              />
-            </div>
-            <button
-              className="mt-8 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
-              onClick={() =>
-                console.log("Informazioni Contatto", { nome, cognome, mail, telefono })
-              }
-            >
-              Invia
             </button>
           </motion.div>
         )}
