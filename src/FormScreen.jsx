@@ -102,7 +102,7 @@ function FormScreen({ onClose, onFormSubmit }) {
   }
 
   return (
-    <div className="h-screen overflow-hidden">
+    <div className={`${isMobile ? "min-h-screen overflow-y-auto" : "h-screen overflow-hidden"}`}>
       <AnimatePresence exitBeforeEnter>
         {step === 1 && (
           <motion.div
@@ -117,7 +117,7 @@ function FormScreen({ onClose, onFormSubmit }) {
             <div className="flex items-center w-full max-w-xl mb-8">
               <div>
                 <button onClick={onClose}>
-                  <IoIosArrowBack size={32} className="text-black mr-4" />
+                  <IoIosArrowBack size={32} className="text-black mr-4 mt-2" />
                 </button>
               </div>
               <div className="flex justify-center">
@@ -915,7 +915,11 @@ function FormScreen({ onClose, onFormSubmit }) {
             exit="exit"
             variants={pageVariants}
             transition={pageTransition}
-            className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl"
+            // En móviles se usa min-h-screen y overflow-y-auto para permitir scroll vertical
+            // En desktop se mantiene h-screen y justify-center para centrar el contenido.
+            className={`flex flex-col items-center bg-white px-4 rounded-2xl ${
+              isMobile ? "min-h-screen overflow-y-auto" : "h-screen justify-center"
+            }`}
           >
             <div className="flex items-center w-full max-w-xl mb-8">
               <button onClick={() => setStep(3)} className="mr-4">
