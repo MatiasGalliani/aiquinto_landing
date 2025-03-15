@@ -8,6 +8,7 @@ import aiQuintoLogo from './assets/ai_quinto_logo.png'
 import { Helmet } from "react-helmet-async";
 import ThankYouPage from './ThankYouPage'
 import FormScreen from './FormScreen'
+import { motion } from "framer-motion";
 
 function HeroWave() {
   return (
@@ -245,12 +246,31 @@ function App() {
   }
 
   if (showFormScreen) {
-    // Se pasa el callback onFormSubmit a FormScreen
-    return <FormScreen onClose={() => setShowFormScreen(false)} onFormSubmit={onFormSubmit} />
+    return (
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5 }}
+        className="min-h-screen"
+      >
+        <FormScreen onClose={() => setShowFormScreen(false)} onFormSubmit={onFormSubmit} />
+      </motion.div>
+    );
   }
 
   if (showContactPage) {
-    return <ContactPage onBack={() => setShowContactPage(false)} />
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -30 }}
+        transition={{ duration: 0.5 }}
+        className="min-h-screen"
+      >
+        <ContactPage onBack={() => setShowContactPage(false)} />
+      </motion.div>
+    )
   }
 
   const structuredData = {
