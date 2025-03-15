@@ -298,7 +298,7 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen animate-fadeIn overflow-x-hidden">
       <Helmet>
         <title>Cessione del Quinto - Creditplan</title>
         <meta name="description" content="Ottieni un prestito sicuro con la cessione del quinto per dipendenti pubblici e pensionati con tassi agevolati." />
@@ -308,40 +308,40 @@ function App() {
       </Helmet>
       <main className="flex-grow">
         {/* Sección Hero con fondo celeste y olas */}
-        <div className="bg-gradient-to-r from-blue-100 to-blue-300 w-full pt-4">
+        <div className="bg-gradient-to-r from-blue-100 to-blue-300 w-full pt-4 transition-all duration-500 ease-out">
           <div className="flex flex-col md:flex-row justify-center items-stretch mx-4 md:mx-12 gap-6">
             <div className="p-6 md:mr-12 mb-6 md:mb-0">
               <div className="px-4 md:px-16">
-                <h1 className="flex items-center space-x-2 mt-8">
+                <h1 className="flex items-center space-x-2 mt-8 animate-fadeIn">
                   <img
                     src={aiQuintoLogo}
                     alt="AI Quinto Logo"
-                    className="w-32 sm:w-40 md:w-56 px-2 py-0 bg-blue-800 rounded-full"
+                    className="w-32 sm:w-40 md:w-56 px-2 py-0 bg-blue-800 rounded-full transition-all duration-500 hover:scale-105"
                   />
-                  <span className="text-center text-base sm:text-xl font-medium">by</span>
+                  <span className="text-center text-base sm:text-xl font-medium animate-fadeIn">by</span>
                   <img
                     src={logo_creditplan}
                     alt="Creditplan Logo"
-                    className="w-40 sm:w-48 md:w-72"
+                    className="w-40 sm:w-48 md:w-72 transition-all duration-500 hover:scale-105"
                   />
                 </h1>
-                <p className="inline-block text-xs font-medium text-green-950 mt-4 py-0.5 bg-green-200 px-2 border border-green-500 rounded-lg">
+                <p className="inline-block text-xs font-medium text-green-950 mt-4 py-0.5 bg-green-200 px-2 border border-green-500 rounded-lg animate-fadeIn">
                   Offerta a tempo limitato
                 </p>
-                <h2 className="text-3xl md:text-5xl font-semibold mt-4 text-gray-800">
+                <h2 className="text-3xl md:text-5xl font-semibold mt-4 text-gray-800 animate-fadeIn">
                   Richiedi subito fino a 75.000 € per la tua Cessione del Quinto
                 </h2>
-                <p className="text-lg text-gray-900 mt-4">
+                <p className="text-lg text-gray-900 mt-4 animate-fadeIn">
                   Risparmia tempo e denaro con AIquinto.it by Creditplan.
                 </p>
-                <p className="text-2xl font-medium text-gray-800 mt-5">
+                <p className="text-2xl font-medium text-gray-800 mt-5 animate-fadeIn">
                   Richiedi la Cessione del Quinto in pochi click.
                 </p>
                 <div className="mt-6 flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
                   <div className="flex flex-col space-y-4">
                     {/* Box para iniciar el formulario */}
                     <div
-                      className="relative bg-blue-800 w-full sm:w-[90%] md:w-[1000px] h-16 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex items-center justify-center px-4 transform hover:scale-110 transition-transform duration-300 ease-in-out shadow-md"
+                      className="relative bg-blue-800 w-full sm:w-[90%] md:w-[1000px] h-16 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex items-center justify-center px-4 transform transition-all duration-500 hover:scale-105 hover:shadow-lg"
                       onClick={() => setShowFormScreen(true)}
                     >
                       <span className="text-xl md:text-2xl font-medium text-white mr-2">
@@ -351,12 +351,13 @@ function App() {
                         <FaArrowRight className="text-sm text-blue-800" />
                       </div>
                     </div>
-                    <p className="flex justify-center text-lg text-gray-500">
+                    <p className="flex justify-center text-lg text-gray-500 animate-fadeIn">
                       Oppure
                     </p>
                     {/* Box para enlace de agente */}
                     <div>
-                      <div className="relative bg-white w-full sm:w-[90%] md:w-[1000px] h-16 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex items-center justify-center px-4 transform hover:scale-110 transition-transform duration-300 ease-in-out shadow-md"
+                      <div
+                        className="relative bg-white w-full sm:w-[90%] md:w-[1000px] h-16 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex items-center justify-center px-4 transform transition-all duration-500 hover:scale-105 hover:shadow-lg"
                         onClick={() => setShowContactPage(true)}
                       >
                         <span className="text-xl md:text-2xl font-medium text-black mr-2">
@@ -374,15 +375,15 @@ function App() {
             <img
               src={family_w_dog}
               alt="family with dog"
-              className="w-full md:w-96 h-full object-cover rounded-3xl"
+              className="w-full md:w-96 h-full object-cover rounded-3xl transition-all duration-500 hover:scale-105"
             />
           </div>
           <HeroWave />
         </div>
         {/* Resto de la página */}
-        <div className="bg-white">
+        <div className="bg-white transition-all duration-500 ease-out">
           {/* Sección de Ilustración */}
-          <div className="my-24 w-full max-w-4xl mx-auto px-4 flex justify-center">
+          <div className="my-24 w-full max-w-4xl mx-auto px-4 flex justify-center animate-fadeIn">
             <div className="inline-flex flex-col md:flex-row items-center gap-4 md:gap-8">
               <div className="text-center md:text-left">
                 <h5 className="font-medium text-4xl mb-2">
@@ -396,32 +397,32 @@ function App() {
                 <img
                   src={savingSvg}
                   alt="Ilustración de ahorro"
-                  className="max-w-sm"
+                  className="max-w-sm transition-all duration-500 hover:scale-105"
                 />
               </div>
             </div>
           </div>
 
           {/* Sección Reactiva */}
-          <div className="my-32 text-center bg-gradient-to-r from-blue-100 to-blue-300 p-8 mx-0 md:mx-auto md:rounded-2xl shadow-md">
-            <p className="text-4xl font-semibold">
+          <div className="my-32 text-center bg-gradient-to-r from-blue-100 to-blue-300 p-8 mx-0 md:mx-auto md:rounded-2xl shadow-md transition-all duration-500 hover:scale-105">
+            <p className="text-4xl font-semibold animate-fadeIn">
               Scopri subito quanto puoi ottenere!
             </p>
-            <p className="text-lg text-gray-600 mt-4">
+            <p className="text-lg text-gray-600 mt-4 animate-fadeIn">
               Calcola in pochi click il tuo finanziamento su misura: semplice, veloce e senza impegno.
             </p>
             <button
               onClick={() => setShowFormScreen(true)}
-              className="bg-blue-700 text-white px-8 py-2 rounded-2xl mt-8 border border-gray-400 hover shadow-md transition-transform duration-300 hover:scale-110"
+              className="bg-blue-700 text-white px-8 py-2 rounded-2xl mt-8 border border-gray-400 shadow-md transition-transform duration-500 hover:scale-105 hover:shadow-lg"
             >
               Inizia Ora
             </button>
           </div>
 
-          {/* New clickable buttons section placed above the Wave */}
+          {/* Sección de botones clicables */}
           {!showContactFields ? (
-            <div className="w-full sm:w-[90%] md:w-[1000px] mx-0 md:mx-auto bg-gradient-to-r from-blue-100 to-blue-300 p-8 md:rounded-2xl shadow-md">
-              <h2 className="text-3xl font-semibold text-center mb-8">
+            <div className="w-full sm:w-[90%] md:w-[1000px] mx-0 md:mx-auto bg-gradient-to-r from-blue-100 to-blue-300 p-8 md:rounded-2xl shadow-md transition-all duration-500 hover:scale-105">
+              <h2 className="text-3xl font-semibold text-center mb-8 animate-fadeIn">
                 Richiedi subito la tua
                 <br />
                 Cessione del Quinto!
@@ -429,7 +430,7 @@ function App() {
               <div className="my-8 flex flex-col md:flex-row gap-4">
                 <div
                   onClick={() => setShowFormScreen(true)}
-                  className="w-full md:flex-1 cursor-pointer bg-blue-800 hover:bg-blue-700 text-white px-8 py-3 text-xl transform hover:scale-105 transition-transform duration-300 ease-in-out flex items-center justify-between rounded-2xl"
+                  className="w-full md:flex-1 cursor-pointer bg-blue-800 hover:bg-blue-700 text-white px-8 py-3 text-xl transform transition-all duration-500 hover:scale-105 hover:shadow-lg flex items-center justify-between rounded-2xl"
                 >
                   <span>Inizia Ora</span>
                   <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center">
@@ -438,7 +439,7 @@ function App() {
                 </div>
                 <div
                   onClick={() => setShowContactFields(true)}
-                  className="w-full md:flex-1 cursor-pointer bg-white hover:bg-gray-100 text-black px-8 py-3 text-xl border border-gray-400 transform hover:scale-105 transition-transform duration-300 ease-in-out flex items-center justify-between rounded-2xl"
+                  className="w-full md:flex-1 cursor-pointer bg-white hover:bg-gray-100 text-black px-8 py-3 text-xl border border-gray-400 transform transition-all duration-500 hover:scale-105 hover:shadow-lg flex items-center justify-between rounded-2xl"
                 >
                   <span>Richiedi di Essere Contattato</span>
                   <div className="w-6 h-6 rounded-full bg-blue-800 flex items-center justify-center">
@@ -448,16 +449,15 @@ function App() {
               </div>
             </div>
           ) : (
-            // Nueva sección con los inputs, organizados en columna en móviles y en 2 columnas en pantallas mayores
-            <div className="w-full sm:w-[90%] md:w-[1000px] mx-auto bg-gradient-to-r from-blue-100 to-blue-300 p-8 rounded-2xl shadow-md">
+            <div className="w-full sm:w-[90%] md:w-[1000px] mx-auto bg-gradient-to-r from-blue-100 to-blue-300 p-8 rounded-2xl shadow-md transition-all duration-500 hover:scale-105">
               <div className="flex items-center mb-8">
                 <button
                   onClick={() => setShowContactFields(false)}
-                  className="mr-4"
+                  className="mr-4 transition-all duration-500 hover:scale-105"
                 >
                   <FaArrowLeft className="text-2xl text-black" />
                 </button>
-                <h2 className="flex-1 text-3xl font-semibold text-center">
+                <h2 className="flex-1 text-3xl font-semibold text-center animate-fadeIn">
                   Inserisci i tuoi dati per essere contattato
                 </h2>
               </div>
@@ -465,26 +465,26 @@ function App() {
                 <input
                   type="text"
                   placeholder="Nome"
-                  className="border p-4 rounded-2xl text-xl w-full"
+                  className="border p-4 rounded-2xl text-xl w-full transition-all duration-500 focus:scale-105"
                 />
                 <input
                   type="text"
                   placeholder="Cognome"
-                  className="border p-4 rounded-2xl text-xl w-full"
+                  className="border p-4 rounded-2xl text-xl w-full transition-all duration-500 focus:scale-105"
                 />
                 <input
                   type="email"
                   placeholder="Email"
-                  className="border p-4 rounded-2xl text-xl w-full"
+                  className="border p-4 rounded-2xl text-xl w-full transition-all duration-500 focus:scale-105"
                 />
                 <input
                   type="tel"
                   placeholder="Telefono"
-                  className="border p-4 rounded-2xl text-xl w-full"
+                  className="border p-4 rounded-2xl text-xl w-full transition-all duration-500 focus:scale-105"
                 />
               </div>
               <button
-                className="mt-8 block mx-auto bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
+                className="mt-8 block mx-auto bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300 transition-all duration-500 hover:scale-105"
                 onClick={() => console.log("Invia richiesta")}
               >
                 Invia Richiesta
@@ -492,7 +492,6 @@ function App() {
             </div>
           )}
 
-          {/* Wave */}
           <Wave />
         </div>
       </main>
