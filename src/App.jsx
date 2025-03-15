@@ -424,7 +424,7 @@ function App() {
           </div>
 
           {/* Sección Reactiva */}
-          <div className="my-32 text-center bg-gradient-to-r from-blue-100 to-blue-300 p-8 mx-0 md:mx-auto md:rounded-2xl shadow-md transition-all duration-500 hover:scale-105">
+          <div className="my-32 text-center bg-gradient-to-r from-blue-100 to-blue-300 p-8 mx-0 md:mx-auto shadow-md transition-all duration-500 hover:scale-105">
             <p className="text-4xl font-semibold animate-fadeIn">
               Scopri subito quanto puoi ottenere!
             </p>
