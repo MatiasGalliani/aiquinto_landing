@@ -348,7 +348,7 @@ function App() {
                         Inizia Ora
                       </span>
                       <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center">
-                        <FaArrowRight className="text-sm text-black" />
+                        <FaArrowRight className="text-sm text-blue-800" />
                       </div>
                     </div>
                     <p className="flex justify-center text-lg text-gray-500">
@@ -403,47 +403,52 @@ function App() {
           </div>
 
           {/* Sección Reactiva */}
-          <div className="my-32 text-center bg-gradient-to-r from-blue-100 to-blue-300 p-8 mx-4 md:mx-auto shadow-md">
+          <div className="my-32 text-center bg-gradient-to-r from-blue-100 to-blue-300 p-8 mx-0 md:mx-auto md:rounded-2xl shadow-md">
             <p className="text-4xl font-semibold">
               Scopri subito quanto puoi ottenere!
             </p>
             <p className="text-lg text-gray-600 mt-4">
               Calcola in pochi click il tuo finanziamento su misura: semplice, veloce e senza impegno.
             </p>
-            <button className="bg-blue-700 text-white px-8 py-2 rounded-2xl mt-8 border border-gray-400 hover shadow-md transition-transform duration-300 hover:scale-110">
+            <button
+              onClick={() => setShowFormScreen(true)}
+              className="bg-blue-700 text-white px-8 py-2 rounded-2xl mt-8 border border-gray-400 hover shadow-md transition-transform duration-300 hover:scale-110"
+            >
               Inizia Ora
             </button>
           </div>
 
-          {/* Sección FAQ */}
-          <FAQ />
-
           {/* New clickable buttons section placed above the Wave */}
           {!showContactFields ? (
-            // Sección de botones clicables
-            <div className="w-full sm:w-[90%] md:w-[1000px] mx-auto bg-gradient-to-r from-blue-100 to-blue-300 p-8 rounded-2xl shadow-md">
+            <div className="w-full sm:w-[90%] md:w-[1000px] mx-0 md:mx-auto bg-gradient-to-r from-blue-100 to-blue-300 p-8 md:rounded-2xl shadow-md">
               <h2 className="text-3xl font-semibold text-center mb-8">
                 Richiedi subito la tua
                 <br />
                 Cessione del Quinto!
               </h2>
-              <div className="my-8 flex flex-col md:flex-row justify-center items-center gap-4">
+              <div className="my-8 flex flex-col md:flex-row gap-4">
                 <div
                   onClick={() => setShowFormScreen(true)}
-                  className="flex-1 cursor-pointer bg-blue-800 hover:bg-blue-700 text-white px-8 py-3 rounded-2xl text-xl text-center transform hover:scale-105 transition-transform duration-300 ease-in-out"
+                  className="w-full md:flex-1 cursor-pointer bg-blue-800 hover:bg-blue-700 text-white px-8 py-3 text-xl transform hover:scale-105 transition-transform duration-300 ease-in-out flex items-center justify-between rounded-2xl"
                 >
-                  Inizia Ora
+                  <span>Inizia Ora</span>
+                  <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center">
+                    <FaArrowRight className="text-sm text-blue-800" />
+                  </div>
                 </div>
                 <div
                   onClick={() => setShowContactFields(true)}
-                  className="flex-1 cursor-pointer bg-white hover:bg-gray-100 text-black px-8 py-3 rounded-2xl text-xl text-center border border-gray-400 transform hover:scale-105 transition-transform duration-300 ease-in-out"
+                  className="w-full md:flex-1 cursor-pointer bg-white hover:bg-gray-100 text-black px-8 py-3 text-xl border border-gray-400 transform hover:scale-105 transition-transform duration-300 ease-in-out flex items-center justify-between rounded-2xl"
                 >
-                  Richiedi di Essere Contattato
+                  <span>Richiedi di Essere Contattato</span>
+                  <div className="w-6 h-6 rounded-full bg-blue-800 flex items-center justify-center">
+                    <FaArrowRight className="text-sm text-white" />
+                  </div>
                 </div>
               </div>
             </div>
           ) : (
-            // Nueva sección con 4 inputs en grid de 2 columnas
+            // Nueva sección con los inputs, organizados en columna en móviles y en 2 columnas en pantallas mayores
             <div className="w-full sm:w-[90%] md:w-[1000px] mx-auto bg-gradient-to-r from-blue-100 to-blue-300 p-8 rounded-2xl shadow-md">
               <div className="flex items-center mb-8">
                 <button
@@ -456,7 +461,7 @@ function App() {
                   Inserisci i tuoi dati per essere contattato
                 </h2>
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <input
                   type="text"
                   placeholder="Nome"

@@ -1,10 +1,12 @@
 - finish the dipendente - privato DONE
 - finish the pensionato part DONE
-- make the middle inizia ora button work FRI
-- finish the richiedi di essere contatatto button up SAT
+- make the middle inizia ora button work DONE
+- finish the richiedi di essere contatatto button up DONE
 - finish the richiedi di essere contatatto button down DONE
 - make every part of the form mandatory SAT
 - connect form to google sheets SUN
 - connect form to eugenio with simple behavior for fixing appointments SUN
 - make the we're sorry page for refusals SUN
 - set the refusals conditions MON
+
+FRONT-END REACT FINISHED ON MARCH 15TH AT 08:20 PM
