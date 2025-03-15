@@ -159,7 +159,7 @@ function ContactPage({ onBack }) {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
-      <div className="flex items-center mb-8">
+      <div className="flex items-center mb-8 w-full">
         <button onClick={onBack} className="mr-4">
           <FaArrowLeft className="text-2xl text-black" />
         </button>
@@ -167,7 +167,7 @@ function ContactPage({ onBack }) {
           Inserisci i tuoi dati per essere contattato
         </h2>
       </div>
-      <div className="grid grid-cols-2 gap-4 w-full max-w-[38.5rem]">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-[38.5rem]">
         <input
           type="text"
           placeholder="Nome"
@@ -198,7 +198,7 @@ function ContactPage({ onBack }) {
         />
       </div>
       <button
-        className="mt-8 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
+        className="mt-8 w-full bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
         onClick={() =>
           console.log("Informazioni Contatto", { nome, cognome, mail, telefono })
         }
