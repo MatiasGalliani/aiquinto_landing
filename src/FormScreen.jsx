@@ -39,6 +39,16 @@ function FormScreen({ onClose, onFormSubmit }) {
   const [over12Months, setOver12Months] = useState("")
   const [numEmployees, setNumEmployees] = useState("")
 
+  // NUEVOS estados para el flujo "Pensionato"
+  const [pensionAmount, setPensionAmount] = useState("")
+  const [pensioneNetta, setPensioneNetta] = useState("")
+  const [entePensionistico, setEntePensionistico] = useState("");
+  const [pensioneType, setPensioneType] = useState("");
+  const [entePensionisticoDropdownOpen, setEntePensionisticoDropdownOpen] = useState(false);
+
+  // Agrega este estado al inicio del componente junto a los demás:
+  const [tipologiaDropdownOpen, setTipologiaDropdownOpen] = useState(false)
+
   // Check viewport width to set isMobile (adjust the px threshold as needed)
   useEffect(() => {
     const checkIsMobile = () => setIsMobile(window.innerWidth <= 768)
@@ -133,18 +143,47 @@ function FormScreen({ onClose, onFormSubmit }) {
     if (selectedOption === "pensionato") {
       return (
         <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
-          <div className="flex items-center w-full max-w-xl mb-8">
+          <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-16">
             <button onClick={() => setStep(1)} className="mr-4">
               <IoIosArrowBack size={32} className="text-black" />
             </button>
-            <h2 className="text-3xl font-semibold">
-              Scelta: Pensionato
-            </h2>
+            <h2 className="text-3xl font-semibold">Inserisci i tuoi dati iniziali</h2>
           </div>
-          <p className="text-lg mb-8">[Qui andrà la parte successiva del form per Pensionato...]</p>
+          <div className="w-full max-w-md space-y-4">
+            {/* L'importo richiesto */}
+            <div className="flex flex-col">
+              <label className="text-base sm:text-xl font-semibold mb-2">
+                L'importo richiesto?
+              </label>
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-xl text-gray-500">€</span>
+                <input
+                  type="text"
+                  value={pensionAmount}
+                  onChange={(e) => setPensionAmount(e.target.value)}
+                  className="border pl-10 pr-3 p-3 sm:p-4 w-full rounded-2xl text-base sm:text-lg"
+                />
+              </div>
+            </div>
+            {/* Pensione netta mensile */}
+            <div className="flex flex-col">
+              <label className="text-base sm:text-xl font-semibold mb-2">
+                Pensione netta mensile?
+              </label>
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-xl text-gray-500">€</span>
+                <input
+                  type="text"
+                  value={pensioneNetta}
+                  onChange={(e) => setPensioneNetta(e.target.value)}
+                  className="border pl-10 pr-3 p-3 sm:p-4 w-full rounded-2xl text-base sm:text-lg"
+                />
+              </div>
+            </div>
+          </div>
           <button
-            className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-1 text-sm rounded-2xl border border-gray-300"
-            onClick={() => console.log("Avanzando per Pensionato...")}
+            className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl mt-8"
+            onClick={() => setStep(3)}
           >
             Avanti
           </button>
@@ -298,6 +337,118 @@ function FormScreen({ onClose, onFormSubmit }) {
               }
             }
           }}
+        >
+          Avanti
+        </button>
+      </div>
+    )
+  }
+
+  if (step === 3 && selectedOption === "pensionato") {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
+        {/* Cabecera */}
+        <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-16">
+          <button onClick={() => setStep(2)} className="mr-4">
+            <IoIosArrowBack size={32} className="text-black" />
+          </button>
+          <h2 className="text-3xl font-semibold">Inserisci i tuoi dati iniziali</h2>
+        </div>
+        <div className="w-full max-w-md space-y-4">
+          {/* Ente pensionistico */}
+          <div className="flex flex-col">
+            <label className="text-base sm:text-xl font-semibold mb-2">
+              Ente pensionistico
+            </label>
+            <div 
+              onClick={() => {
+                setEntePensionisticoDropdownOpen(!entePensionisticoDropdownOpen)
+                setTipologiaDropdownOpen(false) // cierra el otro dropdown
+              }}
+              className="border p-3 rounded-2xl cursor-pointer flex justify-between items-center"
+            >
+              <span className="text-xl font-semibold">
+                {entePensionistico
+                  ? entePensionistico === "italiana"
+                    ? "Pensione italiana"
+                    : "Pensione estera"
+                  : "Seleziona"}
+              </span>
+              <IoIosArrowDown
+                className={`transition-transform duration-300 ${entePensionisticoDropdownOpen ? "rotate-90" : ""}`}
+              />
+            </div>
+            {entePensionisticoDropdownOpen && (
+              <div className="mt-2 border border-gray-300 rounded-lg shadow-lg max-h-40 overflow-y-auto">
+                <button
+                  onClick={() => {
+                    setEntePensionistico("italiana")
+                    setEntePensionisticoDropdownOpen(false)
+                  }}
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                >
+                  Pensione italiana
+                </button>
+                <button
+                  onClick={() => {
+                    setEntePensionistico("estera")
+                    setEntePensionisticoDropdownOpen(false)
+                  }}
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                >
+                  Pensione estera
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Tipologia di pensione */}
+          <div className="flex flex-col">
+            <label className="text-base sm:text-xl font-semibold mb-2">
+              Tipologia di pensione
+            </label>
+            <div 
+              onClick={() => {
+                setTipologiaDropdownOpen(!tipologiaDropdownOpen)
+                setEntePensionisticoDropdownOpen(false) // cierra el otro dropdown
+              }}
+              className="border p-3 rounded-2xl cursor-pointer flex justify-between items-center"
+            >
+              <span className="text-xl font-semibold">
+                {pensioneType ? pensioneType : "Seleziona"}
+              </span>
+              <IoIosArrowDown className={`transition-transform duration-300 ${tipologiaDropdownOpen ? "rotate-90" : ""}`} />
+            </div>
+            {tipologiaDropdownOpen && (
+              <div className="mt-2 border border-gray-300 rounded-lg shadow-lg max-h-40 overflow-y-auto">
+                {[
+                  "Vecchiaia",
+                  "Anzianità contributiva",
+                  "Reversibilità",
+                  "Invalidità ordinaria",
+                  "Pensione con residenza estera",
+                  "Invalidità civile",
+                  "Pensione sociale",
+                  "APe social"
+                ].map(option => (
+                  <button
+                    key={option}
+                    onClick={() => {
+                      setPensioneType(option)
+                      setTipologiaDropdownOpen(false)
+                    }}
+                    className="block w-full text-left px-4 py-2 hover:bg-gray-100 text-base"
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+        <button
+          className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl mt-8"
+          onClick={() => setStep(4)}
         >
           Avanti
         </button>
@@ -528,6 +679,180 @@ function FormScreen({ onClose, onFormSubmit }) {
     )
   }
 
+  if (step === 4 && selectedOption === "pensionato") {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
+        {/* Cabecera */}
+        <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-16">
+          <button onClick={() => setStep(3)} className="mr-4">
+            <IoIosArrowBack size={32} className="text-black" />
+          </button>
+          <h2 className="text-3xl font-semibold">Inserisci i tuoi dati iniziali</h2>
+        </div>
+        <div className="w-full max-w-md space-y-4">
+          {/* Data di nascita */}
+          <div className="flex flex-col">
+            <label className="text-base sm:text-xl font-semibold mb-2">
+              Data di nascita
+            </label>
+            <input
+              type="date"
+              value={birthDate}
+              onChange={(e) => setBirthDate(e.target.value)}
+              className="border p-3 sm:p-4 w-full rounded-2xl text-base sm:text-lg"
+            />
+          </div>
+          {/* Provincia di Residenza */}
+          <div className="flex flex-col">
+            <label className="text-base sm:text-xl font-semibold mb-2 block">
+              Provincia di Residenza
+            </label>
+            <div
+              onClick={() => setProvinceDropdownOpen(!provinceDropdownOpen)}
+              className="border p-3 rounded-2xl cursor-pointer flex justify-between items-center"
+            >
+              <span className="text-xl font-semibold">
+                {province ? province : "Seleziona"}
+              </span>
+              <IoIosArrowDown
+                className={`transition-transform duration-300 ${provinceDropdownOpen ? "rotate-90" : ""}`}
+              />
+            </div>
+            {provinceDropdownOpen && (
+              <div className="mt-2 border border-gray-300 rounded-lg shadow-lg max-h-44 overflow-auto">
+                {[
+                  { value: "", label: "Seleziona" },
+                  { value: "AG", label: "Agrigento" },
+                  { value: "AL", label: "Alessandria" },
+                  { value: "AN", label: "Ancona" },
+                  { value: "AO", label: "Aosta" },
+                  { value: "AR", label: "Arezzo" },
+                  { value: "AP", label: "Ascoli Piceno" },
+                  { value: "AT", label: "Asti" },
+                  { value: "AV", label: "Avellino" },
+                  { value: "BA", label: "Bari" },
+                  { value: "BT", label: "Barletta-Andria-Trani" },
+                  { value: "BL", label: "Belluno" },
+                  { value: "BN", label: "Benevento" },
+                  { value: "BG", label: "Bergamo" },
+                  { value: "BI", label: "Biella" },
+                  { value: "BO", label: "Bologna" },
+                  { value: "BZ", label: "Bolzano" },
+                  { value: "BS", label: "Brescia" },
+                  { value: "BR", label: "Brindisi" },
+                  { value: "CA", label: "Cagliari" },
+                  { value: "CL", label: "Caltanissetta" },
+                  { value: "CB", label: "Campobasso" },
+                  { value: "CI", label: "Carbonia-Iglesias" },
+                  { value: "CE", label: "Caserta" },
+                  { value: "CT", label: "Catania" },
+                  { value: "CZ", label: "Catanzaro" },
+                  { value: "CH", label: "Chieti" },
+                  { value: "CO", label: "Como" },
+                  { value: "CS", label: "Cosenza" },
+                  { value: "CR", label: "Cremona" },
+                  { value: "KR", label: "Crotone" },
+                  { value: "CN", label: "Cuneo" },
+                  { value: "EN", label: "Enna" },
+                  { value: "FM", label: "Fermo" },
+                  { value: "FE", label: "Ferrara" },
+                  { value: "FI", label: "Firenze" },
+                  { value: "FG", label: "Foggia" },
+                  { value: "FC", label: "Forlì-Cesena" },
+                  { value: "FR", label: "Frosinone" },
+                  { value: "GE", label: "Genova" },
+                  { value: "GO", label: "Gorizia" },
+                  { value: "GR", label: "Grosseto" },
+                  { value: "IM", label: "Imperia" },
+                  { value: "IS", label: "Isernia" },
+                  { value: "SP", label: "La Spezia" },
+                  { value: "LT", label: "Latina" },
+                  { value: "LE", label: "Lecce" },
+                  { value: "LC", label: "Lecco" },
+                  { value: "LO", label: "Lodi" },
+                  { value: "LU", label: "Lucca" },
+                  { value: "MC", label: "Macerata" },
+                  { value: "MN", label: "Mantova" },
+                  { value: "MS", label: "Massa-Carrara" },
+                  { value: "MT", label: "Matera" },
+                  { value: "ME", label: "Messina" },
+                  { value: "MI", label: "Milano" },
+                  { value: "MO", label: "Modena" },
+                  { value: "MB", label: "Monza-Brianza" },
+                  { value: "NA", label: "Napoli" },
+                  { value: "NO", label: "Novara" },
+                  { value: "NU", label: "Nuoro" },
+                  { value: "OR", label: "Olbia-Tempio" },
+                  { value: "PD", label: "Padova" },
+                  { value: "PA", label: "Palermo" },
+                  { value: "PR", label: "Parma" },
+                  { value: "PV", label: "Pavia" },
+                  { value: "PG", label: "Perugia" },
+                  { value: "PU", label: "Pesaro e Urbino" },
+                  { value: "PE", label: "Pescara" },
+                  { value: "PC", label: "Piacenza" },
+                  { value: "PI", label: "Pisa" },
+                  { value: "PT", label: "Pistoia" },
+                  { value: "PN", label: "Pordenone" },
+                  { value: "PZ", label: "Potenza" },
+                  { value: "PO", label: "Prato" },
+                  { value: "RG", label: "Ragusa" },
+                  { value: "RA", label: "Ravenna" },
+                  { value: "RC", label: "Reggio Calabria" },
+                  { value: "RE", label: "Reggio Emilia" },
+                  { value: "RI", label: "Rieti" },
+                  { value: "RN", label: "Rimini" },
+                  { value: "RM", label: "Roma" },
+                  { value: "RO", label: "Rovigo" },
+                  { value: "SA", label: "Salerno" },
+                  { value: "SS", label: "Sassari" },
+                  { value: "SV", label: "Savona" },
+                  { value: "SI", label: "Siena" },
+                  { value: "SR", label: "Siracusa" },
+                  { value: "SO", label: "Sondrio" },
+                  { value: "TA", label: "Taranto" },
+                  { value: "TE", label: "Teramo" },
+                  { value: "TR", label: "Terni" },
+                  { value: "TO", label: "Torino" },
+                  { value: "TP", label: "Trapani" },
+                  { value: "TN", label: "Trento" },
+                  { value: "TV", label: "Treviso" },
+                  { value: "TS", label: "Trieste" },
+                  { value: "UD", label: "Udine" },
+                  { value: "VA", label: "Varese" },
+                  { value: "VE", label: "Venezia" },
+                  { value: "VB", label: "Verbano-Cusio-Ossola" },
+                  { value: "VC", label: "Vercelli" },
+                  { value: "VR", label: "Verona" },
+                  { value: "VV", label: "Vibo Valentia" },
+                  { value: "VI", label: "Vicenza" },
+                  { value: "VT", label: "Viterbo" }
+                ].map((option) => (
+                  <button
+                    key={option.value}
+                    onClick={() => {
+                      setProvince(option.value)
+                      setProvinceDropdownOpen(false)
+                    }}
+                    className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+        <button
+          className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl mt-8"
+          onClick={() => setStep(5)}
+        >
+          Avanti
+        </button>
+      </div>
+    )
+  }
+
   // Después del bloque del step === 3, agrega la siguiente condición para el step 4:
   if (step === 4) {
     return (
@@ -581,12 +906,12 @@ function FormScreen({ onClose, onFormSubmit }) {
   }
 
   // STEP 5: Último paso para "Dipendente": Informazioni Contatto con Privacy Policy
-  if (step === 5 && selectedOption === "dipendente") {
+  if (step === 5) {
     return (
       <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
         {/* Cabecera con flecha */}
         <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-20">
-          <button onClick={() => setStep(4)} className="mr-4">
+          <button onClick={() => setStep( selectedOption === "dipendente" ? 4 : 4 )} className="mr-4">
             <IoIosArrowBack size={32} className="text-black" />
           </button>
           <h2 className="text-3xl font-semibold">Informazioni Contatto</h2>

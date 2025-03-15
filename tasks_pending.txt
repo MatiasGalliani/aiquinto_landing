@@ -1,5 +1,5 @@
 - finish the dipendente - privato DONE
-- finish the pensionato part SAT
+- finish the pensionato part DONE
 - make the middle inizia ora button work FRI
 - finish the richiedi di essere contatatto button up SAT
 - finish the richiedi di essere contatatto button down SAT
