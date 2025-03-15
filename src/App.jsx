@@ -137,7 +137,7 @@ function FAQ() {
 }
 
 // Nuevo componente ContactPage
-function ContactPage() {
+function ContactPage({ onBack }) {
   const [loading, setLoading] = useState(true)
   const [nome, setNome] = useState("")
   const [cognome, setCognome] = useState("")
@@ -159,8 +159,11 @@ function ContactPage() {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
-      <div className="mb-8">
-        <h2 className="text-3xl font-semibold text-center">
+      <div className="flex items-center mb-8">
+        <button onClick={onBack} className="mr-4">
+          <FaArrowLeft className="text-2xl text-black" />
+        </button>
+        <h2 className="flex-1 text-3xl font-semibold text-center">
           Inserisci i tuoi dati per essere contattato
         </h2>
       </div>
@@ -245,7 +248,7 @@ function App() {
   }
 
   if (showContactPage) {
-    return <ContactPage />
+    return <ContactPage onBack={() => setShowContactPage(false)} />
   }
 
   const structuredData = {
