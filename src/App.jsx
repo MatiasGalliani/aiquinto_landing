@@ -8,7 +8,6 @@ import aiQuintoLogo from './assets/ai_quinto_logo.png'
 import { Helmet } from "react-helmet-async";
 import ThankYouPage from './ThankYouPage'
 import FormScreen from './FormScreen'
-import ChatWidget from './components/ChatWidget'
 
 function HeroWave() {
   return (
@@ -160,7 +159,12 @@ function ContactPage() {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
-      <div className="grid grid-cols-2 gap-4 w-full max-w-md">
+      <div className="mb-8">
+        <h2 className="text-3xl font-semibold text-center">
+          Inserisci i tuoi dati per essere contattato
+        </h2>
+      </div>
+      <div className="grid grid-cols-2 gap-4 w-full max-w-[38.5rem]">
         <input
           type="text"
           placeholder="Nome"
@@ -196,7 +200,7 @@ function ContactPage() {
           console.log("Informazioni Contatto", { nome, cognome, mail, telefono })
         }
       >
-        Invia
+        Invia Richiesta
       </button>
     </div>
   )
@@ -473,7 +477,7 @@ function App() {
                 className="mt-8 block mx-auto bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
                 onClick={() => console.log("Invia richiesta")}
               >
-                Invia richiesta
+                Invia Richiesta
               </button>
             </div>
           )}
