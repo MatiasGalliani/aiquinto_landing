@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { FaArrowRight } from 'react-icons/fa'
+import { FaArrowRight, FaArrowLeft } from 'react-icons/fa'
 import logo_creditplan from './assets/LOGO-CREDITPLAN.png'
 import family_w_dog from './assets/family_with_dog.png'
 import savingSvg from './assets/saving.svg'
@@ -436,9 +436,17 @@ function App() {
           ) : (
             // Nueva sección con 4 inputs en grid de 2 columnas
             <div className="w-full sm:w-[90%] md:w-[1000px] mx-auto bg-gradient-to-r from-blue-100 to-blue-300 p-8 rounded-2xl shadow-md">
-              <h2 className="text-3xl font-semibold text-center mb-8">
-                Inserisci i tuoi dati per essere contattato
-              </h2>
+              <div className="flex items-center mb-8">
+                <button
+                  onClick={() => setShowContactFields(false)}
+                  className="mr-4"
+                >
+                  <FaArrowLeft className="text-2xl text-black" />
+                </button>
+                <h2 className="flex-1 text-3xl font-semibold text-center">
+                  Inserisci i tuoi dati per essere contattato
+                </h2>
+              </div>
               <div className="grid grid-cols-2 gap-4">
                 <input
                   type="text"
@@ -461,6 +469,12 @@ function App() {
                   className="border p-4 rounded-2xl text-xl w-full"
                 />
               </div>
+              <button
+                className="mt-8 block mx-auto bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
+                onClick={() => console.log("Invia richiesta")}
+              >
+                Invia richiesta
+              </button>
             </div>
           )}
 
