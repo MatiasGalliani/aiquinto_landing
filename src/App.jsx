@@ -8,6 +8,7 @@ import aiQuintoLogo from './assets/ai_quinto_logo.png'
 import { Helmet } from "react-helmet-async";
 import ThankYouPage from './ThankYouPage'
 import FormScreen from './FormScreen'
+import ChatWidget from './components/ChatWidget'
 
 function HeroWave() {
   return (
