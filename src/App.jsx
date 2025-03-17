@@ -707,7 +707,16 @@ function App() {
       </main>
 
       <Footer />
-      <ChatWidget />
+      <ChatWidget
+        open={chatOpen}
+        toggleChat={() => setChatOpen(prev => !prev)}
+      />
+      <button 
+        className="fixed bottom-4 right-4 bg-blue-700 text-white p-3 rounded-full shadow-lg"
+        onClick={() => setChatOpen(prev => !prev)}
+      >
+        Chat with us!
+      </button>
     </div>
   )
 }
