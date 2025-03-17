@@ -9,6 +9,7 @@ import { Helmet } from "react-helmet-async";
 import ThankYouPage from './ThankYouPage'
 import FormScreen from './FormScreen'
 import { motion } from "framer-motion";
+import ChatWidget from './components/ChatWidget'
 
 function HeroWave() {
   return (
@@ -339,7 +340,6 @@ function App() {
 };
 
   if (showThankYou) {
-    // Renderizamos la Thank You page
     return <ThankYouPage />
   }
 
@@ -707,7 +707,7 @@ function App() {
       </main>
 
       <Footer />
-
+      <ChatWidget />
     </div>
   )
 }
