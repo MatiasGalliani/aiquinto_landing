@@ -352,19 +352,20 @@ function FormScreen({ onClose, onFormSubmit }) {
             transition={pageTransition}
             className="absolute inset-0 flex flex-col items-center justify-center bg-white px-4 rounded-2xl"
           >
-            {/* Cabecera unificada con padding para mover a la derecha */}
             <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-16">
               <button onClick={() => setStep(2)} className="mr-4">
                 <IoIosArrowBack size={32} className="text-black" />
               </button>
               <h2 className="text-3xl font-semibold">Che tipo di dipendente sei</h2>
             </div>
-            {/* Desplegable principal "Seleziona tipo di dipendente" */}
+            
+            {/* Dropdown principal: Seleziona tipo di dipendente */}
             <div className="w-full max-w-md mb-4">
               <div
                 onClick={() => {
                   setDropdownOpen(!dropdownOpen)
-                  setSecondaryDropdownOpen(false)  // Cierra el desplegable del subtipo
+                  setSecondaryDropdownOpen(false)
+                  setStepErrors({ ...stepErrors, depType: "" })
                 }}
                 className="border p-4 rounded-2xl cursor-pointer flex justify-between items-center"
               >
@@ -381,7 +382,9 @@ function FormScreen({ onClose, onFormSubmit }) {
                       onClick={() => {
                         setDepType(option)
                         setDropdownOpen(false)
-                        setSecondarySelection(null)
+                        // Si cambia tipo, se non è Privato se limpia el subtipo
+                        if (option !== "Privato") setSecondarySelection(null)
+                        setStepErrors({ ...stepErrors, depType: "" })
                       }}
                       className="block w-full text-left px-4 py-2 hover:bg-gray-100"
                     >
@@ -390,15 +393,18 @@ function FormScreen({ onClose, onFormSubmit }) {
                   ))}
                 </div>
               )}
+              {stepErrors.depType && (
+                <p className="text-red-500 text-sm mt-1">{stepErrors.depType}</p>
+              )}
             </div>
-
-            {/* Desplegable secundario "Seleziona il sottotipo" */}
-            {depType && (
+        
+            {/* Dropdown secundario: Seleziona il sottotipo, obligatorio si es Privato */}
+            {depType === "Privato" && (
               <div className="w-full max-w-md mb-4">
                 <div
                   onClick={() => {
                     setSecondaryDropdownOpen(!secondaryDropdownOpen)
-                    setDropdownOpen(false)  // Cierra el desplegable principal
+                    setStepErrors({ ...stepErrors, secondarySelection: "" })
                   }}
                   className="border p-4 rounded-2xl cursor-pointer flex justify-between items-center"
                 >
@@ -415,6 +421,7 @@ function FormScreen({ onClose, onFormSubmit }) {
                         onClick={() => {
                           setSecondarySelection(subOption)
                           setSecondaryDropdownOpen(false)
+                          setStepErrors({ ...stepErrors, secondarySelection: "" })
                         }}
                         className="block w-full text-left px-4 py-2 hover:bg-gray-100"
                       >
@@ -423,23 +430,28 @@ function FormScreen({ onClose, onFormSubmit }) {
                     ))}
                   </div>
                 )}
+                {stepErrors.secondarySelection && (
+                  <p className="text-red-500 text-sm mt-1">{stepErrors.secondarySelection}</p>
+                )}
               </div>
             )}
+        
             <button
               className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
               onClick={() => {
-                if (
-                  depType === "Pubblico" ||
-                  depType === "Statale" ||
-                  depType === "Parapubblico"
-                ) {
+                const errors = {}
+                if (!depType) errors.depType = "Campo obbligatorio"
+                if (depType === "Privato" && !secondarySelection)
+                  errors.secondarySelection = "Campo obbligatorio"
+                if (Object.keys(errors).length > 0) {
+                  setStepErrors(errors)
+                  return
+                }
+                setStepErrors({})
+                if (depType === "Privato") {
+                  setStep(6)
+                } else {
                   setStep(4)
-                } else if (depType === "Privato") {
-                  if (secondarySelection) { // validamos que se haya seleccionado un subtipo
-                    setStep(6)
-                  } else {
-                    alert("Per favore, seleziona un sottotipo per continuare.")
-                  }
                 }
               }}
             >

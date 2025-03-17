@@ -466,6 +466,9 @@ function App() {
                 <p className="text-2xl font-medium text-gray-800 mt-5 animate-fadeIn">
                   Richiedi la Cessione del Quinto in pochi click.
                 </p>
+                <p>
+                Rispondi a poche domande per ricevere il tuo preventivo personalizzato.
+                </p>
                 <div className="mt-6 flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
                   <div className="flex flex-col space-y-4">
                     {/* Box para iniciar el formulario */}
