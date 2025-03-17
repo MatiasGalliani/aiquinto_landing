@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import aiQuintoLogo from './assets/ai_quinto_logo.png';
 import logo_creditplan from './assets/LOGO-CREDITPLAN.png';
 import { Footer } from './App';
 
 function ThankYouPage() {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-r from-blue-50 to-blue-200">
       <Helmet>

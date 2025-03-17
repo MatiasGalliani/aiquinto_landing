@@ -1,4 +1,4 @@
-- make the thankyoupage for the manual requests SUN
+- make the thankyoupage for the manual requests DONE
 - make every part of the form mandatory SUN
 - connect form to google sheets SUN
 - connect form to eugenio with simple behavior for fixing appointments MON

@@ -138,17 +138,35 @@ function FAQ() {
 }
 
 // Nuevo componente ContactPage
-function ContactPage({ onBack }) {
+function ContactPage({ onBack, onSubmit }) {
   const [loading, setLoading] = useState(true)
   const [nome, setNome] = useState("")
   const [cognome, setCognome] = useState("")
   const [mail, setMail] = useState("")
   const [telefono, setTelefono] = useState("")
+  const [errors, setErrors] = useState({})
+  const [privacyAccepted, setPrivacyAccepted] = useState(false)
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 3000)
     return () => clearTimeout(timer)
   }, [])
+
+  const handleSubmit = () => {
+    const newErrors = {}
+    if (!nome.trim()) newErrors.nome = "Campo obbligatorio"
+    if (!cognome.trim()) newErrors.cognome = "Campo obbligatorio"
+    if (!mail.trim()) newErrors.mail = "Campo obbligatorio"
+    if (!telefono.trim()) newErrors.telefono = "Campo obbligatorio"
+    if (!privacyAccepted) newErrors.privacy = "Campo obbligatorio"
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors)
+      return
+    }
+    // Si no hay errores, llama onSubmit
+    onSubmit()
+  }
 
   if (loading) {
     return (
@@ -170,40 +188,105 @@ function ContactPage({ onBack }) {
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input
-            type="text"
-            placeholder="Nome"
-            value={nome}
-            onChange={(e) => setNome(e.target.value)}
-            className="border p-4 rounded-2xl text-xl w-full"
-          />
-          <input
-            type="text"
-            placeholder="Cognome"
-            value={cognome}
-            onChange={(e) => setCognome(e.target.value)}
-            className="border p-4 rounded-2xl text-xl w-full"
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            value={mail}
-            onChange={(e) => setMail(e.target.value)}
-            className="border p-4 rounded-2xl text-xl w-full"
-          />
-          <input
-            type="tel"
-            placeholder="Telefono"
-            value={telefono}
-            onChange={(e) => setTelefono(e.target.value)}
-            className="border p-4 rounded-2xl text-xl w-full"
-          />
+          <div>
+            <input
+              type="text"
+              placeholder="Nome"
+              value={nome}
+              onChange={(e) => {
+                setNome(e.target.value)
+                setErrors({ ...errors, nome: "" })
+              }}
+              className="border p-4 rounded-2xl text-xl w-full"
+            />
+            {errors.nome && <p className="text-red-500 text-sm">{errors.nome}</p>}
+          </div>
+          <div>
+            <input
+              type="text"
+              placeholder="Cognome"
+              value={cognome}
+              onChange={(e) => {
+                setCognome(e.target.value)
+                setErrors({ ...errors, cognome: "" })
+              }}
+              className="border p-4 rounded-2xl text-xl w-full"
+            />
+            {errors.cognome && <p className="text-red-500 text-sm">{errors.cognome}</p>}
+          </div>
+          <div>
+            <input
+              type="email"
+              placeholder="Email"
+              value={mail}
+              onChange={(e) => {
+                setMail(e.target.value)
+                setErrors({ ...errors, mail: "" })
+              }}
+              className="border p-4 rounded-2xl text-xl w-full"
+            />
+            {errors.mail && <p className="text-red-500 text-sm">{errors.mail}</p>}
+          </div>
+          <div>
+            <input
+              type="tel"
+              placeholder="Telefono"
+              value={telefono}
+              onChange={(e) => {
+                setTelefono(e.target.value)
+                setErrors({ ...errors, telefono: "" })
+              }}
+              className="border p-4 rounded-2xl text-xl w-full"
+            />
+            {errors.telefono && <p className="text-red-500 text-sm">{errors.telefono}</p>}
+          </div>
+        </div>
+        {/* Bloque de privacidad */}
+        <div className="mt-4 w-full">
+          <div className="flex items-start">
+            <input
+              type="checkbox"
+              id="privacy1"
+              checked={privacyAccepted}
+              onChange={(e) => {
+                setPrivacyAccepted(e.target.checked)
+                setErrors({ ...errors, privacy: "" })
+              }}
+              className="mr-2 mt-1 transition-all duration-300"
+            />
+            <div>
+              <label htmlFor="privacy1" className="text-sm text-gray-800 leading-snug">
+                Dichiaro di aver preso visione dell'Informativa ai sensi del Decreto Legislativo 196/2003 e del Regolamento (UE) 2016/679 (GDPR).
+              </label>
+              {!privacyAccepted && errors.privacy && (
+                <p className="text-red-500 text-sm mt-1">{errors.privacy}</p>
+              )}
+            </div>
+          </div>
+          <div className="flex items-start mt-2">
+            <input
+              type="checkbox"
+              id="privacy2"
+              checked={privacyAccepted}
+              onChange={(e) => {
+                setPrivacyAccepted(e.target.checked)
+                setErrors({ ...errors, privacy: "" })
+              }}
+              className="mr-2 mt-1 transition-all duration-300"
+            />
+            <div>
+              <label htmlFor="privacy2" className="text-sm text-gray-800 leading-snug">
+                Do il consenso a Creditplan al trattamento dei miei dati personali per contattarmi via email o telefono, valutare il mio profilo creditizio e creare un preventivo personalizzato. *Con l'invio della richiesta, dichiaro di aver preso visione dell'informativa sulla privacy.
+              </label>
+              {!privacyAccepted && errors.privacy && (
+                <p className="text-red-500 text-sm mt-1">{errors.privacy}</p>
+              )}
+            </div>
+          </div>
         </div>
         <button
           className="mt-8 w-full bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
-          onClick={() =>
-            console.log("Informazioni Contatto", { nome, cognome, mail, telefono })
-          }
+          onClick={handleSubmit}
         >
           Invia Richiesta
         </button>
@@ -219,6 +302,13 @@ function App() {
   const [showContactFields, setShowContactFields] = useState(false)
   const [showThankYou, setShowThankYou] = useState(false)
   const [submissionLoading, setSubmissionLoading] = useState(false)
+  const [contactPrivacyAccepted, setContactPrivacyAccepted] = useState(false)
+
+  const [contactNome, setContactNome] = useState("");
+  const [contactCognome, setContactCognome] = useState("");
+  const [contactMail, setContactMail] = useState("");
+  const [contactTelefono, setContactTelefono] = useState("");
+  const [contactErrors, setContactErrors] = useState({});
 
   // Función de callback para envío de formulario
   const onFormSubmit = () => {
@@ -231,6 +321,22 @@ function App() {
       setShowThankYou(true)
     }, 2000) // Ajusta el tiempo según tu necesidad
   }
+
+  const handleContactSubmit = () => {
+    const errors = {};
+    if (!contactNome.trim()) errors.nome = "Campo obbligatorio";
+    if (!contactCognome.trim()) errors.cognome = "Campo obbligatorio";
+    if (!contactMail.trim()) errors.mail = "Campo obbligatorio";
+    if (!contactTelefono.trim()) errors.telefono = "Campo obbligatorio";
+    if (!contactPrivacyAccepted) errors.privacy = "Campo obbligatorio";
+    
+    if (Object.keys(errors).length > 0) {
+      setContactErrors(errors);
+      return;
+    }
+    // Si no hay errores, muestra la Thank You page
+    setShowThankYou(true);
+};
 
   if (showThankYou) {
     // Renderizamos la Thank You page
@@ -268,7 +374,10 @@ function App() {
         transition={{ duration: 0.5 }}
         className="min-h-screen"
       >
-        <ContactPage onBack={() => setShowContactPage(false)} />
+        <ContactPage 
+          onBack={() => setShowContactPage(false)} 
+          onSubmit={() => setShowThankYou(true)} 
+        />
       </motion.div>
     )
   }
@@ -472,7 +581,10 @@ function App() {
             <div className="w-full sm:w-[90%] md:w-[1000px] mx-auto bg-gradient-to-r from-blue-100 to-blue-300 p-8 rounded-2xl shadow-md transition-all duration-500 hover:scale-105">
               <div className="flex items-center mb-8">
                 <button
-                  onClick={() => setShowContactFields(false)}
+                  onClick={() => {
+                    setShowContactFields(false);
+                    setContactErrors({});
+                  }}
                   className="mr-4 transition-all duration-500 hover:scale-105"
                 >
                   <FaArrowLeft className="text-2xl text-black" />
@@ -482,30 +594,105 @@ function App() {
                 </h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input
-                  type="text"
-                  placeholder="Nome"
-                  className="border p-4 rounded-2xl text-xl w-full transition-all duration-500 focus:scale-105"
-                />
-                <input
-                  type="text"
-                  placeholder="Cognome"
-                  className="border p-4 rounded-2xl text-xl w-full transition-all duration-500 focus:scale-105"
-                />
-                <input
-                  type="email"
-                  placeholder="Email"
-                  className="border p-4 rounded-2xl text-xl w-full transition-all duration-500 focus:scale-105"
-                />
-                <input
-                  type="tel"
-                  placeholder="Telefono"
-                  className="border p-4 rounded-2xl text-xl w-full transition-all duration-500 focus:scale-105"
-                />
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Nome"
+                    value={contactNome}
+                    onChange={(e) => {
+                      setContactNome(e.target.value);
+                      setContactErrors({ ...contactErrors, nome: "" });
+                    }}
+                    className="border p-4 rounded-2xl text-xl w-full transition-all duration-500 focus:scale-105"
+                  />
+                  {contactErrors.nome && <p className="text-red-500 text-sm">{contactErrors.nome}</p>}
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Cognome"
+                    value={contactCognome}
+                    onChange={(e) => {
+                      setContactCognome(e.target.value);
+                      setContactErrors({ ...contactErrors, cognome: "" });
+                    }}
+                    className="border p-4 rounded-2xl text-xl w-full transition-all duration-500 focus:scale-105"
+                  />
+                  {contactErrors.cognome && <p className="text-red-500 text-sm">{contactErrors.cognome}</p>}
+                </div>
+                <div>
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    value={contactMail}
+                    onChange={(e) => {
+                      setContactMail(e.target.value);
+                      setContactErrors({ ...contactErrors, mail: "" });
+                    }}
+                    className="border p-4 rounded-2xl text-xl w-full transition-all duration-500 focus:scale-105"
+                  />
+                  {contactErrors.mail && <p className="text-red-500 text-sm">{contactErrors.mail}</p>}
+                </div>
+                <div>
+                  <input
+                    type="tel"
+                    placeholder="Telefono"
+                    value={contactTelefono}
+                    onChange={(e) => {
+                      setContactTelefono(e.target.value);
+                      setContactErrors({ ...contactErrors, telefono: "" });
+                    }}
+                    className="border p-4 rounded-2xl text-xl w-full transition-all duration-500 focus:scale-105"
+                  />
+                  {contactErrors.telefono && <p className="text-red-500 text-sm">{contactErrors.telefono}</p>}
+                </div>
+              </div>
+              {/* Bloque de privacidad */}
+              <div className="mt-4 w-full">
+                <div className="flex items-start">
+                  <input
+                    type="checkbox"
+                    id="contactPrivacy1"
+                    checked={contactPrivacyAccepted}
+                    onChange={(e) => {
+                      setContactPrivacyAccepted(e.target.checked);
+                      setContactErrors({ ...contactErrors, privacy: "" });
+                    }}
+                    className="mr-2 mt-1 transition-all duration-300"
+                  />
+                  <div>
+                    <label htmlFor="contactPrivacy1" className="text-sm text-gray-800 leading-snug">
+                      Dichiaro di aver preso visione dell'Informativa ai sensi del Decreto Legislativo 196/2003 e del Regolamento (UE) 2016/679 (GDPR).
+                    </label>
+                    {!contactPrivacyAccepted && contactErrors.privacy && (
+                      <p className="text-red-500 text-sm mt-1">{contactErrors.privacy}</p>
+                    )}
+                  </div>
+                </div>
+                <div className="flex items-start mt-2">
+                  <input
+                    type="checkbox"
+                    id="contactPrivacy2"
+                    checked={contactPrivacyAccepted}
+                    onChange={(e) => {
+                      setContactPrivacyAccepted(e.target.checked);
+                      setContactErrors({ ...contactErrors, privacy: "" });
+                    }}
+                    className="mr-2 mt-1 transition-all duration-300"
+                  />
+                  <div>
+                    <label htmlFor="contactPrivacy2" className="text-sm text-gray-800 leading-snug">
+                      Do il consenso a Creditplan al trattamento dei miei dati personali per contattarmi via email o telefono, valutare il mio profilo creditizio e creare un preventivo personalizzato. *Con l'invio della richiesta, dichiaro di aver preso visione dell'informativa sulla privacy.
+                    </label>
+                    {!contactPrivacyAccepted && contactErrors.privacy && (
+                      <p className="text-red-500 text-sm mt-1">{contactErrors.privacy}</p>
+                    )}
+                  </div>
+                </div>
               </div>
               <button
-                className="mt-8 block mx-auto bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300 transition-all duration-500 hover:scale-105"
-                onClick={() => console.log("Invia richiesta")}
+                className="mt-8 block mx-auto w-full bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300 transition-all duration-500 hover:scale-105"
+                onClick={handleContactSubmit}
               >
                 Invia Richiesta
               </button>
@@ -647,15 +834,14 @@ export function Footer() {
             </ul>
           </div>
         </div>
-      </div>
-
-      {/* Copyright */}
-      <div className="border-t border-gray-700 mt-8 pt-4 px-4 sm:px-6 lg:px-8">
-        <p className="text-xs text-center">
-          Copyright © 2025 – Creditplan Italia Network di mediazione creditizia srl. All Rights Reserved.
-          <br />
-          Designed &amp; developed by Matias Galliani :)
-        </p>
+        {/* Copyright */}
+        <div className="border-t border-gray-700 mt-8 pt-4 px-4 sm:px-6 lg:px-8">
+          <p className="text-xs text-center">
+            Copyright © 2025 – Creditplan Italia Network di mediazione creditizia srl. All Rights Reserved.
+            <br />
+            Designed &amp; developed by Matias Galliani :)
+          </p>
+        </div>
       </div>
     </footer>
   )

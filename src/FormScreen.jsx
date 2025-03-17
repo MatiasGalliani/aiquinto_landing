@@ -58,6 +58,9 @@ function FormScreen({ onClose, onFormSubmit }) {
   // Agrega este estado al inicio del componente junto a los demás:
   const [tipologiaDropdownOpen, setTipologiaDropdownOpen] = useState(false)
 
+  // Nuevo estado para almacenar errores de cada paso:
+  const [stepErrors, setStepErrors] = useState({})
+
   // Check viewport width to set isMobile (adjust the px threshold as needed)
   useEffect(() => {
     const checkIsMobile = () => setIsMobile(window.innerWidth <= 768)
@@ -78,15 +81,23 @@ function FormScreen({ onClose, onFormSubmit }) {
     return () => clearTimeout(timer)
   }, [])
 
-  // Elimina o comenta este useEffect
-  /*
-  useEffect(() => {
-    document.body.style.overflow = "hidden"
-    return () => {
-      document.body.style.overflow = "auto"
-    }
-  }, [])
-  */
+  // Ejemplo de validación en cada paso (debes replicarla en cada uno)
+  const validateStep2Pensionato = () => {
+    const errors = {}
+    if (!pensionAmount.trim()) errors.pensionAmount = "Campo obbligatorio"
+    if (!pensioneNetta.trim()) errors.pensioneNetta = "Campo obbligatorio"
+    return errors
+  }
+
+  const validateStep5Contatto = () => {
+    const errors = {}
+    if (!nome.trim()) errors.nome = "Campo obbligatorio"
+    if (!cognome.trim()) errors.cognome = "Campo obbligatorio"
+    if (!mail.trim()) errors.mail = "Campo obbligatorio"
+    if (!telefono.trim()) errors.telefono = "Campo obbligatorio"
+    if (!privacyAccepted) errors.privacy = "Campo obbligatorio"
+    return errors
+  }
 
   if (loading) {
     return (
@@ -197,10 +208,16 @@ function FormScreen({ onClose, onFormSubmit }) {
                   <input
                     type="text"
                     value={pensionAmount}
-                    onChange={(e) => setPensionAmount(e.target.value)}
+                    onChange={(e) => {
+                      setPensionAmount(e.target.value)
+                      setStepErrors({ ...stepErrors, pensionAmount: "" })
+                    }}
                     className="border pl-10 pr-3 p-3 sm:p-4 w-full rounded-2xl text-base sm:text-lg"
                   />
                 </div>
+                {stepErrors.pensionAmount && (
+                  <p className="text-red-500 text-sm mt-1">{stepErrors.pensionAmount}</p>
+                )}
               </div>
               {/* Pensione netta mensile */}
               <div className="flex flex-col">
@@ -212,15 +229,29 @@ function FormScreen({ onClose, onFormSubmit }) {
                   <input
                     type="text"
                     value={pensioneNetta}
-                    onChange={(e) => setPensioneNetta(e.target.value)}
+                    onChange={(e) => {
+                      setPensioneNetta(e.target.value)
+                      setStepErrors({ ...stepErrors, pensioneNetta: "" })
+                    }}
                     className="border pl-10 pr-3 p-3 sm:p-4 w-full rounded-2xl text-base sm:text-lg"
                   />
                 </div>
+                {stepErrors.pensioneNetta && (
+                  <p className="text-red-500 text-sm mt-1">{stepErrors.pensioneNetta}</p>
+                )}
               </div>
             </div>
             <button
               className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl mt-8"
-              onClick={() => setStep(3)}
+              onClick={() => {
+                const errors = validateStep2Pensionato()
+                if (Object.keys(errors).length > 0) {
+                  setStepErrors(errors)
+                  return
+                }
+                setStepErrors({})
+                setStep(3)
+              }}
             >
               Avanti
             </button>
@@ -451,6 +482,9 @@ function FormScreen({ onClose, onFormSubmit }) {
                     </button>
                   </div>
                 )}
+                {stepErrors.entePensionistico && (
+                  <p className="text-red-500 text-sm mt-1">{stepErrors.entePensionistico}</p>
+                )}
               </div>
 
               {/* Tipologia di pensione */}
@@ -495,11 +529,24 @@ function FormScreen({ onClose, onFormSubmit }) {
                     ))}
                   </div>
                 )}
+                {stepErrors.pensioneType && (
+                  <p className="text-red-500 text-sm mt-1">{stepErrors.pensioneType}</p>
+                )}
               </div>
             </div>
             <button
               className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl mt-8"
-              onClick={() => setStep(4)}
+              onClick={() => {
+                const errors = {};
+                if (!entePensionistico) errors.entePensionistico = "Campo obbligatorio";
+                if (!pensioneType) errors.pensioneType = "Campo obbligatorio";
+                if (Object.keys(errors).length > 0) {
+                  setStepErrors(errors);
+                  return;
+                }
+                setStepErrors({});
+                setStep(4);
+              }}
             >
               Avanti
             </button>
@@ -757,9 +804,15 @@ function FormScreen({ onClose, onFormSubmit }) {
                 <input
                   type="date"
                   value={birthDate}
-                  onChange={(e) => setBirthDate(e.target.value)}
+                  onChange={(e) => {
+                    setBirthDate(e.target.value)
+                    setStepErrors({ ...stepErrors, birthDate: "" })
+                  }}
                   className="border p-3 sm:p-4 w-full rounded-2xl text-base sm:text-lg"
                 />
+                {stepErrors.birthDate && (
+                  <p className="text-red-500 text-sm mt-1">{stepErrors.birthDate}</p>
+                )}
               </div>
               {/* Provincia di Residenza */}
               <div className="flex flex-col">
@@ -892,6 +945,7 @@ function FormScreen({ onClose, onFormSubmit }) {
                         onClick={() => {
                           setProvince(option.value)
                           setProvinceDropdownOpen(false)
+                          setStepErrors({ ...stepErrors, province: "" })
                         }}
                         className="block w-full text-left px-4 py-2 hover:bg-gray-100"
                       >
@@ -900,11 +954,24 @@ function FormScreen({ onClose, onFormSubmit }) {
                     ))}
                   </div>
                 )}
+                {stepErrors.province && (
+                  <p className="text-red-500 text-sm mt-1">{stepErrors.province}</p>
+                )}
               </div>
             </div>
             <button
-              className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl mt-8"
-              onClick={() => setStep(5)}
+              className="mt-8 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
+              onClick={() => {
+                const errors = {}
+                if (!birthDate.trim()) errors.birthDate = "Campo obbligatorio"
+                if (!province) errors.province = "Campo obbligatorio"
+                if (Object.keys(errors).length > 0) {
+                  setStepErrors(errors)
+                  return
+                }
+                setStepErrors({})
+                setStep(5)
+              }}
             >
               Avanti
             </button>
@@ -922,77 +989,129 @@ function FormScreen({ onClose, onFormSubmit }) {
           >
             {/* Cabecera con flecha */}
             <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-20">
-              <button onClick={() => setStep( selectedOption === "dipendente" ? 4 : 4 )} className="mr-4">
+              <button
+                onClick={() => setStep(selectedOption === "dipendente" ? 4 : 4)}
+                className="mr-4"
+              >
                 <IoIosArrowBack size={32} className="text-black" />
               </button>
               <h2 className="text-3xl font-semibold">Informazioni Contatto</h2>
             </div>
             {/* Campos de contacto */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-3xl">
-              <input
-                type="text"
-                placeholder="Nome"
-                value={nome}
-                onChange={(e) => setNome(e.target.value)}
-                className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
-              />
-              <input
-                type="text"
-                placeholder="Cognome"
-                value={cognome}
-                onChange={(e) => setCognome(e.target.value)}
-                className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
-              />
-              <input
-                type="email"
-                placeholder="Mail"
-                value={mail}
-                onChange={(e) => setMail(e.target.value)}
-                className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
-              />
-              <input
-                type="tel"
-                placeholder="Telefono"
-                value={telefono}
-                onChange={(e) => setTelefono(e.target.value)}
-                className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
-              />
+              <div className="flex flex-col">
+                <input
+                  type="text"
+                  placeholder="Nome"
+                  value={nome}
+                  onChange={(e) => {
+                    setNome(e.target.value)
+                    setStepErrors({ ...stepErrors, nome: "" })
+                  }}
+                  className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
+                />
+                {stepErrors.nome && <p className="text-red-500 text-sm mt-1">{stepErrors.nome}</p>}
+              </div>
+              <div className="flex flex-col">
+                <input
+                  type="text"
+                  placeholder="Cognome"
+                  value={cognome}
+                  onChange={(e) => {
+                    setCognome(e.target.value)
+                    setStepErrors({ ...stepErrors, cognome: "" })
+                  }}
+                  className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
+                />
+                {stepErrors.cognome && <p className="text-red-500 text-sm mt-1">{stepErrors.cognome}</p>}
+              </div>
+              <div className="flex flex-col">
+                <input
+                  type="email"
+                  placeholder="Mail"
+                  value={mail}
+                  onChange={(e) => {
+                    setMail(e.target.value)
+                    setStepErrors({ ...stepErrors, mail: "" })
+                  }}
+                  className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
+                />
+                {stepErrors.mail && <p className="text-red-500 text-sm mt-1">{stepErrors.mail}</p>}
+              </div>
+              <div className="flex flex-col">
+                <input
+                  type="tel"
+                  placeholder="Telefono"
+                  value={telefono}
+                  onChange={(e) => {
+                    setTelefono(e.target.value)
+                    setStepErrors({ ...stepErrors, telefono: "" })
+                  }}
+                  className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
+                />
+                {stepErrors.telefono && <p className="text-red-500 text-sm mt-1">{stepErrors.telefono}</p>}
+              </div>
             </div>
-            {/* Checkbox de Privacy Policy */}
+            <div className="mt-4 text-center">
+              {/* Si la privacy no es aceptada mostramos error */}
+              {stepErrors.privacy && <p className="text-red-500 text-sm">{stepErrors.privacy}</p>}
+            </div>
             <div className="mt-4 space-y-2 max-w-md mx-auto text-center animate-fadeIn">
-                {/* Checkbox 1 */}
-                <div className="flex items-start mt-6">
-                  <input
-                    type="checkbox"
-                    id="privacy1"
-                    checked={privacyAccepted}
-                    onChange={(e) => setPrivacyAccepted(e.target.checked)}
-                    className="mr-2 mt-1 transition-all duration-300"
-                  />
+              <div className="flex items-start mt-6">
+                <input
+                  type="checkbox"
+                  id="privacy1"
+                  checked={privacyAccepted}
+                  onChange={(e) => {
+                    setPrivacyAccepted(e.target.checked)
+                    setStepErrors({ ...stepErrors, privacy: "" })
+                  }}
+                  className="mr-2 mt-1 transition-all duration-300"
+                />
+                <div>
                   <label htmlFor="privacy1" className="text-sm text-gray-800 leading-snug">
                     Dichiaro di aver preso visione dell'Informativa ai sensi del Decreto Legislativo 196/2003 e del Regolamento (UE) 2016/679 (GDPR).
                   </label>
+                  {!privacyAccepted && stepErrors.privacy && (
+                    <p className="text-red-500 text-sm mt-1">{stepErrors.privacy}</p>
+                  )}
                 </div>
-                {/* Checkbox 2 */}
-                <div className="flex items-start">
-                  <input
-                    type="checkbox"
-                    id="privacy2"
-                    checked={privacyAccepted}
-                    onChange={(e) => setPrivacyAccepted(e.target.checked)}
-                    className="mr-2 mt-1 transition-all duration-300"
-                  />
+              </div>
+              <div className="flex items-start">
+                <input
+                  type="checkbox"
+                  id="privacy2"
+                  checked={privacyAccepted}
+                  onChange={(e) => {
+                    setPrivacyAccepted(e.target.checked)
+                    setStepErrors({ ...stepErrors, privacy: "" })
+                  }}
+                  className="mr-2 mt-1 transition-all duration-300"
+                />
+                <div>
                   <label htmlFor="privacy2" className="text-sm text-gray-800 leading-snug">
                     Do il consenso a Creditplan al trattamento dei miei dati personali per contattarmi via email o telefono, valutare il mio profilo creditizio e creare un preventivo personalizzato. *Con l'invio della richiesta, dichiaro di aver preso visione dell'informativa sulla privacy.
                   </label>
+                  {!privacyAccepted && stepErrors.privacy && (
+                    <p className="text-red-500 text-sm mt-1">{stepErrors.privacy}</p>
+                  )}
                 </div>
               </div>
-              <button
-                className="mt-8 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300 transition-all duration-500 hover:scale-105 hover:shadow-lg animate-fadeIn"
-                onClick={onFormSubmit}
-              >
-                Invia Questa Richiesta
-              </button>
+            </div>
+            <button
+              className="mt-8 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300 transition-all duration-500 hover:scale-105 hover:shadow-lg animate-fadeIn"
+              onClick={() => {
+                const errors = validateStep5Contatto()
+                if (Object.keys(errors).length > 0) {
+                  setStepErrors(errors)
+                  return
+                }
+                setStepErrors({})
+                onFormSubmit()
+              }}
+            >
+              Invia Questa Richiesta
+            </button>
           </motion.div>
         )}
         {step === 6 && selectedOption === "dipendente" && depType === "Privato" && (
