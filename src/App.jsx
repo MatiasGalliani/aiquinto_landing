@@ -570,7 +570,10 @@ function App() {
                   </div>
                 </div>
                 <div
-                  onClick={() => setShowContactFields(true)}
+                  onClick={() => {
+                    setShowContactFields(true);
+                    setChatOpen(true); // Opens the ChatWidget via Eugenio’s button
+                  }}
                   className="w-full md:flex-1 cursor-pointer bg-white hover:bg-gray-100 text-black px-8 py-3 text-xl border border-gray-400 transform transition-all duration-500 hover:scale-105 hover:shadow-lg flex items-center justify-between rounded-2xl"
                 >
                   <span>Richiedi di Essere Contattato</span>
@@ -709,14 +712,8 @@ function App() {
       <Footer />
       <ChatWidget
         open={chatOpen}
-        toggleChat={() => setChatOpen(prev => !prev)}
+        setOpen={setChatOpen}
       />
-      <button 
-        className="fixed bottom-4 right-4 bg-blue-700 text-white p-3 rounded-full shadow-lg"
-        onClick={() => setChatOpen(prev => !prev)}
-      >
-        Chat with us!
-      </button>
     </div>
   )
 }
