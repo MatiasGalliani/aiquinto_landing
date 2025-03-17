@@ -148,7 +148,7 @@ export function ChatWidget({ open, setOpen }) {
       {!open && (
         <button
           onClick={toggleChat}
-          className="fixed bottom-16 sm:bottom-5 right-5 bg-white text-black border border-gray-400 px-6 py-4 rounded-3xl shadow-lg transition-transform duration-500 ease-out hover:scale-110 hover:border-gray-700 animate-fadeIn"
+          className="fixed bottom-5 max-sm:bottom-16 right-5 bg-white text-black border border-gray-400 px-6 py-4 rounded-3xl shadow-lg transition-transform duration-500 ease-out hover:scale-110 hover:border-gray-700 animate-fadeIn"
         >
           <img src={logo} alt="€ugenio logo" className="h-8" />
         </button>

@@ -330,14 +330,14 @@ function App() {
     if (!contactMail.trim()) errors.mail = "Campo obbligatorio";
     if (!contactTelefono.trim()) errors.telefono = "Campo obbligatorio";
     if (!contactPrivacyAccepted) errors.privacy = "Campo obbligatorio";
-    
+
     if (Object.keys(errors).length > 0) {
       setContactErrors(errors);
       return;
     }
     // Si no hay errores, muestra la Thank You page
     setShowThankYou(true);
-};
+  };
 
   if (showThankYou) {
     return <ThankYouPage />
@@ -353,7 +353,7 @@ function App() {
 
   if (showFormScreen) {
     return (
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0 }}
@@ -374,9 +374,9 @@ function App() {
         transition={{ duration: 0.5 }}
         className="min-h-screen"
       >
-        <ContactPage 
-          onBack={() => setShowContactPage(false)} 
-          onSubmit={() => setShowThankYou(true)} 
+        <ContactPage
+          onBack={() => setShowContactPage(false)}
+          onSubmit={() => setShowThankYou(true)}
         />
       </motion.div>
     )
@@ -467,7 +467,7 @@ function App() {
                   Richiedi la Cessione del Quinto in pochi click.
                 </p>
                 <p>
-                Rispondi a poche domande per ricevere il tuo preventivo personalizzato.
+                  Rispondi a poche domande per ricevere il tuo preventivo personalizzato.
                 </p>
                 <div className="mt-6 flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
                   <div className="flex flex-col space-y-4">
@@ -845,9 +845,11 @@ export function Footer() {
         </div>
         {/* Copyright */}
         <div className="border-t border-gray-700 mt-8 pt-4 px-4 sm:px-6 lg:px-8">
-          <p className="text-xs text-center">
+          <p className="text-xs text-left">
             Copyright © 2025 – Creditplan Italia Network di mediazione creditizia srl. All Rights Reserved.
             <br />
+          </p>
+          <p className='text-xs text-left mb-5 mt-3'>
             Designed &amp; developed by Matias Galliani :)
           </p>
         </div>
