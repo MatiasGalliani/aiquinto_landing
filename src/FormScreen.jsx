@@ -89,6 +89,14 @@ function FormScreen({ onClose, onFormSubmit }) {
     return errors
   }
 
+  // Agregar la validación para il flusso "dipendente"
+  const validateStep2Dipendente = () => {
+    const errors = {}
+    if (!amountRequested.trim()) errors.amountRequested = "Campo obbligatorio"
+    if (!netSalary.trim()) errors.netSalary = "Campo obbligatorio"
+    return errors
+  }
+
   const validateStep5Contatto = () => {
     const errors = {}
     if (!nome.trim()) errors.nome = "Campo obbligatorio"
@@ -286,10 +294,16 @@ function FormScreen({ onClose, onFormSubmit }) {
                   <input
                     type="text"
                     value={amountRequested}
-                    onChange={(e) => setAmountRequested(e.target.value)}
+                    onChange={(e) => {
+                      setAmountRequested(e.target.value)
+                      setStepErrors({ ...stepErrors, amountRequested: "" })
+                    }}
                     className="border pl-10 pr-3 p-3 sm:p-4 w-full rounded-2xl text-base sm:text-lg"
                   />
                 </div>
+                {stepErrors.amountRequested && (
+                  <p className="text-red-500 text-sm mt-1">{stepErrors.amountRequested}</p>
+                )}
               </div>
               <div className="flex flex-col">
                 <label className="text-base sm:text-xl font-semibold mb-2">
@@ -300,15 +314,29 @@ function FormScreen({ onClose, onFormSubmit }) {
                   <input
                     type="text"
                     value={netSalary}
-                    onChange={(e) => setNetSalary(e.target.value)}
+                    onChange={(e) => {
+                      setNetSalary(e.target.value)
+                      setStepErrors({ ...stepErrors, netSalary: "" })
+                    }}
                     className="border pl-10 pr-3 p-3 sm:p-4 w-full rounded-2xl text-base sm:text-lg"
                   />
                 </div>
+                {stepErrors.netSalary && (
+                  <p className="text-red-500 text-sm mt-1">{stepErrors.netSalary}</p>
+                )}
               </div>
             </div>
             <button
               className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl mt-8"
-              onClick={() => setStep(3)}
+              onClick={() => {
+                const errors = validateStep2Dipendente()
+                if (Object.keys(errors).length > 0) {
+                  setStepErrors(errors)
+                  return
+                }
+                setStepErrors({})
+                setStep(3)
+              }}
             >
               Avanti
             </button>
