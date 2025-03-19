@@ -125,7 +125,7 @@ function FormScreen({ onClose, onFormSubmit }) {
     };
   
     try {
-      const response = await fetch("https://script.google.com/macros/s/AKfycbw_oBzK_UYpe30Y12M7l6pU5ikg9ZlbIJBZUk5s7vFFrHCEZVeMtUeAcSABWZGIfuxg1g/exec", {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbz2QRObeqqI7q4-lPV7W_lGqBf-TLBlzL-IsBKYmcrW_OQL2lIC7IXPj7MPkkVgBAF8gw/exec", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
