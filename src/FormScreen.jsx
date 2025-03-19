@@ -107,6 +107,42 @@ function FormScreen({ onClose, onFormSubmit }) {
     return errors
   }
 
+  const handleSubmit = async () => {
+    const formData = {
+      nome,
+      cognome,
+      mail,
+      telefono,
+      selectedOption,
+      depType,
+      secondarySelection,
+      amountRequested,
+      netSalary,
+      pensionAmount,
+      pensioneNetta,
+      birthDate,
+      province
+    };
+
+    try {
+      const response = await fetch("TU_URL_DEL_SCRIPT", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      });
+
+      const result = await response.json();
+      if (result.status === "success") {
+        alert("Formulario enviado con éxito!");
+      } else {
+        alert("Error al enviar el formulario.");
+      }
+    } catch (error) {
+      console.error("Error al enviar datos:", error);
+      alert("Hubo un error en la conexión.");
+    }
+  };
+
   if (loading) {
     return (
       <motion.div
@@ -1147,7 +1183,7 @@ function FormScreen({ onClose, onFormSubmit }) {
                   return
                 }
                 setStepErrors({})
-                onFormSubmit()
+                handleSubmit();  // Enviar datos al Google Sheet
               }}
             >
               Invia Questa Richiesta
