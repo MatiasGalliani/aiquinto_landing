@@ -458,7 +458,7 @@ function App() {
                   Offerta a tempo limitato
                 </p>
                 <h2 className="text-3xl md:text-5xl font-semibold mt-4 text-gray-800 animate-fadeIn">
-                  Richiedi subito fino a 75.000 € per la tua Cessione del Quinto
+                  Richiedi subito fino a € 75.000 per la tua Cessione del Quinto
                 </h2>
                 <p className="text-lg text-gray-900 mt-4 animate-fadeIn">
                   Risparmia tempo e denaro con AIquinto.it by Creditplan.
