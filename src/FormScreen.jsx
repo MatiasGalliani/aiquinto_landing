@@ -123,14 +123,14 @@ function FormScreen({ onClose, onFormSubmit }) {
       birthDate,
       province
     };
-
+  
     try {
-      const response = await fetch("https://script.google.com/macros/s/AKfycbx9e80Angjd_AWXvpw1Q-Q3JIw6cAwj6PiFfimm8anseg7LUXPW4SvXDQapbeN2JCJpYQ/exec", {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbw_oBzK_UYpe30Y12M7l6pU5ikg9ZlbIJBZUk5s7vFFrHCEZVeMtUeAcSABWZGIfuxg1g/exec", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
       });
-
+  
       const result = await response.json();
       if (result.status === "success") {
         alert("Formulario enviado con éxito!");
@@ -141,7 +141,7 @@ function FormScreen({ onClose, onFormSubmit }) {
       console.error("Error al enviar datos:", error);
       alert("Hubo un error en la conexión.");
     }
-  };
+  };  
 
   if (loading) {
     return (
