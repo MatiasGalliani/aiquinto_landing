@@ -125,7 +125,7 @@ function FormScreen({ onClose, onFormSubmit }) {
     };
 
     try {
-      const response = await fetch("TU_URL_DEL_SCRIPT", {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbxyvkP_VFrF3aIRrPv7VgWN6hBcW0C3HGuhdpprGbgTBZY-LmreIgznHfCywrz-ZhESnQ/exec", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
