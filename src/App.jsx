@@ -6,7 +6,7 @@ import savingSvg from './assets/saving.svg'
 import './App.css'
 import aiQuintoLogo from './assets/ai_quinto_logo.png'
 import { Helmet } from "react-helmet-async";
-import ThankYouPage from './ThankYouPage'
+import ThankYouPage from './BookingPage'
 import FormScreen from './FormScreen'
 import { motion } from "framer-motion";
 import ChatWidget from './components/ChatWidget'
@@ -550,7 +550,10 @@ function App() {
               Inizia Ora
             </button>
           </div>
-
+          {/* Sección de Preguntas Frecuentes */}
+          <div className="my-16 animate-fadeIn">
+            <FAQ />
+          </div>
           {/* Sección de botones clicables */}
           {!showContactFields ? (
             <div className="w-full sm:w-[90%] md:w-[1000px] mx-0 md:mx-auto bg-gradient-to-r from-blue-100 to-blue-300 p-8 md:rounded-2xl shadow-md transition-all duration-500 hover:scale-105">
