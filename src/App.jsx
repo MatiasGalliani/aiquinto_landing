@@ -71,7 +71,7 @@ function FAQ() {
     {
       question: "Quanto tempo serve per ottenere il prestito?",
       answer:
-        "Con Creditplan puoi ottenere la liquidità necessaria in pocos días gracias ai nostri partner bancari specializzati."
+        "Con Creditplan puoi ottenere la liquidità necessaria in pochi giorni grazie ai nostri partner bancari specializzati e al team qualificato di Creditplan."
     },
     {
       question: "Quali requisiti devo avere per richiedere la Cessione del Quinto?",
