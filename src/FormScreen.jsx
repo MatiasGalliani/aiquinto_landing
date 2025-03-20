@@ -1161,7 +1161,7 @@ export function ContactInfo({ onBack, onSubmit }) {
             placeholder="Nome"
             value={nome}
             onChange={(e) => setNome(e.target.value)}
-            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200"
+            className="border p-4 rounded-2xl text-xl transition duration-200"
           />
           {errors.nome && <p className="text-red-500 text-sm mt-1">{errors.nome}</p>}
         </div>
@@ -1175,7 +1175,7 @@ export function ContactInfo({ onBack, onSubmit }) {
             placeholder="Cognome"
             value={cognome}
             onChange={(e) => setCognome(e.target.value)}
-            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200"
+            className="border p-4 rounded-2xl text-xl transition duration-200"
           />
           {errors.cognome && <p className="text-red-500 text-sm mt-1">{errors.cognome}</p>}
         </div>
@@ -1189,7 +1189,7 @@ export function ContactInfo({ onBack, onSubmit }) {
             placeholder="Mail"
             value={mail}
             onChange={(e) => setMail(e.target.value)}
-            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200"
+            className="border p-4 rounded-2xl text-xl transition duration-200"
           />
           {errors.mail && <p className="text-red-500 text-sm mt-1">{errors.mail}</p>}
         </div>
@@ -1203,7 +1203,7 @@ export function ContactInfo({ onBack, onSubmit }) {
             placeholder="Telefono"
             value={telefono}
             onChange={(e) => setTelefono(e.target.value)}
-            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200"
+            className="border p-4 rounded-2xl text-xl transition duration-200"
           />
           {errors.telefono && <p className="text-red-500 text-sm mt-1">{errors.telefono}</p>}
         </div>
