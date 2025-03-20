@@ -107,41 +107,10 @@ function FormScreen({ onClose, onFormSubmit }) {
     return errors
   }
 
-  const handleSubmit = async () => {
-    const formData = {
-      nome,
-      cognome,
-      mail,
-      telefono,
-      selectedOption,
-      depType,
-      secondarySelection,
-      amountRequested,
-      netSalary,
-      pensionAmount,
-      pensioneNetta,
-      birthDate,
-      province
-    };
-  
-    try {
-      const response = await fetch("https://script.google.com/macros/s/AKfycbz2QRObeqqI7q4-lPV7W_lGqBf-TLBlzL-IsBKYmcrW_OQL2lIC7IXPj7MPkkVgBAF8gw/exechttps://script.google.com/macros/s/AKfycbx3FueM-025iMg70v0PKNQhMKZONyuRkPQBUW0f8s7ld50pj12ljVoLfLmfnn2MnpE8rA/exec", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData)
-      });
-  
-      const result = await response.json();
-      if (result.status === "success") {
-        alert("Formulario enviado con éxito!");
-      } else {
-        alert("Error al enviar el formulario.");
-      }
-    } catch (error) {
-      console.error("Error al enviar datos:", error);
-      alert("Hubo un error en la conexión.");
-    }
-  };  
+  const handleSubmit = (contactData) => {
+    console.log("Datos del formulario:", contactData);
+    // Aquí puedes integrar la lógica de envío deseada o, por el momento, solo imprimir los datos.
+};
 
   if (loading) {
     return (
@@ -1054,141 +1023,14 @@ function FormScreen({ onClose, onFormSubmit }) {
           </motion.div>
         )}
         {step === 5 && (
-          <motion.div
-            key="step5"
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            variants={pageVariants}
-            transition={pageTransition}
-            className="absolute inset-0 flex flex-col items-center justify-center bg-white px-4 rounded-2xl"
-          >
-            {/* Cabecera con flecha */}
-            <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-20">
-              <button
-                onClick={() => setStep(selectedOption === "dipendente" ? 4 : 4)}
-                className="mr-4"
-              >
-                <IoIosArrowBack size={32} className="text-black" />
-              </button>
-              <h2 className="text-3xl font-semibold">Informazioni Contatto</h2>
-            </div>
-            {/* Campos de contacto */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-3xl">
-              <div className="flex flex-col">
-                <input
-                  type="text"
-                  placeholder="Nome"
-                  value={nome}
-                  onChange={(e) => {
-                    setNome(e.target.value)
-                    setStepErrors({ ...stepErrors, nome: "" })
-                  }}
-                  className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
-                />
-                {stepErrors.nome && <p className="text-red-500 text-sm mt-1">{stepErrors.nome}</p>}
-              </div>
-              <div className="flex flex-col">
-                <input
-                  type="text"
-                  placeholder="Cognome"
-                  value={cognome}
-                  onChange={(e) => {
-                    setCognome(e.target.value)
-                    setStepErrors({ ...stepErrors, cognome: "" })
-                  }}
-                  className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
-                />
-                {stepErrors.cognome && <p className="text-red-500 text-sm mt-1">{stepErrors.cognome}</p>}
-              </div>
-              <div className="flex flex-col">
-                <input
-                  type="email"
-                  placeholder="Mail"
-                  value={mail}
-                  onChange={(e) => {
-                    setMail(e.target.value)
-                    setStepErrors({ ...stepErrors, mail: "" })
-                  }}
-                  className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
-                />
-                {stepErrors.mail && <p className="text-red-500 text-sm mt-1">{stepErrors.mail}</p>}
-              </div>
-              <div className="flex flex-col">
-                <input
-                  type="tel"
-                  placeholder="Telefono"
-                  value={telefono}
-                  onChange={(e) => {
-                    setTelefono(e.target.value)
-                    setStepErrors({ ...stepErrors, telefono: "" })
-                  }}
-                  className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
-                />
-                {stepErrors.telefono && <p className="text-red-500 text-sm mt-1">{stepErrors.telefono}</p>}
-              </div>
-            </div>
-            <div className="mt-4 text-center">
-              {/* Si la privacy no es aceptada mostramos error */}
-              {stepErrors.privacy && <p className="text-red-500 text-sm">{stepErrors.privacy}</p>}
-            </div>
-            <div className="mt-4 space-y-2 max-w-md mx-auto text-center animate-fadeIn">
-              <div className="flex items-start mt-6">
-                <input
-                  type="checkbox"
-                  id="privacy1"
-                  checked={privacyAccepted}
-                  onChange={(e) => {
-                    setPrivacyAccepted(e.target.checked)
-                    setStepErrors({ ...stepErrors, privacy: "" })
-                  }}
-                  className="mr-2 mt-1 transition-all duration-300"
-                />
-                <div>
-                  <label htmlFor="privacy1" className="text-sm text-gray-800 leading-snug">
-                    Dichiaro di aver preso visione dell'Informativa ai sensi del Decreto Legislativo 196/2003 e del Regolamento (UE) 2016/679 (GDPR).
-                  </label>
-                  {!privacyAccepted && stepErrors.privacy && (
-                    <p className="text-red-500 text-sm mt-1">{stepErrors.privacy}</p>
-                  )}
-                </div>
-              </div>
-              <div className="flex items-start">
-                <input
-                  type="checkbox"
-                  id="privacy2"
-                  checked={privacyAccepted}
-                  onChange={(e) => {
-                    setPrivacyAccepted(e.target.checked)
-                    setStepErrors({ ...stepErrors, privacy: "" })
-                  }}
-                  className="mr-2 mt-1 transition-all duration-300"
-                />
-                <div>
-                  <label htmlFor="privacy2" className="text-sm text-gray-800 leading-snug">
-                    Do il consenso a Creditplan al trattamento dei miei dati personali per contattarmi via email o telefono, valutare il mio profilo creditizio e creare un preventivo personalizzato. *Con l'invio della richiesta, dichiaro di aver preso visione dell'informativa sulla privacy.
-                  </label>
-                  {!privacyAccepted && stepErrors.privacy && (
-                    <p className="text-red-500 text-sm mt-1">{stepErrors.privacy}</p>
-                  )}
-                </div>
-              </div>
-            </div>
-            <button
-              className="mt-8 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300 transition-all duration-500 hover:scale-105 hover:shadow-lg animate-fadeIn"
-              onClick={() => {
-                const errors = validateStep5Contatto()
-                if (Object.keys(errors).length > 0) {
-                  setStepErrors(errors)
-                  return
-                }
-                setStepErrors({})
-                handleSubmit();  // Enviar datos al Google Sheet
-              }}
-            >
-              Invia Questa Richiesta
-            </button>
-          </motion.div>
+          <ContactInfo
+            onBack={() => setStep(selectedOption === "dipendente" ? 4 : 4)}
+            onSubmit={(contactData) => {
+              // Puedes combinar contactData con el resto de tus estados si es necesario,
+              // o llamarlo directamente a tu función handleSubmit.
+              handleSubmit(contactData);
+            }}
+          />
         )}
         {step === 6 && selectedOption === "dipendente" && depType === "Privato" && (
           <motion.div
@@ -1258,6 +1100,160 @@ function FormScreen({ onClose, onFormSubmit }) {
       )}
     </div>
   )
+}
+
+export function ContactInfo({ onBack, onSubmit }) {
+  const [nome, setNome] = useState("");
+  const [cognome, setCognome] = useState("");
+  const [mail, setMail] = useState("");
+  const [telefono, setTelefono] = useState("");
+  // Estados separados para cada consentimiento
+  const [privacyInfoRead, setPrivacyInfoRead] = useState(false);
+  const [privacyConsent, setPrivacyConsent] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  const validate = () => {
+    const newErrors = {};
+    if (!nome.trim()) newErrors.nome = "Campo obbligatorio";
+    if (!cognome.trim()) newErrors.cognome = "Campo obbligatorio";
+    if (!mail.trim()) newErrors.mail = "Campo obbligatorio";
+    if (!telefono.trim()) newErrors.telefono = "Campo obbligatorio";
+    if (!privacyInfoRead) newErrors.privacyInfo = "Devi accettare l'informativa";
+    if (!privacyConsent) newErrors.privacyConsent = "Devi dare il consenso al trattamento dei dati";
+    return newErrors;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+    setErrors({});
+    // Reunir los datos y llamar a la función de submit externa
+    onSubmit({ nome, cognome, mail, telefono });
+  };
+
+  return (
+    <motion.div
+      key="contactInfo"
+      initial={{ opacity: 0, x: 50 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -50 }}
+      transition={{ duration: 0.5, ease: "easeInOut" }}
+      className="absolute inset-0 flex flex-col items-center justify-center bg-white px-4 rounded-2xl"
+    >
+      <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-20">
+        <button onClick={onBack} className="mr-4">
+          <IoIosArrowBack size={32} className="text-black" />
+        </button>
+        <h2 className="text-3xl font-semibold">Informazioni Contatto</h2>
+      </div>
+      <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-3xl">
+        <div className="flex flex-col">
+          <label htmlFor="nome" className="text-sm font-semibold mb-1">
+            Nome
+          </label>
+          <input
+            id="nome"
+            type="text"
+            placeholder="Nome"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200"
+          />
+          {errors.nome && <p className="text-red-500 text-sm mt-1">{errors.nome}</p>}
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="cognome" className="text-sm font-semibold mb-1">
+            Cognome
+          </label>
+          <input
+            id="cognome"
+            type="text"
+            placeholder="Cognome"
+            value={cognome}
+            onChange={(e) => setCognome(e.target.value)}
+            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200"
+          />
+          {errors.cognome && <p className="text-red-500 text-sm mt-1">{errors.cognome}</p>}
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="mail" className="text-sm font-semibold mb-1">
+            Mail
+          </label>
+          <input
+            id="mail"
+            type="email"
+            placeholder="Mail"
+            value={mail}
+            onChange={(e) => setMail(e.target.value)}
+            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200"
+          />
+          {errors.mail && <p className="text-red-500 text-sm mt-1">{errors.mail}</p>}
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="telefono" className="text-sm font-semibold mb-1">
+            Telefono
+          </label>
+          <input
+            id="telefono"
+            type="tel"
+            placeholder="Telefono"
+            value={telefono}
+            onChange={(e) => setTelefono(e.target.value)}
+            className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200"
+          />
+          {errors.telefono && <p className="text-red-500 text-sm mt-1">{errors.telefono}</p>}
+        </div>
+        <div className="col-span-2">
+          <div className="flex items-start mt-4">
+            <input
+              type="checkbox"
+              id="privacyInfo"
+              checked={privacyInfoRead}
+              onChange={(e) => {
+                setPrivacyInfoRead(e.target.checked);
+                setErrors({ ...errors, privacyInfo: "" });
+              }}
+              className="mr-2 mt-1"
+            />
+            <label htmlFor="privacyInfo" className="text-sm text-gray-800">
+              Dichiaro di aver preso visione dell'Informativa ai sensi del Decreto Legislativo 196/2003 e del Regolamento (UE) 2016/679 (GDPR).
+            </label>
+          </div>
+          {errors.privacyInfo && <p className="text-red-500 text-sm mt-1">{errors.privacyInfo}</p>}
+        </div>
+        <div className="col-span-2">
+          <div className="flex items-start mt-2">
+            <input
+              type="checkbox"
+              id="privacyConsent"
+              checked={privacyConsent}
+              onChange={(e) => {
+                setPrivacyConsent(e.target.checked);
+                setErrors({ ...errors, privacyConsent: "" });
+              }}
+              className="mr-2 mt-1"
+            />
+            <label htmlFor="privacyConsent" className="text-sm text-gray-800">
+              Do il consenso a Creditplan al trattamento dei miei dati personali per contattarmi via email o telefono, valutare il mio profilo creditizio e creare un preventivo personalizzato. *Con l'invio della richiesta, dichiaro di aver preso visione dell'informativa sulla privacy.
+            </label>
+          </div>
+          {errors.privacyConsent && <p className="text-red-500 text-sm mt-1">{errors.privacyConsent}</p>}
+        </div>
+        <div className="col-span-2 flex justify-center mt-6">
+          <button
+            type="submit"
+            className="bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 text-lg rounded-2xl transition transform hover:scale-105"
+          >
+            Invia Questa Richiesta
+          </button>
+        </div>
+      </form>
+    </motion.div>
+  );
 }
 
 export default FormScreen
