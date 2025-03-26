@@ -141,41 +141,79 @@ function FAQ() {
 
 // Nuevo componente ContactPage
 function ContactPage({ onBack, onSubmit }) {
-  const [loading, setLoading] = useState(true)
-  const [nome, setNome] = useState("")
-  const [cognome, setCognome] = useState("")
-  const [mail, setMail] = useState("")
-  const [telefono, setTelefono] = useState("")
-  const [errors, setErrors] = useState({})
-  const [privacyAccepted, setPrivacyAccepted] = useState(false)
+  const [loading, setLoading] = useState(true);
+  const [submissionLoading, setSubmissionLoading] = useState(false);
+  const [nome, setNome] = useState("");
+  const [cognome, setCognome] = useState("");
+  const [mail, setMail] = useState("");
+  const [telefono, setTelefono] = useState("");
+  const [errors, setErrors] = useState({});
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 3000)
-    return () => clearTimeout(timer)
-  }, [])
+    const timer = setTimeout(() => setLoading(false), 3000);
+    return () => clearTimeout(timer);
+  }, []);
 
-  const handleSubmit = () => {
-    const newErrors = {}
-    if (!nome.trim()) newErrors.nome = "Campo obbligatorio"
-    if (!cognome.trim()) newErrors.cognome = "Campo obbligatorio"
-    if (!mail.trim()) newErrors.mail = "Campo obbligatorio"
-    if (!telefono.trim()) newErrors.telefono = "Campo obbligatorio"
-    if (!privacyAccepted) newErrors.privacy = "Campo obbligatorio"
+  const handleSubmit = async () => {
+    const newErrors = {};
+    if (!nome.trim()) newErrors.nome = "Campo obbligatorio";
+    if (!cognome.trim()) newErrors.cognome = "Campo obbligatorio";
+    if (!mail.trim()) newErrors.mail = "Campo obbligatorio";
+    if (!telefono.trim()) newErrors.telefono = "Campo obbligatorio";
+    if (!privacyAccepted) newErrors.privacy = "Campo obbligatorio";
 
     if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors)
-      return
+      setErrors(newErrors);
+      return;
     }
-    // Si no hay errores, llama onSubmit
-    onSubmit()
-  }
+
+    setSubmissionLoading(true);
+
+    // Construye el objeto con las claves que espera el Apps Script.
+    const data = {
+      nome: nome,         // Primer valor: Nombre
+      cognome: cognome,   // Segundo valor: Apellido
+      email: mail,        // Tercer valor: Email
+      telefono: telefono  // Cuarto valor: Teléfono
+    };
+
+    console.log("Datos a enviar:", data);
+
+    try {
+      await fetch("https://script.google.com/macros/s/AKfycbzu0BMWs416ubQ8eH3g3bcY6eqkWjL0-uHldfGIkOce21YmSAPCT18CicAqQ5VyvxKF2g/exec", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      // Dado que usamos "no-cors", asumimos que se envió correctamente.
+      setTimeout(() => {
+        setSubmissionLoading(false);
+        onSubmit(); // Redirige a la ThankYouPage
+      }, 2000);
+    } catch (error) {
+      console.error("Error en la petición:", error);
+      setSubmissionLoading(false);
+    }
+  };
 
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen bg-white rounded-2xl">
         <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-700 border-t-transparent"></div>
       </div>
-    )
+    );
+  }
+
+  if (submissionLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-white rounded-2xl">
+        <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-700 border-t-transparent"></div>
+      </div>
+    );
   }
 
   return (
@@ -189,15 +227,15 @@ function ContactPage({ onBack, onSubmit }) {
             Inserisci i tuoi dati per essere contattato
           </h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <form className="grid grid-cols-1 md:grid-cols-2 gap-4" id="contact-form">
           <div>
             <input
               type="text"
               placeholder="Nome"
               value={nome}
               onChange={(e) => {
-                setNome(e.target.value)
-                setErrors({ ...errors, nome: "" })
+                setNome(e.target.value);
+                setErrors({ ...errors, nome: "" });
               }}
               className="border p-4 rounded-2xl text-xl w-full"
             />
@@ -209,8 +247,9 @@ function ContactPage({ onBack, onSubmit }) {
               placeholder="Cognome"
               value={cognome}
               onChange={(e) => {
-                setCognome(e.target.value)
-                setErrors({ ...errors, cognome: "" })
+                setCognome(e.target.value);
+                setErrors({ ...errors, cognome: "" });
+                console.log("Cognome:", e.target.value);
               }}
               className="border p-4 rounded-2xl text-xl w-full"
             />
@@ -222,8 +261,8 @@ function ContactPage({ onBack, onSubmit }) {
               placeholder="Email"
               value={mail}
               onChange={(e) => {
-                setMail(e.target.value)
-                setErrors({ ...errors, mail: "" })
+                setMail(e.target.value);
+                setErrors({ ...errors, mail: "" });
               }}
               className="border p-4 rounded-2xl text-xl w-full"
             />
@@ -235,14 +274,14 @@ function ContactPage({ onBack, onSubmit }) {
               placeholder="Telefono"
               value={telefono}
               onChange={(e) => {
-                setTelefono(e.target.value)
-                setErrors({ ...errors, telefono: "" })
+                setTelefono(e.target.value);
+                setErrors({ ...errors, telefono: "" });
               }}
               className="border p-4 rounded-2xl text-xl w-full"
             />
             {errors.telefono && <p className="text-red-500 text-sm">{errors.telefono}</p>}
           </div>
-        </div>
+        </form>
         {/* Bloque de privacidad */}
         <div className="mt-4 w-full">
           <div className="flex items-start">
@@ -251,8 +290,8 @@ function ContactPage({ onBack, onSubmit }) {
               id="privacy1"
               checked={privacyAccepted}
               onChange={(e) => {
-                setPrivacyAccepted(e.target.checked)
-                setErrors({ ...errors, privacy: "" })
+                setPrivacyAccepted(e.target.checked);
+                setErrors({ ...errors, privacy: "" });
               }}
               className="mr-2 mt-1 transition-all duration-300"
             />
@@ -271,8 +310,8 @@ function ContactPage({ onBack, onSubmit }) {
               id="privacy2"
               checked={privacyAccepted}
               onChange={(e) => {
-                setPrivacyAccepted(e.target.checked)
-                setErrors({ ...errors, privacy: "" })
+                setPrivacyAccepted(e.target.checked);
+                setErrors({ ...errors, privacy: "" });
               }}
               className="mr-2 mt-1 transition-all duration-300"
             />
@@ -294,7 +333,7 @@ function ContactPage({ onBack, onSubmit }) {
         </button>
       </div>
     </div>
-  )
+  );
 }
 
 function MainApp() {
