@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom'
 import { FaArrowRight, FaArrowLeft } from 'react-icons/fa'
 import logo_creditplan from './assets/LOGO-CREDITPLAN.png'
 import family_w_dog from './assets/family_with_dog.png'
@@ -296,12 +297,12 @@ function ContactPage({ onBack, onSubmit }) {
   )
 }
 
-function App() {
+function MainApp() {
+  const navigate = useNavigate()
   const [chatOpen, setChatOpen] = useState(false)
   const [showFormScreen, setShowFormScreen] = useState(false)
   const [showContactPage, setShowContactPage] = useState(false)
   const [showContactFields, setShowContactFields] = useState(false)
-  const [showThankYou, setShowThankYou] = useState(false)
   const [submissionLoading, setSubmissionLoading] = useState(false)
   const [contactPrivacyAccepted, setContactPrivacyAccepted] = useState(false)
 
@@ -319,7 +320,7 @@ function App() {
       setSubmissionLoading(false)
       // Cierra el formulario y muestra la Thank You page
       setShowFormScreen(false)
-      setShowThankYou(true)
+      navigate("/thankyoupage") // Redirige a la ruta "/thankyoupage"
     }, 2000) // Ajusta el tiempo según tu necesidad
   }
 
@@ -336,12 +337,8 @@ function App() {
       return;
     }
     // Si no hay errores, muestra la Thank You page
-    setShowThankYou(true);
+    navigate("/thankyoupage")
   };
-
-  if (showThankYou) {
-    return <ThankYouPage />
-  }
 
   if (submissionLoading) {
     return (
@@ -376,7 +373,7 @@ function App() {
       >
         <ContactPage
           onBack={() => setShowContactPage(false)}
-          onSubmit={() => setShowThankYou(true)}
+          onSubmit={() => navigate("/thankyoupage")}
         />
       </motion.div>
     )
@@ -718,6 +715,17 @@ function App() {
         setOpen={setChatOpen}
       />
     </div>
+  )
+}
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<MainApp />} />
+        <Route path="/thankyoupage" element={<ThankYouPage />} />
+      </Routes>
+    </Router>
   )
 }
 
