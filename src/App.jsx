@@ -156,7 +156,8 @@ function ContactPage({ onBack, onSubmit }) {
   }, []);
 
   const handleSubmit = async (e) => {
-    if (e) e.preventDefault(); // Prevenir el comportamiento por defecto del form
+    e.preventDefault();
+
     const newErrors = {};
     if (!nome.trim()) newErrors.nome = "Campo obbligatorio";
     if (!cognome.trim()) newErrors.cognome = "Campo obbligatorio";
@@ -171,29 +172,31 @@ function ContactPage({ onBack, onSubmit }) {
 
     setSubmissionLoading(true);
 
-    // Construye el objeto con las claves que espera el Apps Script.
+    // Construimos el objeto de datos con los campos que espera el backend.
     const data = {
-      nome: nome,         // Primer valor: Nombre
-      cognome: cognome,   // Segundo valor: Apellido
-      email: mail,        // Tercer valor: Email
-      telefono: telefono  // Cuarto valor: Teléfono
+      nome,
+      cognome,
+      email: mail,
+      telefono,
     };
 
     console.log("Datos a enviar:", data);
 
     try {
-      await fetch("/api/proxy", {
+      const response = await fetch("/api/proxy", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
 
-      // Dado que usamos el proxy, asumimos que se envió correctamente.
+      if (!response.ok) {
+        throw new Error("Error en la respuesta del servidor");
+      }
+
+      // Simulamos una espera y luego redirigimos.
       setTimeout(() => {
         setSubmissionLoading(false);
-        onSubmit(); // Redirige a la ThankYouPage
+        onSubmit(); // Redirige a la página de agradecimiento
       }, 2000);
     } catch (error) {
       console.error("Error en la petición:", error);
@@ -228,7 +231,8 @@ function ContactPage({ onBack, onSubmit }) {
             Inserisci i tuoi dati per essere contattato
           </h2>
         </div>
-        <form className="grid grid-cols-1 md:grid-cols-2 gap-4" id="contact-form" onSubmit={handleSubmit}>
+        {/* Colocamos el botón de envío dentro del formulario para aprovechar onSubmit */}
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <input
               type="text"
@@ -236,7 +240,7 @@ function ContactPage({ onBack, onSubmit }) {
               value={nome}
               onChange={(e) => {
                 setNome(e.target.value);
-                setErrors({ ...errors, nome: "" });
+                setErrors((prev) => ({ ...prev, nome: "" }));
               }}
               className="border p-4 rounded-2xl text-xl w-full"
             />
@@ -249,89 +253,67 @@ function ContactPage({ onBack, onSubmit }) {
               value={cognome}
               onChange={(e) => {
                 setCognome(e.target.value);
-                setErrors({ ...errors, cognome: "" });
-                console.log("Cognome:", e.target.value);
+                setErrors((prev) => ({ ...prev, cognome: "" }));
               }}
               className="border p-4 rounded-2xl text-xl w-full"
             />
             {errors.cognome && <p className="text-red-500 text-sm">{errors.cognome}</p>}
           </div>
-          <div>
+          <div className="md:col-span-2">
             <input
               type="email"
               placeholder="Email"
               value={mail}
               onChange={(e) => {
                 setMail(e.target.value);
-                setErrors({ ...errors, mail: "" });
+                setErrors((prev) => ({ ...prev, mail: "" }));
               }}
               className="border p-4 rounded-2xl text-xl w-full"
             />
             {errors.mail && <p className="text-red-500 text-sm">{errors.mail}</p>}
           </div>
-          <div>
+          <div className="md:col-span-2">
             <input
               type="tel"
               placeholder="Telefono"
               value={telefono}
               onChange={(e) => {
                 setTelefono(e.target.value);
-                setErrors({ ...errors, telefono: "" });
+                setErrors((prev) => ({ ...prev, telefono: "" }));
               }}
               className="border p-4 rounded-2xl text-xl w-full"
             />
             {errors.telefono && <p className="text-red-500 text-sm">{errors.telefono}</p>}
           </div>
+          <div className="md:col-span-2">
+            <div className="flex items-start">
+              <input
+                type="checkbox"
+                id="privacy"
+                checked={privacyAccepted}
+                onChange={(e) => {
+                  setPrivacyAccepted(e.target.checked);
+                  setErrors((prev) => ({ ...prev, privacy: "" }));
+                }}
+                className="mr-2 mt-1 transition-all duration-300"
+              />
+              <div>
+                <label htmlFor="privacy" className="text-sm text-gray-800 leading-snug">
+                  Dichiaro di aver preso visione dell'Informativa (GDPR) e acconsento al trattamento dei miei dati.
+                </label>
+                {errors.privacy && <p className="text-red-500 text-sm mt-1">{errors.privacy}</p>}
+              </div>
+            </div>
+          </div>
+          <div className="md:col-span-2">
+            <button
+              type="submit"
+              className="mt-8 w-full bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
+            >
+              Invia Richiesta
+            </button>
+          </div>
         </form>
-        {/* Bloque de privacidad */}
-        <div className="mt-4 w-full">
-          <div className="flex items-start">
-            <input
-              type="checkbox"
-              id="privacy1"
-              checked={privacyAccepted}
-              onChange={(e) => {
-                setPrivacyAccepted(e.target.checked);
-                setErrors({ ...errors, privacy: "" });
-              }}
-              className="mr-2 mt-1 transition-all duration-300"
-            />
-            <div>
-              <label htmlFor="privacy1" className="text-sm text-gray-800 leading-snug">
-                Dichiaro di aver preso visione dell'Informativa ai sensi del Decreto Legislativo 196/2003 e del Regolamento (UE) 2016/679 (GDPR).
-              </label>
-              {!privacyAccepted && errors.privacy && (
-                <p className="text-red-500 text-sm mt-1">{errors.privacy}</p>
-              )}
-            </div>
-          </div>
-          <div className="flex items-start mt-2">
-            <input
-              type="checkbox"
-              id="privacy2"
-              checked={privacyAccepted}
-              onChange={(e) => {
-                setPrivacyAccepted(e.target.checked);
-                setErrors({ ...errors, privacy: "" });
-              }}
-              className="mr-2 mt-1 transition-all duration-300"
-            />
-            <div>
-              <label htmlFor="privacy2" className="text-sm text-gray-800 leading-snug">
-                Do il consenso a Creditplan al trattamento dei miei dati personali per contattarmi via email o telefono, valutare il mio profilo creditizio e creare un preventivo personalizzato. *Con l'invio della richiesta, dichiaro di aver preso visione dell'informativa sulla privacy.
-              </label>
-              {!privacyAccepted && errors.privacy && (
-                <p className="text-red-500 text-sm mt-1">{errors.privacy}</p>
-              )}
-            </div>
-          </div>
-        </div>
-        <button
-          className="mt-8 w-full bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
-          onClick={handleSubmit}
-        >
-          Invia Richiesta
-        </button>
       </div>
     </div>
   );
