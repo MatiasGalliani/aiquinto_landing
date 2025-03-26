@@ -155,7 +155,8 @@ function ContactPage({ onBack, onSubmit }) {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    if (e) e.preventDefault(); // Prevenir el comportamiento por defecto del form
     const newErrors = {};
     if (!nome.trim()) newErrors.nome = "Campo obbligatorio";
     if (!cognome.trim()) newErrors.cognome = "Campo obbligatorio";
@@ -181,7 +182,7 @@ function ContactPage({ onBack, onSubmit }) {
     console.log("Datos a enviar:", data);
 
     try {
-      await fetch("https://script.google.com/macros/s/AKfycbzu0BMWs416ubQ8eH3g3bcY6eqkWjL0-uHldfGIkOce21YmSAPCT18CicAqQ5VyvxKF2g/exec", {
+      await fetch("/api/proxy", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -189,7 +190,7 @@ function ContactPage({ onBack, onSubmit }) {
         body: JSON.stringify(data),
       });
 
-      // Dado que usamos "no-cors", asumimos que se envió correctamente.
+      // Dado que usamos el proxy, asumimos que se envió correctamente.
       setTimeout(() => {
         setSubmissionLoading(false);
         onSubmit(); // Redirige a la ThankYouPage
@@ -227,7 +228,7 @@ function ContactPage({ onBack, onSubmit }) {
             Inserisci i tuoi dati per essere contattato
           </h2>
         </div>
-        <form className="grid grid-cols-1 md:grid-cols-2 gap-4" id="contact-form">
+        <form className="grid grid-cols-1 md:grid-cols-2 gap-4" id="contact-form" onSubmit={handleSubmit}>
           <div>
             <input
               type="text"
