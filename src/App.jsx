@@ -162,59 +162,42 @@ function ContactPage({ onBack, onSubmit }) {
     if (!mail.trim()) newErrors.mail = "Campo obbligatorio";
     if (!telefono.trim()) newErrors.telefono = "Campo obbligatorio";
     if (!privacyAccepted) newErrors.privacy = "Campo obbligatorio";
-
+  
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
-
+  
     setSubmissionLoading(true);
-
-    // Construye el objeto con las claves que espera el Apps Script.
-    const data = {
-      nome: nome,         // Primer valor: Nombre
-      cognome: cognome,   // Segundo valor: Apellido
-      email: mail,        // Tercer valor: Email
-      telefono: telefono  // Cuarto valor: Teléfono
+  
+    // Construye el payload para nuestro backend Express.
+    const payload = {
+      datos: [nome, cognome, mail, telefono]
     };
-
-    console.log("Datos a enviar:", data);
-
+  
+    console.log("Datos a enviar:", payload);
+  
     try {
-      await fetch("https://script.google.com/macros/s/AKfycbzu0BMWs416ubQ8eH3g3bcY6eqkWjL0-uHldfGIkOce21YmSAPCT18CicAqQ5VyvxKF2g/exec", {
+      const response = await fetch("http://localhost:3500/guardar-en-sheets", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload)
       });
-
-      // Dado que usamos "no-cors", asumimos que se envió correctamente.
-      setTimeout(() => {
-        setSubmissionLoading(false);
-        onSubmit(); // Redirige a la ThankYouPage
-      }, 2000);
+  
+      if (!response.ok) {
+        throw new Error("Error en la respuesta del servidor");
+      }
+  
+      // Si la respuesta es exitosa, detenemos el loading y llamamos a onSubmit.
+      setSubmissionLoading(false);
+      onSubmit();
     } catch (error) {
       console.error("Error en la petición:", error);
       setSubmissionLoading(false);
     }
   };
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-screen bg-white rounded-2xl">
-        <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-700 border-t-transparent"></div>
-      </div>
-    );
-  }
-
-  if (submissionLoading) {
-    return (
-      <div className="flex items-center justify-center h-screen bg-white rounded-2xl">
-        <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-700 border-t-transparent"></div>
-      </div>
-    );
-  }
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
@@ -336,6 +319,25 @@ function ContactPage({ onBack, onSubmit }) {
   );
 }
 
+const sendContactData = async (data) => {
+    try {
+        const response = await fetch("http://localhost:3500/guardar-en-sheets", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+        if (!response.ok) {
+            throw new Error("Error en la respuesta del servidor");
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Error sending contact data:", error);
+        throw error;
+    }
+};
+
 function MainApp() {
   const navigate = useNavigate()
   const [chatOpen, setChatOpen] = useState(false)
@@ -363,7 +365,7 @@ function MainApp() {
     }, 2000) // Ajusta el tiempo según tu necesidad
   }
 
-  const handleContactSubmit = () => {
+  const handleContactSubmit = async () => {
     const errors = {};
     if (!contactNome.trim()) errors.nome = "Campo obbligatorio";
     if (!contactCognome.trim()) errors.cognome = "Campo obbligatorio";
@@ -372,12 +374,19 @@ function MainApp() {
     if (!contactPrivacyAccepted) errors.privacy = "Campo obbligatorio";
 
     if (Object.keys(errors).length > 0) {
-      setContactErrors(errors);
-      return;
+        setContactErrors(errors);
+        return;
     }
-    // Si no hay errores, muestra la Thank You page
-    navigate("/thankyoupage")
-  };
+    
+    const payload = { datos: [contactNome, contactCognome, contactMail, contactTelefono] };
+
+    try {
+        await sendContactData(payload);
+        navigate("/thankyoupage");
+    } catch (error) {
+        // Manejo de error si es necesario.
+    }
+};
 
   if (submissionLoading) {
     return (
