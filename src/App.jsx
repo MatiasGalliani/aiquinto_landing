@@ -772,6 +772,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainApp />} />
         <Route path="/thankyoupage" element={<ThankYouPage />} />
+        <Route path="*" element={<h1>404 Prueba</h1>} />
       </Routes>
     </Router>
   )
