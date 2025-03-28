@@ -2,6 +2,19 @@ import { useState, useEffect } from "react"
 import { IoIosArrowBack, IoIosArrowDown } from "react-icons/io"
 import { motion, AnimatePresence } from "framer-motion"
 
+const validateNetValue = (value) => {
+  if (!value.trim()) {
+    return "Campo obbligatorio";
+  }
+  const netValue = parseFloat(value);
+  if (isNaN(netValue)) {
+    return "Debe ser un número válido";
+  } else if (netValue < 600) {
+    return "Lo lamentamos pero no es posible";
+  }
+  return null;
+};
+
 const pageVariants = {
   initial: { opacity: 0, x: 50 },
   animate: { opacity: 1, x: 0 },
@@ -83,11 +96,13 @@ function FormScreen({ onClose, onFormSubmit }) {
 
   // Ejemplo de validación en cada paso (debes replicarla en cada uno)
   const validateStep2Pensionato = () => {
-    const errors = {}
-    if (!pensionAmount.trim()) errors.pensionAmount = "Campo obbligatorio"
-    if (!pensioneNetta.trim()) errors.pensioneNetta = "Campo obbligatorio"
-    return errors
-  }
+    const errors = {};
+    const errorMsg = validateNetValue(pensioneNetta); // pensioneNetta es el estado para ese input
+    if (errorMsg) {
+      errors.pensioneNetta = errorMsg;
+    }
+    return errors;
+  };
 
   // Agregar la validación para il flusso "dipendente"
   const validateStep2Dipendente = () => {
@@ -143,6 +158,28 @@ function FormScreen({ onClose, onFormSubmit }) {
       </motion.div>
     )
   }
+
+  const validatePensioneNetta = () => {
+    const errors = {};
+    const errorMsg = validateNetValue(pensioneNetta);
+    if (errorMsg) {
+      errors.pensioneNetta = errorMsg;
+    }
+    return errors;
+  };
+
+  // Función de validación para el flujo de Dipendente
+  const validateStipendioNetto = () => {
+    const errors = {};
+    const errorMsg = validateNetValue(netSalary);
+    if (errorMsg) {
+      errors.netSalary = errorMsg;
+    }
+    return errors;
+  };
+
+  const netValueError = validateNetValue(pensioneNetta);
+  const netSalaryError = validateNetValue(netSalary);
 
   return (
     <div className={`relative min-h-screen overflow-y-auto ${!isMobile ? "hide-scroll" : ""} overflow-x-hidden`}>
@@ -257,12 +294,10 @@ function FormScreen({ onClose, onFormSubmit }) {
                   <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-xl text-gray-500">€</span>
                   <input
                     type="text"
-                    value={pensioneNetta}
-                    onChange={(e) => {
-                      setPensioneNetta(e.target.value)
-                      setStepErrors({ ...stepErrors, pensioneNetta: "" })
-                    }}
-                    className="border pl-10 pr-3 p-3 sm:p-4 w-full rounded-2xl text-base sm:text-lg"
+                    value={netSalary}
+                    onChange={(e) => setNetSalary(e.target.value)}
+                    placeholder="Inserisci lo stipendio netto mensile"
+                    className="border pl-10 pr-3 p-3 w-full rounded-2xl text-base sm:text-lg"
                   />
                 </div>
                 {stepErrors.pensioneNetta && (
@@ -270,20 +305,22 @@ function FormScreen({ onClose, onFormSubmit }) {
                 )}
               </div>
             </div>
-            <button
-              className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl mt-8"
-              onClick={() => {
-                const errors = validateStep2Pensionato()
-                if (Object.keys(errors).length > 0) {
-                  setStepErrors(errors)
-                  return
-                }
-                setStepErrors({})
-                setStep(3)
-              }}
-            >
-              Avanti
-            </button>
+            {!netValueError && (
+              <button
+                className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl mt-8"
+                onClick={() => {
+                  const errors = validateStep2Pensionato(); // o la función correspondiente
+                  if (Object.keys(errors).length > 0) {
+                    setStepErrors(errors);
+                    return;
+                  }
+                  setStepErrors({});
+                  setStep(3);
+                }}
+              >
+                Avanti
+              </button>
+            )}
           </motion.div>
         )}
         {step === 2 && selectedOption === "dipendente" && (
@@ -347,20 +384,17 @@ function FormScreen({ onClose, onFormSubmit }) {
                 )}
               </div>
             </div>
-            <button
-              className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl mt-8"
-              onClick={() => {
-                const errors = validateStep2Dipendente()
-                if (Object.keys(errors).length > 0) {
-                  setStepErrors(errors)
-                  return
-                }
-                setStepErrors({})
-                setStep(3)
-              }}
-            >
-              Avanti
-            </button>
+            {!netSalaryError && (
+              <button
+                className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl mt-8"
+                onClick={() => {
+                  // Aquí puedes ejecutar la validación adicional o cambiar el paso
+                  setStep(3); // Ejemplo: avanzar al paso siguiente
+                }}
+              >
+                Avanti
+              </button>
+            )}
           </motion.div>
         )}
         {step === 3 && selectedOption === "dipendente" && (
@@ -379,7 +413,7 @@ function FormScreen({ onClose, onFormSubmit }) {
               </button>
               <h2 className="text-3xl font-semibold">Che tipo di dipendente sei</h2>
             </div>
-            
+
             {/* Dropdown principal: Seleziona tipo di dipendente */}
             <div className="w-full max-w-md mb-4">
               <div
@@ -418,7 +452,7 @@ function FormScreen({ onClose, onFormSubmit }) {
                 <p className="text-red-500 text-sm mt-1">{stepErrors.depType}</p>
               )}
             </div>
-        
+
             {/* Dropdown secundario: Seleziona il sottotipo, obligatorio si es Privato */}
             {depType === "Privato" && (
               <div className="w-full max-w-md mb-4">
@@ -456,7 +490,7 @@ function FormScreen({ onClose, onFormSubmit }) {
                 )}
               </div>
             )}
-        
+
             <button
               className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
               onClick={() => {
@@ -503,7 +537,7 @@ function FormScreen({ onClose, onFormSubmit }) {
                 <label className="text-base sm:text-xl font-semibold mb-2">
                   Ente pensionistico
                 </label>
-                <div 
+                <div
                   onClick={() => {
                     setEntePensionisticoDropdownOpen(!entePensionisticoDropdownOpen)
                     setTipologiaDropdownOpen(false) // cierra el otro dropdown
@@ -553,7 +587,7 @@ function FormScreen({ onClose, onFormSubmit }) {
                 <label className="text-base sm:text-xl font-semibold mb-2">
                   Tipologia di pensione
                 </label>
-                <div 
+                <div
                   onClick={() => {
                     setTipologiaDropdownOpen(!tipologiaDropdownOpen)
                     setEntePensionisticoDropdownOpen(false) // cierra el otro dropdown
@@ -1228,8 +1262,9 @@ function FormScreen({ onClose, onFormSubmit }) {
           </motion.div>
         )}
       </AnimatePresence>
-      {!isMobile && (
-        <style>{`
+      {
+        !isMobile && (
+          <style>{`
           /* Oculta scrollbar en navegadores Webkit */
           .hide-scroll::-webkit-scrollbar {
             display: none;
@@ -1240,8 +1275,9 @@ function FormScreen({ onClose, onFormSubmit }) {
             scrollbar-width: none;
           }
         `}</style>
-      )}
-    </div>
+        )
+      }
+    </div >
   )
 }
 
