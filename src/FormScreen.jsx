@@ -285,42 +285,43 @@ function FormScreen({ onClose, onFormSubmit }) {
                   <p className="text-red-500 text-sm mt-1">{stepErrors.pensionAmount}</p>
                 )}
               </div>
-              {/* Pensione netta mensile */}
-              <div className="flex flex-col">
-                <label className="text-base sm:text-xl font-semibold mb-2">
-                  Pensione netta mensile?
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-xl text-gray-500">€</span>
-                  <input
-                    type="text"
-                    value={netSalary}
-                    onChange={(e) => setNetSalary(e.target.value)}
-                    placeholder="Inserisci lo stipendio netto mensile"
-                    className="border pl-10 pr-3 p-3 w-full rounded-2xl text-base sm:text-lg"
-                  />
+              <div className="w-full max-w-md space-y-4">
+                {/* Pensione netta mensile */}
+                <div className="flex flex-col">
+                  <label className="text-base sm:text-xl font-semibold mb-2">
+                    Pensione netta mensile?
+                  </label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-xl text-gray-500">€</span>
+                    <input
+                      type="text"
+                      value={pensioneNetta} // Usa la variable pensioneNetta
+                      onChange={(e) => setPensioneNetta(e.target.value)}
+                      className="border pl-10 pr-3 p-3 w-full rounded-2xl text-base sm:text-lg"
+                    />
+                  </div>
+                  {stepErrors.pensioneNetta && (
+                    <p className="text-red-500 text-sm mt-1">{stepErrors.pensioneNetta}</p>
+                  )}
                 </div>
-                {stepErrors.pensioneNetta && (
-                  <p className="text-red-500 text-sm mt-1">{stepErrors.pensioneNetta}</p>
-                )}
               </div>
+              {!netValueError && (  // netValueError debe calcularse con pensioneNetta, ej: const netValueError = validateNetValue(pensioneNetta);
+                <button
+                  className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl mt-8"
+                  onClick={() => {
+                    const errors = validateStep2Pensionato(); // Función de validación para el flujo "Pensione"
+                    if (Object.keys(errors).length > 0) {
+                      setStepErrors(errors);
+                      return;
+                    }
+                    setStepErrors({});
+                    setStep(3);
+                  }}
+                >
+                  Avanti
+                </button>
+              )}
             </div>
-            {!netValueError && (
-              <button
-                className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl mt-8"
-                onClick={() => {
-                  const errors = validateStep2Pensionato(); // o la función correspondiente
-                  if (Object.keys(errors).length > 0) {
-                    setStepErrors(errors);
-                    return;
-                  }
-                  setStepErrors({});
-                  setStep(3);
-                }}
-              >
-                Avanti
-              </button>
-            )}
           </motion.div>
         )}
         {step === 2 && selectedOption === "dipendente" && (
