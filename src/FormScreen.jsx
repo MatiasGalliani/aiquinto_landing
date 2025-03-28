@@ -829,6 +829,9 @@ function FormScreen({ onClose, onFormSubmit }) {
                           { value: "AG", label: "Agrigento" },
                           { value: "AL", label: "Alessandria" },
                           { value: "AN", label: "Ancona" },
+                          { value: "AG", label: "Agrigento" },
+                          { value: "AL", label: "Alessandria" },
+                          { value: "AN", label: "Ancona" },
                           { value: "AO", label: "Aosta" },
                           { value: "AR", label: "Arezzo" },
                           { value: "AP", label: "Ascoli Piceno" },
@@ -1189,7 +1192,7 @@ function FormScreen({ onClose, onFormSubmit }) {
                     setNome(e.target.value)
                     setStepErrors({ ...stepErrors, nome: "" })
                   }}
-                  className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
+                  className="border p-4 rounded-2xl text-xl transition duration-200 ease-in-out"
                 />
                 {stepErrors.nome && <p className="text-red-500 text-sm mt-1">{stepErrors.nome}</p>}
               </div>
@@ -1202,7 +1205,7 @@ function FormScreen({ onClose, onFormSubmit }) {
                     setCognome(e.target.value)
                     setStepErrors({ ...stepErrors, cognome: "" })
                   }}
-                  className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
+                  className="border p-4 rounded-2xl text-xl transition duration-200 ease-in-out"
                 />
                 {stepErrors.cognome && <p className="text-red-500 text-sm mt-1">{stepErrors.cognome}</p>}
               </div>
@@ -1215,7 +1218,7 @@ function FormScreen({ onClose, onFormSubmit }) {
                     setMail(e.target.value)
                     setStepErrors({ ...stepErrors, mail: "" })
                   }}
-                  className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
+                  className="border p-4 rounded-2xl text-xl transition duration-200 ease-in-out"
                 />
                 {stepErrors.mail && <p className="text-red-500 text-sm mt-1">{stepErrors.mail}</p>}
               </div>
@@ -1228,7 +1231,7 @@ function FormScreen({ onClose, onFormSubmit }) {
                     setTelefono(e.target.value)
                     setStepErrors({ ...stepErrors, telefono: "" })
                   }}
-                  className="border p-4 rounded-2xl text-xl focus:ring-2 focus:ring-blue-700 transition duration-200 ease-in-out"
+                  className="border p-4 rounded-2xl text-xl transition duration-200 ease-in-out"
                 />
                 {stepErrors.telefono && <p className="text-red-500 text-sm mt-1">{stepErrors.telefono}</p>}
               </div>
