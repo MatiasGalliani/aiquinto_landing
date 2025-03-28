@@ -135,13 +135,34 @@ function FormScreen({ onClose, onFormSubmit }) {
       netSalary,
       pensionAmount,
       pensioneNetta,
+      entePensionistico,
+      pensioneType,
       birthDate,
-      province
+      province,
+      privacyAccepted
     };
-    console.log("Formulario enviado:", formData);
-    // Una vez enviados los datos, redirige a BookingPage.jsx
-    onFormSubmit();
+
+    if (selectedOption === "pensionato") {
+      fetch("http://localhost:3001/submit-pensionato", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log("Dati salvati con successo:", data);
+          onFormSubmit(); // sigue a lo siguiente
+        })
+        .catch(error => {
+          console.error("Errore durante l'invio:", error);
+        });
+    } else {
+      onFormSubmit(); // si no es pensionato, sigue igual por ahora
+    }
   };
+
 
   if (loading) {
     return (
