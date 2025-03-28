@@ -152,8 +152,8 @@ function FormScreen({ onClose, onFormSubmit }) {
 
     const endpoint =
       selectedOption === "pensionato"
-        ? "http://localhost:3001/submit-pensionato"
-        : "http://localhost:3001/submit-dipendente";
+        ? "https://backend-richiedidiessereconttato.onrender.com/pensionato"
+        : "https://backend-richiedidiessereconttato.onrender.com/dipendente";
 
     try {
       const response = await fetch(endpoint, {
