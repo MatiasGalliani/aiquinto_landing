@@ -122,46 +122,58 @@ function FormScreen({ onClose, onFormSubmit }) {
     return errors
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const formData = {
       nome,
       cognome,
       mail,
       telefono,
-      selectedOption,
-      depType,
-      secondarySelection,
-      amountRequested,
-      netSalary,
-      pensionAmount,
-      pensioneNetta,
-      entePensionistico,
-      pensioneType,
       birthDate,
       province,
-      privacyAccepted
+      privacyAccepted,
     };
 
     if (selectedOption === "pensionato") {
-      fetch("http://localhost:3001/submit-pensionato", {
+      Object.assign(formData, {
+        pensionAmount,
+        pensioneNetta,
+        entePensionistico,
+        pensioneType,
+      });
+    } else if (selectedOption === "dipendente") {
+      Object.assign(formData, {
+        amountRequested,
+        netSalary,
+        depType,
+        secondarySelection,
+        contractType,
+      });
+    }
+
+    const endpoint =
+      selectedOption === "pensionato"
+        ? "http://localhost:3001/submit-pensionato"
+        : "http://localhost:3001/submit-dipendente";
+
+    try {
+      const response = await fetch(endpoint, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData)
-      })
-        .then(res => res.json())
-        .then(data => {
-          console.log("Dati salvati con successo:", data);
-          onFormSubmit(); // sigue a lo siguiente
-        })
-        .catch(error => {
-          console.error("Errore durante l'invio:", error);
-        });
-    } else {
-      onFormSubmit(); // si no es pensionato, sigue igual por ahora
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) throw new Error("Errore nella richiesta");
+
+      const result = await response.json();
+      console.log("Dati inviati:", result);
+      onFormSubmit();
+    } catch (error) {
+      console.error("Errore:", error);
     }
   };
+
 
 
   if (loading) {
