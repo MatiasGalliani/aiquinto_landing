@@ -10,7 +10,7 @@ const validateNetValue = (value) => {
   if (isNaN(netValue)) {
     return "Debe ser un número válido";
   } else if (netValue < 600) {
-    return "Lo lamentamos pero no es posible";
+    return "Lo lamentamos pero no es possibile";
   }
   return null;
 };
@@ -201,6 +201,25 @@ function FormScreen({ onClose, onFormSubmit }) {
     return errors;
   };
 
+  const validateStep4Dipendente = () => {
+    const errors = {};
+
+    if (!contractType) {
+      errors.contractType = "Campo obbligatorio";
+    } else if (contractType === "indeterminato") {
+      errors.contractType = "Siamo spiacenti, non possiamo procedere con contratto indeterminato.";
+    }
+
+    if (!birthDate.trim() && contractType !== "indeterminato") {
+      errors.birthDate = "Campo obbligatorio";
+    }
+
+    if (!province && contractType !== "indeterminato") {
+      errors.province = "Campo obbligatorio";
+    }
+
+    return errors;
+  };
 
   return (
     <div className={`relative min-h-screen overflow-y-auto ${!isMobile ? "hide-scroll" : ""} overflow-x-hidden`}>
@@ -306,27 +325,32 @@ function FormScreen({ onClose, onFormSubmit }) {
                   <p className="text-red-500 text-sm mt-1">{stepErrors.pensionAmount}</p>
                 )}
               </div>
-              <div className="w-full max-w-md space-y-4">
-                {/* Pensione netta mensile */}
-                <div className="flex flex-col">
-                  <label className="text-base sm:text-xl font-semibold mb-2">
-                    Pensione netta mensile?
-                  </label>
-                  <div className="relative">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-xl text-gray-500">€</span>
-                    <input
-                      type="text"
-                      value={pensioneNetta} // Usa la variable pensioneNetta
-                      onChange={(e) => setPensioneNetta(e.target.value)}
-                      className="border pl-10 pr-3 p-3 w-full rounded-2xl text-base sm:text-lg"
-                    />
-                  </div>
-                  {stepErrors.pensioneNetta && (
-                    <p className="text-red-500 text-sm mt-1">{stepErrors.pensioneNetta}</p>
-                  )}
+              <div className="flex flex-col">
+                <label className="text-base sm:text-xl font-semibold mb-2">
+                  Pensione netta mensile?
+                </label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-xl text-gray-500">€</span>
+                  <input
+                    type="text"
+                    value={pensioneNetta}
+                    onChange={(e) => {
+                      setPensioneNetta(e.target.value);
+                      setStepErrors({ ...stepErrors, pensioneNetta: "" });
+                    }}
+                    className="border pl-10 pr-3 p-3 w-full rounded-2xl text-base sm:text-lg"
+                  />
                 </div>
+                {pensioneNetta && !isNaN(parseFloat(pensioneNetta)) && parseFloat(pensioneNetta) < 600 && (
+                  <p className="text-red-500 text-lg font-medium mt-4 text-center">
+                    Siamo spiacenti, non possiamo procedere.
+                  </p>
+                )}
+                {stepErrors.pensioneNetta && (
+                  <p className="text-red-500 text-sm mt-1">{stepErrors.pensioneNetta}</p>
+                )}
               </div>
-              {!netValueError && (
+              {pensioneNetta && !isNaN(parseFloat(pensioneNetta)) && parseFloat(pensioneNetta) >= 600 && (
                 <div className="flex justify-center">
                   <button
                     className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl mt-8"
@@ -408,12 +432,23 @@ function FormScreen({ onClose, onFormSubmit }) {
                 )}
               </div>
             </div>
-            {!netSalaryError && (
+            {netSalary && parseFloat(netSalary) < 600 && (
+              <p className="text-red-500 text-lg font-medium mt-6 text-center">
+                Siamo spiacenti, non possiamo procedere.
+              </p>
+            )}
+
+            {parseFloat(netSalary) >= 600 && !isNaN(parseFloat(netSalary)) && (
               <button
                 className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl mt-8"
                 onClick={() => {
-                  // Aquí puedes ejecutar la validación adicional o cambiar el paso
-                  setStep(3); // Ejemplo: avanzar al paso siguiente
+                  const errors = validateStep2Dipendente();
+                  if (Object.keys(errors).length > 0) {
+                    setStepErrors(errors);
+                    return;
+                  }
+                  setStepErrors({});
+                  setStep(3);
                 }}
               >
                 Avanti
@@ -515,27 +550,33 @@ function FormScreen({ onClose, onFormSubmit }) {
               </div>
             )}
 
-            <button
-              className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
-              onClick={() => {
-                const errors = {}
-                if (!depType) errors.depType = "Campo obbligatorio"
-                if (depType === "Privato" && !secondarySelection)
-                  errors.secondarySelection = "Campo obbligatorio"
-                if (Object.keys(errors).length > 0) {
-                  setStepErrors(errors)
-                  return
-                }
-                setStepErrors({})
-                if (depType === "Privato") {
-                  setStep(6)
-                } else {
-                  setStep(4)
-                }
-              }}
-            >
-              Avanti
-            </button>
+            {depType === "Privato" && secondarySelection === "Ditta Individuale" ? (
+              <p className="text-red-500 text-lg font-medium mt-6 text-center">
+                Siamo spiacenti, non possiamo procedere con una Ditta Individuale.
+              </p>
+            ) : (
+              <button
+                className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
+                onClick={() => {
+                  const errors = {};
+                  if (!depType) errors.depType = "Campo obbligatorio";
+                  if (depType === "Privato" && !secondarySelection)
+                    errors.secondarySelection = "Campo obbligatorio";
+                  if (Object.keys(errors).length > 0) {
+                    setStepErrors(errors);
+                    return;
+                  }
+                  setStepErrors({});
+                  if (depType === "Privato") {
+                    setStep(6);
+                  } else {
+                    setStep(4);
+                  }
+                }}
+              >
+                Avanti
+              </button>
+            )}
           </motion.div>
         )}
         {step === 3 && selectedOption === "pensionato" && (
@@ -746,166 +787,176 @@ function FormScreen({ onClose, onFormSubmit }) {
                   </div>
                 )}
               </div>
-              {/* Data di nascita */}
-              <div className="flex flex-col">
-                <label className="text-base sm:text-xl font-semibold mb-2">
-                  Data di nascita
-                </label>
-                <input
-                  type="date"
-                  value={birthDate}
-                  onChange={(e) => setBirthDate(e.target.value)}
-                  className="border p-3 rounded-2xl text-base sm:text-lg"
-                />
-              </div>
-              {/* Provincia di Residenza */}
-              <div className="w-full max-w-md">
-                <label className="text-base sm:text-xl font-semibold mb-2 block">
-                  Provincia di Residenza
-                </label>
-                <div
-                  onClick={() => {
-                    setProvinceDropdownOpen(!provinceDropdownOpen)
-                    setContractDropdownOpen(false)  // Cierra el de contrato
-                  }}
-                  className="border p-3 rounded-2xl cursor-pointer flex justify-between items-center"
-                >
-                  <span className="text-xl font-semibold">
-                    {province ? province : "Seleziona"}
-                  </span>
-                  <IoIosArrowDown className={`transition-transform duration-300 ${provinceDropdownOpen ? "rotate-90" : ""}`} />
-                </div>
-                {provinceDropdownOpen && (
-                  <div className="mt-2 border border-gray-300 rounded-lg shadow-lg max-h-44 overflow-auto">
-                    {[
-                      { value: "", label: "Seleziona" },
-                      { value: "AG", label: "Agrigento" },
-                      { value: "AL", label: "Alessandria" },
-                      { value: "AN", label: "Ancona" },
-                      { value: "AO", label: "Aosta" },
-                      { value: "AR", label: "Arezzo" },
-                      { value: "AP", label: "Ascoli Piceno" },
-                      { value: "AT", label: "Asti" },
-                      { value: "AV", label: "Avellino" },
-                      { value: "BA", label: "Bari" },
-                      { value: "BT", label: "Barletta-Andria-Trani" },
-                      { value: "BL", label: "Belluno" },
-                      { value: "BN", label: "Benevento" },
-                      { value: "BG", label: "Bergamo" },
-                      { value: "BI", label: "Biella" },
-                      { value: "BO", label: "Bologna" },
-                      { value: "BZ", label: "Bolzano" },
-                      { value: "BS", label: "Brescia" },
-                      { value: "BR", label: "Brindisi" },
-                      { value: "CA", label: "Cagliari" },
-                      { value: "CL", label: "Caltanissetta" },
-                      { value: "CB", label: "Campobasso" },
-                      { value: "CI", label: "Carbonia-Iglesias" },
-                      { value: "CE", label: "Caserta" },
-                      { value: "CT", label: "Catania" },
-                      { value: "CZ", label: "Catanzaro" },
-                      { value: "CH", label: "Chieti" },
-                      { value: "CO", label: "Como" },
-                      { value: "CS", label: "Cosenza" },
-                      { value: "CR", label: "Cremona" },
-                      { value: "KR", label: "Crotone" },
-                      { value: "CN", label: "Cuneo" },
-                      { value: "EN", label: "Enna" },
-                      { value: "FM", label: "Fermo" },
-                      { value: "FE", label: "Ferrara" },
-                      { value: "FI", label: "Firenze" },
-                      { value: "FG", label: "Foggia" },
-                      { value: "FC", label: "Forlì-Cesena" },
-                      { value: "FR", label: "Frosinone" },
-                      { value: "GE", label: "Genova" },
-                      { value: "GO", label: "Gorizia" },
-                      { value: "GR", label: "Grosseto" },
-                      { value: "IM", label: "Imperia" },
-                      { value: "IS", label: "Isernia" },
-                      { value: "SP", label: "La Spezia" },
-                      { value: "LT", label: "Latina" },
-                      { value: "LE", label: "Lecce" },
-                      { value: "LC", label: "Lecco" },
-                      { value: "LO", label: "Lodi" },
-                      { value: "LU", label: "Lucca" },
-                      { value: "MC", label: "Macerata" },
-                      { value: "MN", label: "Mantova" },
-                      { value: "MS", label: "Massa-Carrara" },
-                      { value: "MT", label: "Matera" },
-                      { value: "ME", label: "Messina" },
-                      { value: "MI", label: "Milano" },
-                      { value: "MO", label: "Modena" },
-                      { value: "MB", label: "Monza-Brianza" },
-                      { value: "NA", label: "Napoli" },
-                      { value: "NO", label: "Novara" },
-                      { value: "NU", label: "Nuoro" },
-                      { value: "OR", label: "Olbia-Tempio" },
-                      { value: "PD", label: "Padova" },
-                      { value: "PA", label: "Palermo" },
-                      { value: "PR", label: "Parma" },
-                      { value: "PV", label: "Pavia" },
-                      { value: "PG", label: "Perugia" },
-                      { value: "PU", label: "Pesaro e Urbino" },
-                      { value: "PE", label: "Pescara" },
-                      { value: "PC", label: "Piacenza" },
-                      { value: "PI", label: "Pisa" },
-                      { value: "PT", label: "Pistoia" },
-                      { value: "PN", label: "Pordenone" },
-                      { value: "PZ", label: "Potenza" },
-                      { value: "PO", label: "Prato" },
-                      { value: "RG", label: "Ragusa" },
-                      { value: "RA", label: "Ravenna" },
-                      { value: "RC", label: "Reggio Calabria" },
-                      { value: "RE", label: "Reggio Emilia" },
-                      { value: "RI", label: "Rieti" },
-                      { value: "RN", label: "Rimini" },
-                      { value: "RM", label: "Roma" },
-                      { value: "RO", label: "Rovigo" },
-                      { value: "SA", label: "Salerno" },
-                      { value: "SS", label: "Sassari" },
-                      { value: "SV", label: "Savona" },
-                      { value: "SI", label: "Siena" },
-                      { value: "SR", label: "Siracusa" },
-                      { value: "SO", label: "Sondrio" },
-                      { value: "TA", label: "Taranto" },
-                      { value: "TE", label: "Teramo" },
-                      { value: "TR", label: "Terni" },
-                      { value: "TO", label: "Torino" },
-                      { value: "TP", label: "Trapani" },
-                      { value: "TN", label: "Trento" },
-                      { value: "TV", label: "Treviso" },
-                      { value: "TS", label: "Trieste" },
-                      { value: "UD", label: "Udine" },
-                      { value: "VA", label: "Varese" },
-                      { value: "VE", label: "Venezia" },
-                      { value: "VB", label: "Verbano-Cusio-Ossola" },
-                      { value: "VC", label: "Vercelli" },
-                      { value: "VR", label: "Verona" },
-                      { value: "VV", label: "Vibo Valentia" },
-                      { value: "VI", label: "Vicenza" },
-                      { value: "VT", label: "Viterbo" }
-                    ].map((option) => (
-                      <button
-                        key={option.value}
-                        onClick={() => {
-                          setProvince(option.value)
-                          setProvinceDropdownOpen(false)
-                        }}
-                        className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                      >
-                        {option.label}
-                      </button>
-                    ))}
+              {contractType === "determinato" ? (
+                <p className="text-red-500 text-lg font-medium mt-6 text-center">
+                  Siamo spiacenti, non possiamo procedere con contratto indeterminato.
+                </p>
+              ) : (
+                <>
+                  {/* Data di nascita */}
+                  <div className="flex flex-col">
+                    <label className="text-base sm:text-xl font-semibold mb-2">
+                      Data di nascita
+                    </label>
+                    <input
+                      type="date"
+                      value={birthDate}
+                      onChange={(e) => setBirthDate(e.target.value)}
+                      className="border p-3 rounded-2xl text-base sm:text-lg"
+                    />
                   </div>
-                )}
-              </div>
+                  {/* Provincia di Residenza */}
+                  <div className="w-full max-w-md">
+                    <label className="text-base sm:text-xl font-semibold mb-2 block">
+                      Provincia di Residenza
+                    </label>
+                    <div
+                      onClick={() => {
+                        setProvinceDropdownOpen(!provinceDropdownOpen)
+                        setContractDropdownOpen(false)  // Cierra el de contrato
+                      }}
+                      className="border p-3 rounded-2xl cursor-pointer flex justify-between items-center"
+                    >
+                      <span className="text-xl font-semibold">
+                        {province ? province : "Seleziona"}
+                      </span>
+                      <IoIosArrowDown className={`transition-transform duration-300 ${provinceDropdownOpen ? "rotate-90" : ""}`} />
+                    </div>
+                    {provinceDropdownOpen && (
+                      <div className="mt-2 border border-gray-300 rounded-lg shadow-lg max-h-44 overflow-auto">
+                        {[
+                          { value: "", label: "Seleziona" },
+                          { value: "AG", label: "Agrigento" },
+                          { value: "AL", label: "Alessandria" },
+                          { value: "AN", label: "Ancona" },
+                          { value: "AO", label: "Aosta" },
+                          { value: "AR", label: "Arezzo" },
+                          { value: "AP", label: "Ascoli Piceno" },
+                          { value: "AT", label: "Asti" },
+                          { value: "AV", label: "Avellino" },
+                          { value: "BA", label: "Bari" },
+                          { value: "BT", label: "Barletta-Andria-Trani" },
+                          { value: "BL", label: "Belluno" },
+                          { value: "BN", label: "Benevento" },
+                          { value: "BG", label: "Bergamo" },
+                          { value: "BI", label: "Biella" },
+                          { value: "BO", label: "Bologna" },
+                          { value: "BZ", label: "Bolzano" },
+                          { value: "BS", label: "Brescia" },
+                          { value: "BR", label: "Brindisi" },
+                          { value: "CA", label: "Cagliari" },
+                          { value: "CL", label: "Caltanissetta" },
+                          { value: "CB", label: "Campobasso" },
+                          { value: "CI", label: "Carbonia-Iglesias" },
+                          { value: "CE", label: "Caserta" },
+                          { value: "CT", label: "Catania" },
+                          { value: "CZ", label: "Catanzaro" },
+                          { value: "CH", label: "Chieti" },
+                          { value: "CO", label: "Como" },
+                          { value: "CS", label: "Cosenza" },
+                          { value: "CR", label: "Cremona" },
+                          { value: "KR", label: "Crotone" },
+                          { value: "CN", label: "Cuneo" },
+                          { value: "EN", label: "Enna" },
+                          { value: "FM", label: "Fermo" },
+                          { value: "FE", label: "Ferrara" },
+                          { value: "FI", label: "Firenze" },
+                          { value: "FG", label: "Foggia" },
+                          { value: "FC", label: "Forlì-Cesena" },
+                          { value: "FR", label: "Frosinone" },
+                          { value: "GE", label: "Genova" },
+                          { value: "GO", label: "Gorizia" },
+                          { value: "GR", label: "Grosseto" },
+                          { value: "IM", label: "Imperia" },
+                          { value: "IS", label: "Isernia" },
+                          { value: "SP", label: "La Spezia" },
+                          { value: "LT", label: "Latina" },
+                          { value: "LE", label: "Lecce" },
+                          { value: "LC", label: "Lecco" },
+                          { value: "LO", label: "Lodi" },
+                          { value: "LU", label: "Lucca" },
+                          { value: "MC", label: "Macerata" },
+                          { value: "MN", label: "Mantova" },
+                          { value: "MS", label: "Massa-Carrara" },
+                          { value: "MT", label: "Matera" },
+                          { value: "ME", label: "Messina" },
+                          { value: "MI", label: "Milano" },
+                          { value: "MO", label: "Modena" },
+                          { value: "MB", label: "Monza-Brianza" },
+                          { value: "NA", label: "Napoli" },
+                          { value: "NO", label: "Novara" },
+                          { value: "NU", label: "Nuoro" },
+                          { value: "OR", label: "Olbia-Tempio" },
+                          { value: "PD", label: "Padova" },
+                          { value: "PA", label: "Palermo" },
+                          { value: "PR", label: "Parma" },
+                          { value: "PV", label: "Pavia" },
+                          { value: "PG", label: "Perugia" },
+                          { value: "PU", label: "Pesaro e Urbino" },
+                          { value: "PE", label: "Pescara" },
+                          { value: "PC", label: "Piacenza" },
+                          { value: "PI", label: "Pisa" },
+                          { value: "PT", label: "Pistoia" },
+                          { value: "PN", label: "Pordenone" },
+                          { value: "PZ", label: "Potenza" },
+                          { value: "PO", label: "Prato" },
+                          { value: "RG", label: "Ragusa" },
+                          { value: "RA", label: "Ravenna" },
+                          { value: "RC", label: "Reggio Calabria" },
+                          { value: "RE", label: "Reggio Emilia" },
+                          { value: "RI", label: "Rieti" },
+                          { value: "RN", label: "Rimini" },
+                          { value: "RM", label: "Roma" },
+                          { value: "RO", label: "Rovigo" },
+                          { value: "SA", label: "Salerno" },
+                          { value: "SS", label: "Sassari" },
+                          { value: "SV", label: "Savona" },
+                          { value: "SI", label: "Siena" },
+                          { value: "SR", label: "Siracusa" },
+                          { value: "SO", label: "Sondrio" },
+                          { value: "TA", label: "Taranto" },
+                          { value: "TE", label: "Teramo" },
+                          { value: "TR", label: "Terni" },
+                          { value: "TO", label: "Torino" },
+                          { value: "TP", label: "Trapani" },
+                          { value: "TN", label: "Trento" },
+                          { value: "TV", label: "Treviso" },
+                          { value: "TS", label: "Trieste" },
+                          { value: "UD", label: "Udine" },
+                          { value: "VA", label: "Varese" },
+                          { value: "VE", label: "Venezia" },
+                          { value: "VB", label: "Verbano-Cusio-Ossola" },
+                          { value: "VC", label: "Vercelli" },
+                          { value: "VR", label: "Verona" },
+                          { value: "VV", label: "Vibo Valentia" },
+                          { value: "VI", label: "Vicenza" },
+                          { value: "VT", label: "Viterbo" }
+                        ].map((option) => (
+                          <button
+                            key={option.value}
+                            onClick={() => {
+                              setProvince(option.value)
+                              setProvinceDropdownOpen(false)
+                            }}
+                            className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                          >
+                            {option.label}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex justify-center">
+                    <button
+                      className="mt-8 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
+                      onClick={() => setStep(5)}
+                    >
+                      Avanti
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
-            <button
-              className="mt-8 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
-              onClick={() => setStep(5)}
-            >
-              Avanti
-            </button>
           </motion.div>
         )}
         {step === 4 && selectedOption === "pensionato" && (
@@ -1260,54 +1311,92 @@ function FormScreen({ onClose, onFormSubmit }) {
               </button>
               <h2 className="text-3xl font-semibold">Informazioni Privato</h2>
             </div>
+
             <div className="w-full max-w-md space-y-4">
+              {/* Sei dipendente da più di 12 mesi? */}
               <div className="flex flex-col">
                 <label className="text-base sm:text-xl font-semibold mb-2">
                   Sei dipendente da più di 12 mesi?
                 </label>
-                <select
-                  value={over12Months}
-                  onChange={(e) => setOver12Months(e.target.value)}
-                  className="border p-3 sm:p-4 rounded-2xl text-base sm:text-lg"
-                >
-                  <option value="">Seleziona</option>
-                  <option value="si">Si</option>
-                  <option value="no">No</option>
-                </select>
+                <div className="relative">
+                  <select
+                    value={over12Months}
+                    onChange={(e) => {
+                      setOver12Months(e.target.value);
+                      setStepErrors({ ...stepErrors, over12Months: "" });
+                      setNumEmployees("");
+                    }}
+                    className="border p-3 sm:p-4 pr-10 rounded-2xl text-base sm:text-lg appearance-none w-full"
+                  >
+                    <option value="">Seleziona</option>
+                    <option value="si">Si</option>
+                    <option value="no">No</option>
+                  </select>
+
+                  <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none text-gray-600">
+                    <IoIosArrowDown size={20} />
+                  </div>
+                </div>
                 {stepErrors.over12Months && (
                   <p className="text-red-500 text-sm mt-1">{stepErrors.over12Months}</p>
                 )}
               </div>
-              <div className="flex flex-col">
-                <label className="text-base sm:text-xl font-semibold mb-2">
-                  Numero dipendenti?
-                </label>
-                <input
-                  type="text"
-                  value={numEmployees}
-                  onChange={(e) => setNumEmployees(e.target.value)}
-                  placeholder="Inserisci il numero"
-                  className="border p-3 sm:p-4 rounded-2xl text-base sm:text-lg"
-                />
-                {stepErrors.numEmployees && (
-                  <p className="text-red-500 text-sm mt-1">{stepErrors.numEmployees}</p>
-                )}
-              </div>
+
+              {/* Caso NO: mostramos solo mensaje */}
+              {over12Months === "no" && (
+                <p className="text-red-500 text-lg font-medium mt-6 text-center">
+                  Siamo spiacenti, non possiamo procedere.
+                </p>
+              )}
+
+              {/* Si dijo SÌ, mostramos número dipendenti y lógica */}
+              {over12Months === "si" && (
+                <>
+                  <div className="flex flex-col">
+                    <label className="text-base sm:text-xl font-semibold mb-2">
+                      Numero dipendenti?
+                    </label>
+                    <input
+                      type="text"
+                      value={numEmployees}
+                      onChange={(e) => setNumEmployees(e.target.value)}
+                      placeholder="Inserisci il numero"
+                      className="border p-3 sm:p-4 rounded-2xl text-base sm:text-lg"
+                    />
+                    {stepErrors.numEmployees && (
+                      <p className="text-red-500 text-sm mt-1">{stepErrors.numEmployees}</p>
+                    )}
+                  </div>
+
+                  {numEmployees.trim() &&
+                    /^\d+$/.test(numEmployees) &&
+                    parseInt(numEmployees) < 3 ? (
+                    <p className="text-red-500 text-lg font-medium mt-6 text-center">
+                      Siamo spiacenti, non possiamo procedere.
+                    </p>
+                  ) : (
+                    parseInt(numEmployees) >= 3 && (
+                      <div className="flex justify-center">
+                        <button
+                          className="mt-8 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl"
+                          onClick={() => {
+                            const errors = validateStep6Privato();
+                            if (Object.keys(errors).length > 0) {
+                              setStepErrors(errors);
+                              return;
+                            }
+                            setStepErrors({});
+                            setStep(4);
+                          }}
+                        >
+                          Avanti
+                        </button>
+                      </div>
+                    )
+                  )}
+                </>
+              )}
             </div>
-            <button
-              className="mt-8 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl"
-              onClick={() => {
-                const errors = validateStep6Privato();
-                if (Object.keys(errors).length > 0) {
-                  setStepErrors(errors);
-                  return;
-                }
-                setStepErrors({});
-                setStep(4); // Avanzamos al paso 4
-              }}
-            >
-              Avanti
-            </button>
           </motion.div>
         )}
       </AnimatePresence>
