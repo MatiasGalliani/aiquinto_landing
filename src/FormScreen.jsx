@@ -181,6 +181,27 @@ function FormScreen({ onClose, onFormSubmit }) {
   const netValueError = validateNetValue(pensioneNetta);
   const netSalaryError = validateNetValue(netSalary);
 
+  const validateStep6Privato = () => {
+    const errors = {};
+
+    if (!over12Months) {
+      errors.over12Months = "Campo obbligatorio";
+    } else if (over12Months === "no") {
+      errors.over12Months = "Purtroppo non possiamo procedere con meno di 12 mesi.";
+    }
+
+    if (!numEmployees.trim()) {
+      errors.numEmployees = "Campo obbligatorio";
+    } else if (!/^\d+$/.test(numEmployees)) {
+      errors.numEmployees = "Deve essere un numero valido";
+    } else if (parseInt(numEmployees) < 3) {
+      errors.numEmployees = "Purtroppo non possiamo procedere.";
+    }
+
+    return errors;
+  };
+
+
   return (
     <div className={`relative min-h-screen overflow-y-auto ${!isMobile ? "hide-scroll" : ""} overflow-x-hidden`}>
       <AnimatePresence exitBeforeEnter>
@@ -305,21 +326,23 @@ function FormScreen({ onClose, onFormSubmit }) {
                   )}
                 </div>
               </div>
-              {!netValueError && (  // netValueError debe calcularse con pensioneNetta, ej: const netValueError = validateNetValue(pensioneNetta);
-                <button
-                  className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl mt-8"
-                  onClick={() => {
-                    const errors = validateStep2Pensionato(); // Función de validación para el flujo "Pensione"
-                    if (Object.keys(errors).length > 0) {
-                      setStepErrors(errors);
-                      return;
-                    }
-                    setStepErrors({});
-                    setStep(3);
-                  }}
-                >
-                  Avanti
-                </button>
+              {!netValueError && (
+                <div className="flex justify-center">
+                  <button
+                    className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl mt-8"
+                    onClick={() => {
+                      const errors = validateStep2Pensionato();
+                      if (Object.keys(errors).length > 0) {
+                        setStepErrors(errors);
+                        return;
+                      }
+                      setStepErrors({});
+                      setStep(3);
+                    }}
+                  >
+                    Avanti
+                  </button>
+                </div>
               )}
             </div>
           </motion.div>
@@ -540,8 +563,8 @@ function FormScreen({ onClose, onFormSubmit }) {
                 </label>
                 <div
                   onClick={() => {
-                    setEntePensionisticoDropdownOpen(!entePensionisticoDropdownOpen)
-                    setTipologiaDropdownOpen(false) // cierra el otro dropdown
+                    setEntePensionisticoDropdownOpen(!entePensionisticoDropdownOpen);
+                    setTipologiaDropdownOpen(false); // cierra el otro dropdown
                   }}
                   className="border p-3 rounded-2xl cursor-pointer flex justify-between items-center"
                 >
@@ -560,8 +583,8 @@ function FormScreen({ onClose, onFormSubmit }) {
                   <div className="mt-2 border border-gray-300 rounded-lg shadow-lg max-h-40 overflow-y-auto">
                     <button
                       onClick={() => {
-                        setEntePensionistico("italiana")
-                        setEntePensionisticoDropdownOpen(false)
+                        setEntePensionistico("italiana");
+                        setEntePensionisticoDropdownOpen(false);
                       }}
                       className="block w-full text-left px-4 py-2 hover:bg-gray-100"
                     >
@@ -569,8 +592,8 @@ function FormScreen({ onClose, onFormSubmit }) {
                     </button>
                     <button
                       onClick={() => {
-                        setEntePensionistico("estera")
-                        setEntePensionisticoDropdownOpen(false)
+                        setEntePensionistico("estera");
+                        setEntePensionisticoDropdownOpen(false);
                       }}
                       className="block w-full text-left px-4 py-2 hover:bg-gray-100"
                     >
@@ -583,69 +606,80 @@ function FormScreen({ onClose, onFormSubmit }) {
                 )}
               </div>
 
-              {/* Tipologia di pensione */}
-              <div className="flex flex-col">
-                <label className="text-base sm:text-xl font-semibold mb-2">
-                  Tipologia di pensione
-                </label>
-                <div
-                  onClick={() => {
-                    setTipologiaDropdownOpen(!tipologiaDropdownOpen)
-                    setEntePensionisticoDropdownOpen(false) // cierra el otro dropdown
-                  }}
-                  className="border p-3 rounded-2xl cursor-pointer flex justify-between items-center"
-                >
-                  <span className="text-xl font-semibold">
-                    {pensioneType ? pensioneType : "Seleziona"}
-                  </span>
-                  <IoIosArrowDown className={`transition-transform duration-300 ${tipologiaDropdownOpen ? "rotate-90" : ""}`} />
-                </div>
-                {tipologiaDropdownOpen && (
-                  <div className="mt-2 border border-gray-300 rounded-lg shadow-lg max-h-40 overflow-y-auto">
-                    {[
-                      "Vecchiaia",
-                      "Anzianità contributiva",
-                      "Reversibilità",
-                      "Invalidità ordinaria",
-                      "Pensione con residenza estera",
-                      "Invalidità civile",
-                      "Pensione sociale",
-                      "APe social"
-                    ].map(option => (
-                      <button
-                        key={option}
-                        onClick={() => {
-                          setPensioneType(option)
-                          setTipologiaDropdownOpen(false)
-                        }}
-                        className="block w-full text-left px-4 py-2 hover:bg-gray-100 text-base"
-                      >
-                        {option}
-                      </button>
-                    ))}
+              {entePensionistico !== "estera" && (
+                <div className="flex flex-col mt-4">
+                  <label className="text-base sm:text-xl font-semibold mb-2">
+                    Tipologia di pensione
+                  </label>
+                  <div
+                    onClick={() => {
+                      setTipologiaDropdownOpen(!tipologiaDropdownOpen);
+                      setEntePensionisticoDropdownOpen(false); // cierra el otro dropdown
+                    }}
+                    className="border p-3 rounded-2xl cursor-pointer flex justify-between items-center"
+                  >
+                    <span className="text-xl font-semibold">
+                      {pensioneType ? pensioneType : "Seleziona"}
+                    </span>
+                    <IoIosArrowDown className={`transition-transform duration-300 ${tipologiaDropdownOpen ? "rotate-90" : ""}`} />
                   </div>
-                )}
-                {stepErrors.pensioneType && (
-                  <p className="text-red-500 text-sm mt-1">{stepErrors.pensioneType}</p>
-                )}
-              </div>
+                  {tipologiaDropdownOpen && (
+                    <div className="mt-2 border border-gray-300 rounded-lg shadow-lg max-h-40 overflow-y-auto">
+                      {[
+                        "Vecchiaia",
+                        "Anzianità contributiva",
+                        "Reversibilità",
+                        "Invalidità ordinaria",
+                        "Pensione con residenza estera",
+                        "Invalidità civile",
+                        "Pensione sociale",
+                        "APe social"
+                      ].map(option => (
+                        <button
+                          key={option}
+                          onClick={() => {
+                            setPensioneType(option);
+                            setTipologiaDropdownOpen(false);
+                          }}
+                          className="block w-full text-left px-4 py-2 hover:bg-gray-100 text-base"
+                        >
+                          {option}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                  {stepErrors.pensioneType && (
+                    <p className="text-red-500 text-sm mt-1">{stepErrors.pensioneType}</p>
+                  )}
+                </div>
+              )}
+
+              {/* Condizione finale: messaggio o bottone */}
+              {entePensionistico === "estera" ? (
+                <p className="text-red-500 text-lg font-medium mt-6 text-center">
+                  Siamo spiacenti, non possiamo procedere con una pensione estera.
+                </p>
+              ) : (
+                <div className="flex justify-center">
+                  <button
+                    className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl mt-8"
+                    onClick={() => {
+                      const errors = {};
+                      if (!entePensionistico) errors.entePensionistico = "Campo obbligatorio";
+                      if (!pensioneType) errors.pensioneType = "Campo obbligatorio";
+                      if (Object.keys(errors).length > 0) {
+                        setStepErrors(errors);
+                        return;
+                      }
+                      setStepErrors({});
+                      setStep(4); // prossimo step
+                    }}
+                  >
+                    Avanti
+                  </button>
+                </div>
+              )}
             </div>
-            <button
-              className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl mt-8"
-              onClick={() => {
-                const errors = {};
-                if (!entePensionistico) errors.entePensionistico = "Campo obbligatorio";
-                if (!pensioneType) errors.pensioneType = "Campo obbligatorio";
-                if (Object.keys(errors).length > 0) {
-                  setStepErrors(errors);
-                  return;
-                }
-                setStepErrors({});
-                setStep(4);
-              }}
-            >
-              Avanti
-            </button>
           </motion.div>
         )}
         {step === 4 && selectedOption === "dipendente" && (
@@ -1240,6 +1274,9 @@ function FormScreen({ onClose, onFormSubmit }) {
                   <option value="si">Si</option>
                   <option value="no">No</option>
                 </select>
+                {stepErrors.over12Months && (
+                  <p className="text-red-500 text-sm mt-1">{stepErrors.over12Months}</p>
+                )}
               </div>
               <div className="flex flex-col">
                 <label className="text-base sm:text-xl font-semibold mb-2">
@@ -1252,11 +1289,22 @@ function FormScreen({ onClose, onFormSubmit }) {
                   placeholder="Inserisci il numero"
                   className="border p-3 sm:p-4 rounded-2xl text-base sm:text-lg"
                 />
+                {stepErrors.numEmployees && (
+                  <p className="text-red-500 text-sm mt-1">{stepErrors.numEmployees}</p>
+                )}
               </div>
             </div>
             <button
               className="mt-8 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl"
-              onClick={() => setStep(4)} // Reutilizamos la pantalla de Informazioni Aggiuntive.
+              onClick={() => {
+                const errors = validateStep6Privato();
+                if (Object.keys(errors).length > 0) {
+                  setStepErrors(errors);
+                  return;
+                }
+                setStepErrors({});
+                setStep(4); // Avanzamos al paso 4
+              }}
             >
               Avanti
             </button>
