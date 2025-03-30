@@ -152,8 +152,8 @@ function FormScreen({ onClose, onFormSubmit }) {
 
     const endpoint =
       selectedOption === "pensionato"
-        ? "https://backend-richiedidiessereconttato.onrender.com/pensionato"
-        : "https://backend-richiedidiessereconttato.onrender.com/dipendente";
+        ? "https://backend-richiedidiessereconttato-production.up.railway.app/pensionato"
+        : "https://backend-richiedidiessereconttato-production.up.railway.app/dipendente";
 
     try {
       const response = await fetch(endpoint, {
