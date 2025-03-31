@@ -8,9 +8,9 @@ const validateNetValue = (value) => {
   }
   const netValue = parseFloat(value);
   if (isNaN(netValue)) {
-    return "Debe ser un número válido";
+    return "Deve essere un numero valido";
   } else if (netValue < 600) {
-    return "Lo lamentamos pero no es possibile";
+    return "Siamo spiacenti, non possiamo procedere.";
   }
   return null;
 };
