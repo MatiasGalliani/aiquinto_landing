@@ -321,7 +321,7 @@ function ContactPage({ onBack, onSubmit }) {
 
 const sendContactData = async (data) => {
   try {
-    const response = await fetch("https://backend-richiedidiessereconttato-production.up.railway.app/sheets", {
+    const response = await fetch("https://backend-richiedidiessereconttato-production.up.railway.app/manuale_aiquinto", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
