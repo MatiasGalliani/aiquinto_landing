@@ -162,34 +162,34 @@ function ContactPage({ onBack, onSubmit }) {
     if (!mail.trim()) newErrors.mail = "Campo obbligatorio";
     if (!telefono.trim()) newErrors.telefono = "Campo obbligatorio";
     if (!privacyAccepted) newErrors.privacy = "Campo obbligatorio";
-  
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
-  
+
     setSubmissionLoading(true);
-  
+
     // Construye el payload para nuestro backend Express.
     const payload = {
       datos: [nome, cognome, mail, telefono]
     };
-  
+
     console.log("Datos a enviar:", payload);
-  
+
     try {
-      const response = await fetch("https://backend-richiedidiessereconttato-production.up.railway.app/sheets", {
+      const response = await fetch("https://backend-richiedidiessereconttato-production.up.railway.app/manuale_aiquinto", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(payload)
       });
-  
+
       if (!response.ok) {
         throw new Error("Error en la respuesta del servidor");
       }
-  
+
       // Si la respuesta es exitosa, detenemos el loading y llamamos a onSubmit.
       setSubmissionLoading(false);
       onSubmit();
@@ -320,22 +320,22 @@ function ContactPage({ onBack, onSubmit }) {
 }
 
 const sendContactData = async (data) => {
-    try {
-        const response = await fetch("https://backend-richiedidiessereconttato-production.up.railway.app/sheets", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        });
-        if (!response.ok) {
-            throw new Error("Error en la respuesta del servidor");
-        }
-        return await response.json();
-    } catch (error) {
-        console.error("Error sending contact data:", error);
-        throw error;
+  try {
+    const response = await fetch("https://backend-richiedidiessereconttato-production.up.railway.app/sheets", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      throw new Error("Error en la respuesta del servidor");
     }
+    return await response.json();
+  } catch (error) {
+    console.error("Error sending contact data:", error);
+    throw error;
+  }
 };
 
 function MainApp() {
@@ -374,19 +374,19 @@ function MainApp() {
     if (!contactPrivacyAccepted) errors.privacy = "Campo obbligatorio";
 
     if (Object.keys(errors).length > 0) {
-        setContactErrors(errors);
-        return;
+      setContactErrors(errors);
+      return;
     }
-    
+
     const payload = { datos: [contactNome, contactCognome, contactMail, contactTelefono] };
 
     try {
-        await sendContactData(payload);
-        navigate("/thankyoupage");
+      await sendContactData(payload);
+      navigate("/thankyoupage");
     } catch (error) {
-        // Manejo de error si es necesario.
+      // Manejo de error si es necesario.
     }
-};
+  };
 
   if (submissionLoading) {
     return (
