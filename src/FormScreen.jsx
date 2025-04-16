@@ -123,9 +123,6 @@ function FormScreen({ onClose, onFormSubmit }) {
   }
 
   const handleSubmit = async () => {
-    // Activa la pantalla de carga inmediatamente
-    setLoading(true);
-
     const formData = {
       nome,
       cognome,
@@ -174,11 +171,10 @@ function FormScreen({ onClose, onFormSubmit }) {
       onFormSubmit();
     } catch (error) {
       console.error("Errore:", error);
-    } finally {
-      // Opcionalmente, si quieres quitar la pantalla de carga cuando la petición termina:
-      setLoading(false);
     }
   };
+
+
 
   if (loading) {
     return (
