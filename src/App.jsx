@@ -10,7 +10,6 @@ import { Helmet } from "react-helmet-async";
 import ThankYouPage from './BookingPage'
 import FormScreen from './FormScreen'
 import { motion } from "framer-motion";
-import ChatWidget from './components/ChatWidget'
 
 function HeroWave() {
   return (
@@ -484,7 +483,7 @@ function MainApp() {
         {/* Sección Hero con fondo celeste y olas */}
         <div className="bg-gradient-to-r from-blue-100 to-blue-300 w-full pt-4 transition-all duration-500 ease-out">
           <div className="flex flex-col md:flex-row justify-center items-stretch mx-4 md:mx-12 gap-6">
-            <div className="p-6 md:mr-12 mb-6 md:mb-0">
+            <div className="p-6 md:mr-12 mb-6 md:mb-0 md:mt-14">
               <div className="px-4 md:px-16">
                 <h1 className="flex items-center space-x-2 mt-8 animate-fadeIn">
                   <img
@@ -499,9 +498,6 @@ function MainApp() {
                     className="w-40 sm:w-48 md:w-72 transition-all duration-500 hover:scale-105"
                   />
                 </h1>
-                <p className="inline-block text-xs font-medium text-green-950 mt-4 py-0.5 bg-green-200 px-2 border border-green-500 rounded-lg animate-fadeIn">
-                  Offerta a tempo limitato
-                </p>
                 <h2 className="text-3xl md:text-5xl font-semibold mt-4 text-gray-800 animate-fadeIn">
                   Richiedi subito fino a € 75.000 per la tua Cessione del Quinto
                 </h2>
@@ -514,39 +510,7 @@ function MainApp() {
                 <p>
                   Rispondi a poche domande per ricevere il tuo preventivo personalizzato.
                 </p>
-                <div className="mt-6 flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
-                  <div className="flex flex-col space-y-4">
-                    {/* Box para iniciar el formulario */}
-                    <div
-                      className="relative bg-blue-800 w-full sm:w-[90%] md:w-[1000px] h-16 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex items-center justify-center px-4 transform transition-all duration-500 hover:scale-105 hover:shadow-lg"
-                      onClick={() => setShowFormScreen(true)}
-                    >
-                      <span className="text-xl md:text-2xl font-medium text-white mr-2">
-                        Inizia Ora
-                      </span>
-                      <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center">
-                        <FaArrowRight className="text-sm text-blue-800" />
-                      </div>
-                    </div>
-                    <p className="flex justify-center text-lg text-gray-500 animate-fadeIn">
-                      Oppure
-                    </p>
-                    {/* Box para enlace de agente */}
-                    <div>
-                      <div
-                        className="relative bg-white w-full sm:w-[90%] md:w-[1000px] h-16 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex items-center justify-center px-4 transform transition-all duration-500 hover:scale-105 hover:shadow-lg"
-                        onClick={() => setShowContactPage(true)}
-                      >
-                        <span className="text-xl md:text-2xl font-medium text-black mr-2">
-                          Richiedi di Essere Contattato
-                        </span>
-                        <div className="w-6 h-6 rounded-full bg-blue-800 flex items-center justify-center">
-                          <FaArrowRight className="text-sm text-white" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                                <div className="mt-12 mb-12 flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">                  <div className="flex flex-col space-y-4">                    {/* Box para iniciar el formulario */}                    <div                      className="relative bg-blue-800 w-full sm:w-[90%] md:w-[1000px] h-16 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex items-center justify-center px-4 transform transition-all duration-500 hover:scale-105 hover:shadow-lg"                      onClick={() => setShowFormScreen(true)}                    >                      <span className="text-xl md:text-2xl font-medium text-white mr-2">                        Inizia Ora                      </span>                      <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center">                        <FaArrowRight className="text-sm text-blue-800" />                      </div>                    </div>                    {/* Box para enlace de agente */}                                      </div>                </div>
               </div>
             </div>
             <img
@@ -608,26 +572,7 @@ function MainApp() {
                 Cessione del Quinto!
               </h2>
               <div className="my-8 flex flex-col md:flex-row gap-4">
-                <div
-                  onClick={() => setShowFormScreen(true)}
-                  className="w-full md:flex-1 cursor-pointer bg-blue-800 hover:bg-blue-700 text-white px-8 py-3 text-xl transform transition-all duration-500 hover:scale-105 hover:shadow-lg flex items-center justify-between rounded-2xl"
-                >
-                  <span>Inizia Ora</span>
-                  <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center">
-                    <FaArrowRight className="text-sm text-blue-800" />
-                  </div>
-                </div>
-                <div
-                  onClick={() => {
-                    setShowContactFields(true);
-                  }}
-                  className="w-full md:flex-1 cursor-pointer bg-white hover:bg-gray-100 text-black px-8 py-3 text-xl border border-gray-400 transform transition-all duration-500 hover:scale-105 hover:shadow-lg flex items-center justify-between rounded-2xl"
-                >
-                  <span>Richiedi di Essere Contattato</span>
-                  <div className="w-6 h-6 rounded-full bg-blue-800 flex items-center justify-center">
-                    <FaArrowRight className="text-sm text-white" />
-                  </div>
-                </div>
+                                                                 <div                  onClick={() => setShowFormScreen(true)}                  className="w-full cursor-pointer bg-blue-800 hover:bg-blue-700 text-white px-8 py-3 text-xl transform transition-all duration-500 hover:scale-105 hover:shadow-lg flex items-center justify-center gap-3 rounded-2xl"                >                  <span>Inizia Ora</span>                  <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center">                    <FaArrowRight className="text-sm text-blue-800" />                  </div>                </div>
               </div>
             </div>
           ) : (
@@ -757,10 +702,6 @@ function MainApp() {
       </main>
 
       <Footer />
-      <ChatWidget
-        open={chatOpen}
-        setOpen={setChatOpen}
-      />
     </div>
   )
 }
