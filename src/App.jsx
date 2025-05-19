@@ -510,7 +510,7 @@ function MainApp() {
                 <p>
                   Rispondi a poche domande per ricevere il tuo preventivo personalizzato.
                 </p>
-                                <div className="mt-12 mb-12 flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">                  <div className="flex flex-col space-y-4">                    {/* Box para iniciar el formulario */}                    <div                      className="relative bg-blue-800 w-full sm:w-[90%] md:w-[1000px] h-16 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex items-center justify-center px-4 transform transition-all duration-500 hover:scale-105 hover:shadow-lg"                      onClick={() => setShowFormScreen(true)}                    >                      <span className="text-xl md:text-2xl font-medium text-white mr-2">                        Inizia Ora                      </span>                      <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center">                        <FaArrowRight className="text-sm text-blue-800" />                      </div>                    </div>                    {/* Box para enlace de agente */}                                      </div>                </div>
+                <div className="mt-12 mb-12 flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">                  <div className="flex flex-col space-y-4">                    {/* Box para iniciar el formulario */}                    <div className="relative bg-blue-800 w-full sm:w-[90%] md:w-[1000px] h-16 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex items-center justify-center px-4 transform transition-all duration-500 hover:scale-105 hover:shadow-lg" onClick={() => setShowFormScreen(true)}                    >                      <span className="text-xl md:text-2xl font-medium text-white mr-2">                        Inizia Ora                      </span>                      <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center">                        <FaArrowRight className="text-sm text-blue-800" />                      </div>                    </div>                    {/* Box para enlace de agente */}                                      </div>                </div>
               </div>
             </div>
             <img
@@ -531,8 +531,7 @@ function MainApp() {
                   Il servizio 100% digitale 100% umano.
                 </h5>
                 <p className="text-gray-700 font-normal text-xl">
-                Unendo tecnologia avanzata e consulenza personalizzata, ti guidiamo verso la migliore soluzione di finanziamento.
-                </p>
+                  Con tecnologia e consulenza personalizzata, trovi il finanziamento migliore per te.                </p>
               </div>
               <div>
                 <img
@@ -572,7 +571,7 @@ function MainApp() {
                 Cessione del Quinto!
               </h2>
               <div className="my-8 flex flex-col md:flex-row gap-4">
-                                                                 <div                  onClick={() => setShowFormScreen(true)}                  className="w-full cursor-pointer bg-blue-800 hover:bg-blue-700 text-white px-8 py-3 text-xl transform transition-all duration-500 hover:scale-105 hover:shadow-lg flex items-center justify-center gap-3 rounded-2xl"                >                  <span>Inizia Ora</span>                  <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center">                    <FaArrowRight className="text-sm text-blue-800" />                  </div>                </div>
+                <div onClick={() => setShowFormScreen(true)} className="w-full cursor-pointer bg-blue-800 hover:bg-blue-700 text-white px-8 py-3 text-xl transform transition-all duration-500 hover:scale-105 hover:shadow-lg flex items-center justify-center gap-3 rounded-2xl"                >                  <span>Inizia Ora</span>                  <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center">                    <FaArrowRight className="text-sm text-blue-800" />                  </div>                </div>
               </div>
             </div>
           ) : (
