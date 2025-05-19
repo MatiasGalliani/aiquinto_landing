@@ -531,7 +531,7 @@ function MainApp() {
                   Il servizio 100% digitale 100% umano.
                 </h5>
                 <p className="text-gray-700 font-normal text-xl">
-                  Gestito dalla nostra Intelligenza Artificiale e dagli esperti a te dedicati.
+                Unendo tecnologia avanzata e consulenza personalizzata, ti guidiamo verso la migliore soluzione di finanziamento.
                 </p>
               </div>
               <div>
