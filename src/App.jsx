@@ -71,7 +71,7 @@ function FAQ() {
     {
       question: "Quanto tempo serve per ottenere il prestito?",
       answer:
-        "Con Creditplan puoi ottenere la liquidità necessaria in pochi giorni grazie ai nostri partner bancari specializzati e al team qualificato di Creditplan."
+        "Con Creditplan puoi ottenere la liquidità necessaria in pochi giorni grazie ai nostri partner bancari specializzati e al team qualificato."
     },
     {
       question: "Quali requisiti devo avere per richiedere la Cessione del Quinto?",
@@ -106,7 +106,7 @@ function FAQ() {
     {
       question: "Quanto costa la consulenza iniziale con Creditplan?",
       answer:
-        "La consulenza iniziale con i nostri esperti è completamente gratuita e senza impegno."
+        "Nessun costo accessorio."
     }
   ]
 
