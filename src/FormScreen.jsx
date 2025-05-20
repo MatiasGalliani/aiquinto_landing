@@ -123,8 +123,15 @@ function FormScreen({ onClose, onFormSubmit }) {
   }
 
   const handleSubmit = async () => {
-    // Activa la pantalla de carga inmediatamente
     setLoading(true);
+
+    // Format the employment date to a proper date string if it exists
+    let formattedEmploymentDate = null;
+    if (over12Months) {
+      const [month, year] = over12Months.split('/');
+      const inputDate = new Date(year, month - 1);
+      formattedEmploymentDate = inputDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+    }
 
     const formData = {
       nome,
@@ -150,6 +157,8 @@ function FormScreen({ onClose, onFormSubmit }) {
         depType,
         secondarySelection,
         contractType,
+        employmentDate: over12Months, // Keep original MM/YYYY format
+        numEmployees: parseInt(numEmployees),
       });
     }
 
@@ -175,7 +184,6 @@ function FormScreen({ onClose, onFormSubmit }) {
     } catch (error) {
       console.error("Errore:", error);
     } finally {
-      // Opcionalmente, si quieres quitar la pantalla de carga cuando la petición termina:
       setLoading(false);
     }
   };
@@ -223,8 +231,24 @@ function FormScreen({ onClose, onFormSubmit }) {
 
     if (!over12Months) {
       errors.over12Months = "Campo obbligatorio";
-    } else if (over12Months === "no") {
-      errors.over12Months = "Purtroppo non possiamo procedere con meno di 12 mesi.";
+    } else {
+      // Validate date format MM/YYYY
+      const dateRegex = /^(0[1-9]|1[0-2])\/\d{4}$/;
+      if (!dateRegex.test(over12Months)) {
+        errors.over12Months = "Formato data non valido (MM/YYYY)";
+      } else {
+        // Check if date is more than 12 months ago
+        const [month, year] = over12Months.split('/');
+        const inputDate = new Date(year, month - 1);
+        const twelveMonthsAgo = new Date();
+        twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 12);
+        
+        if (inputDate > new Date()) {
+          errors.over12Months = "La data non può essere nel futuro";
+        } else if (inputDate > twelveMonthsAgo) {
+          errors.over12Months = "Purtroppo non possiamo procedere con meno di 12 mesi.";
+        }
+      }
     }
 
     if (!numEmployees.trim()) {
@@ -560,7 +584,7 @@ function FormScreen({ onClose, onFormSubmit }) {
                   className="border p-4 rounded-2xl cursor-pointer flex justify-between items-center"
                 >
                   <span className="text-xl font-semibold">
-                    {secondarySelection ? secondarySelection : "Seleziona il sottotipo"}
+                    {secondarySelection ? secondarySelection : "Seleziona tipologia azienda"}
                   </span>
                   <IoIosArrowDown className={`transition-transform duration-300 ${secondaryDropdownOpen ? "rotate-90" : ""}`} />
                 </div>
@@ -1353,29 +1377,36 @@ function FormScreen({ onClose, onFormSubmit }) {
             </div>
 
             <div className="w-full max-w-md space-y-4">
-              {/* Sei dipendente da più di 12 mesi? */}
+              {/* Mese ed anno di asunzione */}
               <div className="flex flex-col">
                 <label className="text-base sm:text-xl font-semibold mb-2">
-                  Sei dipendente da più di 12 mesi?
+                  Mese ed anno di asunzione
                 </label>
                 <div className="relative">
-                  <select
+                  <input
+                    type="text"
                     value={over12Months}
                     onChange={(e) => {
-                      setOver12Months(e.target.value);
+                      let value = e.target.value;
+                      // Remove any non-digit characters
+                      value = value.replace(/\D/g, '');
+                      
+                      // Add the "/" after 2 digits for month
+                      if (value.length >= 2) {
+                        value = value.slice(0, 2) + '/' + value.slice(2);
+                      }
+                      
+                      // Limit the total length to 7 (MM/YYYY)
+                      value = value.slice(0, 7);
+                      
+                      setOver12Months(value);
                       setStepErrors({ ...stepErrors, over12Months: "" });
                       setNumEmployees("");
                     }}
-                    className="border p-3 sm:p-4 pr-10 rounded-2xl text-base sm:text-lg appearance-none w-full"
-                  >
-                    <option value="">Seleziona</option>
-                    <option value="si">Si</option>
-                    <option value="no">No</option>
-                  </select>
-
-                  <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none text-gray-600">
-                    <IoIosArrowDown size={20} />
-                  </div>
+                    placeholder="MM/AAAA"
+                    maxLength={7}
+                    className="border p-3 sm:p-4 rounded-2xl text-base sm:text-lg w-full"
+                  />
                 </div>
                 {stepErrors.over12Months && (
                   <p className="text-red-500 text-sm mt-1">{stepErrors.over12Months}</p>
@@ -1383,14 +1414,26 @@ function FormScreen({ onClose, onFormSubmit }) {
               </div>
 
               {/* Caso NO: mostramos solo mensaje */}
-              {over12Months === "no" && (
+              {over12Months && (() => {
+                const [month, year] = over12Months.split('/');
+                const inputDate = new Date(year, month - 1);
+                const twelveMonthsAgo = new Date();
+                twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 12);
+                return inputDate > twelveMonthsAgo;
+              })() && (
                 <p className="text-red-500 text-lg font-medium mt-6 text-center">
                   Siamo spiacenti, non possiamo procedere.
                 </p>
               )}
 
-              {/* Si dijo SÌ, mostramos número dipendenti y lógica */}
-              {over12Months === "si" && (
+              {/* Si la fecha es válida y más de 12 meses, mostramos número dipendenti y lógica */}
+              {over12Months && (() => {
+                const [month, year] = over12Months.split('/');
+                const inputDate = new Date(year, month - 1);
+                const twelveMonthsAgo = new Date();
+                twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 12);
+                return inputDate <= twelveMonthsAgo;
+              })() && (
                 <>
                   <div className="flex flex-col">
                     <label className="text-base sm:text-xl font-semibold mb-2">
@@ -1400,7 +1443,7 @@ function FormScreen({ onClose, onFormSubmit }) {
                       type="text"
                       value={numEmployees}
                       onChange={(e) => setNumEmployees(e.target.value)}
-                      placeholder="Inserisci il numero"
+                      placeholder="Inserisci el numero"
                       className="border p-3 sm:p-4 rounded-2xl text-base sm:text-lg"
                     />
                     {stepErrors.numEmployees && (
