@@ -524,54 +524,25 @@ function MainApp() {
               className="w-full md:w-96 h-full object-cover rounded-3xl transition-all duration-500 hover:scale-105"
             />
           </div>
-          {/* Regulatory Info Box - Above the fold */}
-          <div className="w-full max-w-4xl mx-auto px-4 py-6 text-sm text-gray-700 bg-blue-50 rounded-lg my-4 shadow-sm">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="p-4 bg-white rounded-lg">
-                <strong className="text-blue-800 block mb-2">Esempio Rappresentativo Cessione del Quinto:</strong>
-                <ul className="space-y-2">
-                  <li>• Durata: da 24 a 120 mesi</li>
-                  <li>• Importo: da € 3.000 a € 75.000</li>
-                  <li>• TAEG massimo: 12,20%</li>
-                </ul>
-              </div>
-              <div className="p-4 bg-white rounded-lg">
-                <strong className="text-blue-800 block mb-2">Esempio su € 30.000 in 120 mesi:</strong>
-                <ul className="space-y-2">
-                  <li>• Rata mensile: € 335</li>
-                  <li>• TAEG: 8,90%</li>
-                  <li>• Totale dovuto: € 40.200</li>
-                  <li>• Include: spese istruttoria, commissioni, assicurazione</li>
-                </ul>
-              </div>
-            </div>
-            <div className="mt-4 text-xs bg-white p-3 rounded-lg">
-              <strong>Avvertenza:</strong> Messaggio pubblicitario. Creditplan (OAM M30) opera come mediatore creditizio. Offerta soggetta ad approvazione dell'istituto erogante. Verifica le condizioni complete nel modulo SECCI.
-            </div>
-          </div>
           <HeroWave />
         </div>
-        {/* Regulatory Disclosures */}
-        <div className="w-full max-w-4xl mx-auto px-4 py-6 text-sm text-gray-700 bg-gray-50 rounded-lg my-8">
-          <div className="mb-4">
-            <strong>Informativa Trasparenza:</strong> Creditplan Italia Network di Mediazione Creditizia SRL opera come mediatore creditizio regolarmente iscritto OAM n.M30. Non eroga direttamente prestiti o finanziamenti. Ogni richiesta è soggetta all'approvazione dell'istituto erogante.
-          </div>
+        {/* Regulatory Info Box - Right after waves */}
+        <div className="w-full max-w-4xl mx-auto px-4 py-6 text-sm text-gray-700 bg-blue-50 rounded-lg my-8">
           <div className="mb-4">
             <strong>Esempio Rappresentativo Cessione del Quinto:</strong><br/>
-            • Durata del finanziamento: da 24 a 120 mesi<br/>
-            • Importo finanziabile: da € 3.000 a € 75.000<br/>
-            • TAEG massimo: 12,20% (tasso variabile in base al profilo del richiedente)<br/>
-            • Esempio per € 30.000 in 120 mesi:<br/>
-            &nbsp;&nbsp;- Rata mensile: € 335<br/>
-            &nbsp;&nbsp;- TAEG: 8,90%<br/>
-            &nbsp;&nbsp;- Importo totale dovuto: € 40.200<br/>
-            &nbsp;&nbsp;- Costi inclusi: spese istruttoria, commissioni bancarie, assicurazione obbligatoria
+            • Durata: da 24 a 120 mesi<br/>
+            • Importo: da € 3.000 a € 75.000<br/>
+            • TAEG massimo: 12,20%
           </div>
           <div className="mb-4">
-            <strong>Costi e Commissioni:</strong> Tutte le condizioni economiche, incluso il TAEG (Tasso Annuo Effettivo Globale), verranno specificate nel contratto e nel modulo SECCI prima della sottoscrizione, in conformità con il D.Lgs. 385/93 e le disposizioni di Banca d'Italia.
+            <strong>Esempio su € 30.000 in 120 mesi:</strong><br/>
+            • Rata mensile: € 335<br/>
+            • TAEG: 8,90%<br/>
+            • Totale dovuto: € 40.200<br/>
+            • Include: spese istruttoria, commissioni, assicurazione
           </div>
           <div>
-            <strong>Avvertenza:</strong> Messaggio pubblicitario con finalità promozionale. Per le condizioni contrattuali ed economiche, si rimanda ai documenti informativi disponibili presso le nostre sedi e sul sito. La concessione del finanziamento è subordinata alla valutazione e all'approvazione dell'istituto erogante.
+            <strong>Avvertenza:</strong> Messaggio pubblicitario. Creditplan (OAM M30) opera come mediatore creditizio. Offerta soggetta ad approvazione dell'istituto erogante. Verifica le condizioni complete nel modulo SECCI.
           </div>
         </div>
         {/* Resto de la página */}
