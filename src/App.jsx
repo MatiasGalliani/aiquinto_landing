@@ -71,7 +71,7 @@ function FAQ() {
     {
       question: "Quali sono i costi e le commissioni associate?",
       answer:
-        "Le commissioni di mediazione variano in base all'importo e alla durata del finanziamento, con un massimo del 10% sull'importo erogato. Sono inclusi: spese di istruttoria, commissioni bancarie, e costi assicurativi obbligatori per legge. Ti forniremo un preventivo dettagliato e trasparente prima di procedere."
+        "Le commissioni di mediazione sono regolamentate secondo la normativa vigente e vengono sempre comunicate in modo trasparente nel preventivo TAEG (Tasso Annuo Effettivo Globale). Il TAEG comprende tutti i costi, inclusi: spese di istruttoria, commissioni di mediazione, costi assicurativi obbligatori per legge e commissioni bancarie. Riceverai un preventivo personalizzato e dettagliato prima di qualsiasi impegno, in conformità con le normative di trasparenza bancaria."
     },
     {
       question: "Quanto tempo serve per ottenere il prestito?",
@@ -526,6 +526,18 @@ function MainApp() {
           </div>
           <HeroWave />
         </div>
+        {/* Regulatory Disclosures */}
+        <div className="w-full max-w-4xl mx-auto px-4 py-6 text-sm text-gray-700 bg-gray-50 rounded-lg my-8">
+          <div className="mb-4">
+            <strong>Informativa Trasparenza:</strong> Creditplan Italia Network di Mediazione Creditizia SRL opera come mediatore creditizio regolarmente iscritto OAM n.M30. Non eroga direttamente prestiti o finanziamenti. Ogni richiesta è soggetta all'approvazione dell'istituto erogante.
+          </div>
+          <div className="mb-4">
+            <strong>Costi e Commissioni:</strong> Tutte le condizioni economiche, incluso il TAEG (Tasso Annuo Effettivo Globale), verranno specificate nel contratto e nel modulo SECCI prima della sottoscrizione, in conformità con il D.Lgs. 385/93 e le disposizioni di Banca d'Italia.
+          </div>
+          <div>
+            <strong>Avvertenza:</strong> Messaggio pubblicitario con finalità promozionale. Per le condizioni contrattuali ed economiche, si rimanda ai documenti informativi disponibili presso le nostre sedi e sul sito.
+          </div>
+        </div>
         {/* Resto de la página */}
         <div className="bg-white transition-all duration-500 ease-out">
           {/* Sección de Ilustración */}
@@ -810,8 +822,13 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a href="https://creditplan.it/guida-ai-mutui" className="underline">
-                  Guida ai mutui
+                <a href="https://creditplan.it/documenti-informativi" className="underline">
+                  Documenti SECCI
+                </a>
+              </li>
+              <li>
+                <a href="https://creditplan.it/informativa-precontrattuale" className="underline">
+                  Informativa Precontrattuale
                 </a>
               </li>
               <li>
