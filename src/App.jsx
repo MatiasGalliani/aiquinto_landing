@@ -532,10 +532,21 @@ function MainApp() {
             <strong>Informativa Trasparenza:</strong> Creditplan Italia Network di Mediazione Creditizia SRL opera come mediatore creditizio regolarmente iscritto OAM n.M30. Non eroga direttamente prestiti o finanziamenti. Ogni richiesta è soggetta all'approvazione dell'istituto erogante.
           </div>
           <div className="mb-4">
+            <strong>Esempio Rappresentativo Cessione del Quinto:</strong><br/>
+            • Durata del finanziamento: da 24 a 120 mesi<br/>
+            • Importo finanziabile: da € 3.000 a € 75.000<br/>
+            • TAEG massimo: 12,20% (tasso variabile in base al profilo del richiedente)<br/>
+            • Esempio per € 30.000 in 120 mesi:<br/>
+            &nbsp;&nbsp;- Rata mensile: € 335<br/>
+            &nbsp;&nbsp;- TAEG: 8,90%<br/>
+            &nbsp;&nbsp;- Importo totale dovuto: € 40.200<br/>
+            &nbsp;&nbsp;- Costi inclusi: spese istruttoria, commissioni bancarie, assicurazione obbligatoria
+          </div>
+          <div className="mb-4">
             <strong>Costi e Commissioni:</strong> Tutte le condizioni economiche, incluso il TAEG (Tasso Annuo Effettivo Globale), verranno specificate nel contratto e nel modulo SECCI prima della sottoscrizione, in conformità con il D.Lgs. 385/93 e le disposizioni di Banca d'Italia.
           </div>
           <div>
-            <strong>Avvertenza:</strong> Messaggio pubblicitario con finalità promozionale. Per le condizioni contrattuali ed economiche, si rimanda ai documenti informativi disponibili presso le nostre sedi e sul sito.
+            <strong>Avvertenza:</strong> Messaggio pubblicitario con finalità promozionale. Per le condizioni contrattuali ed economiche, si rimanda ai documenti informativi disponibili presso le nostre sedi e sul sito. La concessione del finanziamento è subordinata alla valutazione e all'approvazione dell'istituto erogante.
           </div>
         </div>
         {/* Resto de la página */}
