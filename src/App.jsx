@@ -69,6 +69,11 @@ function FAQ() {
         "La Cessione del Quinto è un prestito personale con una rata mensile che non supera il quinto (20%) del tuo stipendio netto o della tua pensione, trattenuta direttamente in busta paga o sulla pensione."
     },
     {
+      question: "Quali sono i costi e le commissioni associate?",
+      answer:
+        "Le commissioni di mediazione variano in base all'importo e alla durata del finanziamento, con un massimo del 10% sull'importo erogato. Sono inclusi: spese di istruttoria, commissioni bancarie, e costi assicurativi obbligatori per legge. Ti forniremo un preventivo dettagliato e trasparente prima di procedere."
+    },
+    {
       question: "Quanto tempo serve per ottenere il prestito?",
       answer:
         "Con Creditplan puoi ottenere la liquidità necessaria in pochi giorni grazie ai nostri partner bancari specializzati e al team qualificato."
@@ -795,27 +800,27 @@ export function Footer() {
             <h4 className="text-lg font-bold mb-2 mt-4">Link Utili</h4>
             <ul className="text-sm space-y-1">
               <li>
-                <a href="/trasparenza" className="underline">
+                <a href="https://creditplan.it/trasparenza" className="underline">
                   Trasparenza
                 </a>
               </li>
               <li>
-                <a href="/reclami" className="underline">
+                <a href="https://creditplan.it/reclami" className="underline">
                   Reclami
                 </a>
               </li>
               <li>
-                <a href="/guida-ai-mutui" className="underline">
+                <a href="https://creditplan.it/guida-ai-mutui" className="underline">
                   Guida ai mutui
                 </a>
               </li>
               <li>
-                <a href="/privacy" className="underline">
+                <a href="https://creditplan.it/privacy" className="underline">
                   Privacy
                 </a>
               </li>
               <li>
-                <a href="/faq" className="underline">
+                <a href="https://creditplan.it/faq" className="underline">
                   FAQ
                 </a>
               </li>
