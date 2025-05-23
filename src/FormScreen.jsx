@@ -164,10 +164,8 @@ function FormScreen({ onClose, onFormSubmit }) {
 
     const endpoint =
       selectedOption === "pensionato"
-        ? "https://backend-richiedidiessereconttato-production.up.railway.app/pensionato"
-        : "https://backend-richiedidiessereconttato-production.up.railway.app/dipendente";
-        // ? "https://accelerabackend.creditplan.it/api/forms/pensionato"
-        // : "https://accelerabackend.creditplan.it/api/forms/dipendente";
+        ? "https://accelera-crm-production.up.railway.app/api/forms/pensionato"
+        : "https://accelera-crm-production.up.railway.app/api/forms/dipendente";
 
     try {
       const response = await fetch(endpoint, {
