@@ -24,6 +24,17 @@ function ThankYouPage() {
       <Helmet>
         <title>Grazie - Richiesta Inviata</title>
         <meta name="description" content="La tua richiesta è stata inviata con successo. Ti contatteremo al più presto." />
+        {/* Google tag (gtag.js) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17086810445"></script>
+        <script>
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'AW-17086810445');
+          `}
+        </script>
       </Helmet>
 
       {/* Contenedor principal que centra el contenido */}
