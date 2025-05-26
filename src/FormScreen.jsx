@@ -123,70 +123,57 @@ function FormScreen({ onClose, onFormSubmit }) {
   }
 
   const handleSubmit = async () => {
-    setLoading(true);
+  setLoading(true);
 
-    // Format the employment date to a proper date string if it exists
-    let formattedEmploymentDate = null;
-    if (over12Months) {
-      const [month, year] = over12Months.split('/');
-      const inputDate = new Date(year, month - 1);
-      formattedEmploymentDate = inputDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
-    }
+  // Format the employment date if needed
+  let formattedEmploymentDate = null;
+  if (over12Months) {
+    const [month, year] = over12Months.split('/');
+    const inputDate = new Date(year, month - 1);
+    formattedEmploymentDate = inputDate.toISOString().split('T')[0]; // YYYY-MM-DD
+  }
 
-    const formData = {
-      nome,
-      cognome,
-      mail,
-      telefono,
-      birthDate,
-      province,
-      privacyAccepted,
-    };
-
-    if (selectedOption === "pensionato") {
-      Object.assign(formData, {
-        pensionAmount,
-        pensioneNetta,
-        entePensionistico,
-        pensioneType,
-      });
-    } else if (selectedOption === "dipendente") {
-      Object.assign(formData, {
-        amountRequested,
-        netSalary,
-        depType,
-        secondarySelection,
-        contractType,
-        employmentDate: over12Months, // Keep original MM/YYYY format
-        numEmployees: parseInt(numEmployees),
-      });
-    }
-
-    const endpoint =
-      selectedOption === "pensionato"
-        ? "https://accelerabackend.creditplan.it/api/forms/pensionato"
-        : "https://accelerabackend.creditplan.it/api/forms/dipendente";
-
-    try {
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) throw new Error("Errore nella richiesta");
-
-      const result = await response.json();
-      console.log("Dati inviati:", result);
-      onFormSubmit();
-    } catch (error) {
-      console.error("Errore:", error);
-    } finally {
-      setLoading(false);
-    }
+  // Build payload with Italian field names
+  const formData = {
+    nome,
+    cognome,
+    mail,
+    telefono,
+    // Common fields
+    birthDate,
+    provinciaResidenza: province,
+    privacyAccepted,
+    // “Dipendente”‐specific fields (rename to match your DB)
+    importoRichiesto: amountRequested,
+    stipendioNetto: netSalary,
+    tipologiaDipendente: depType,
+    sottotipo: secondarySelection,
+    tipoContratto: contractType,
+    // send the original MM/YYYY or the formatted ISO date:
+    meseAnnoAssunzione: formattedEmploymentDate ?? over12Months,
+    numeroDipendenti: parseInt(numEmployees, 10),
   };
+
+  const endpoint = selectedOption === "dipendente"
+    ? "https://accelerabackend.creditplan.it/api/forms/dipendente"
+    : "https://accelerabackend.creditplan.it/api/forms/pensionato";
+
+  try {
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+    if (!response.ok) throw new Error("Errore nella richiesta");
+    const result = await response.json();
+    console.log("Dati inviati:", result);
+    onFormSubmit();
+  } catch (error) {
+    console.error("Errore:", error);
+  } finally {
+    setLoading(false);
+  }
+};
 
   if (loading) {
     return (
