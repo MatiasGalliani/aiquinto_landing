@@ -156,7 +156,8 @@ function FormScreen({ onClose, onFormSubmit }) {
 
   const endpoint = selectedOption === "dipendente"
     ? "https://accelerabackend.creditplan.it/api/forms/dipendente"
-    : "https://accelerabackend.creditplan.it/api/forms/pensionato";
+    : "https://accelerabackend.creditplan.it/api/forms/dipendente";
+    
 
   try {
     const response = await fetch(endpoint, {
