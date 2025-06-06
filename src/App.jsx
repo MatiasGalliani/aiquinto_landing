@@ -487,7 +487,7 @@ function MainApp() {
       <main className="flex-grow">
         {/* Sección Hero con fondo celeste y olas */}
         <div className="bg-gradient-to-r from-blue-100 to-blue-300 w-full pt-4 transition-all duration-500 ease-out">
-          <div className="flex flex-col md:flex-row justify-center items-stretch mx-4 md:mx-12 gap-6">
+          <div className="flex flex-col md:flex-row justify-center items-stretch mx-4 md:mx-12 !mr-24 gap-6">
             <div className="p-6 md:mr-12 mb-6 md:mb-0 md:mt-14">
               <div className="px-4 md:px-16">
                 <h1 className="flex items-center space-x-2 mt-8 animate-fadeIn">
