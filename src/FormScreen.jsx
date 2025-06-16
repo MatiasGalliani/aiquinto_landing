@@ -2,6 +2,36 @@ import { useState, useEffect } from "react"
 import { IoIosArrowBack, IoIosArrowDown } from "react-icons/io"
 import { motion, AnimatePresence } from "framer-motion"
 
+// -------------------------------------------------------------
+// API ENDPOINTS
+// -------------------------------------------------------------
+// Decide automatically which base URL to use depending on the
+// running environment. During local development we talk to the
+// backend on localhost, while in production we fall back to the
+// hosted API. You can override either via .env by defining
+// REACT_APP_PENSIONATO_ENDPOINT and/or REACT_APP_DIPENDENTE_ENDPOINT.
+
+// Use Vite's `import.meta.env` in the browser; fall back to `process.env` only
+// if it exists (e.g. during server-side rendering).
+
+const isProd =
+  (typeof import.meta !== "undefined" && import.meta.env && import.meta.env.PROD) ||
+  (typeof process !== "undefined" && process.env && process.env.NODE_ENV === "production")
+
+const BASE_URL = isProd
+  ? "https://accelera-crm-production.up.railway.app"
+  : "http://localhost:3001"
+
+export const PENSIONATO_ENDPOINT =
+  (typeof import.meta !== "undefined" && import.meta.env && import.meta.env.VITE_PENSIONATO_ENDPOINT) ||
+  (typeof process !== "undefined" && process.env && process.env.REACT_APP_PENSIONATO_ENDPOINT) ||
+  `${BASE_URL}/api/forms/pensionato`
+
+export const DIPENDENTE_ENDPOINT =
+  (typeof import.meta !== "undefined" && import.meta.env && import.meta.env.VITE_DIPENDENTE_ENDPOINT) ||
+  (typeof process !== "undefined" && process.env && process.env.REACT_APP_DIPENDENTE_ENDPOINT) ||
+  `${BASE_URL}/api/forms/dipendente`
+
 const validateNetValue = (value) => {
   if (!value.trim()) {
     return "Campo obbligatorio";
@@ -163,11 +193,7 @@ function FormScreen({ onClose, onFormSubmit }) {
     }
 
     const endpoint =
-      selectedOption === "pensionato"
-        ? "https://backend-richiedidiessereconttato-production.up.railway.app/pensionato"
-        : "https://backend-richiedidiessereconttato-production.up.railway.app/dipendente";
-        // ? "https://accelerabackend.creditplan.it/api/forms/pensionato"
-        // : "https://accelerabackend.creditplan.it/api/forms/dipendente";
+      selectedOption === "pensionato" ? PENSIONATO_ENDPOINT : DIPENDENTE_ENDPOINT;
 
     try {
       const response = await fetch(endpoint, {
